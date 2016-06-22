@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:WizardWarz"
         xmlns:Custom="http://schemas.microsoft.com/surface/2008" x:Class="WizardWarz.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid/>
+        Title="MainWindow" Height="1080" Width="1080">
+    
+    <Canvas Name="GameCanvas">
+        <Grid Name="GameBoardGrid">
+            
+        </Grid>
+    </Canvas>
 </Custom:SurfaceWindow>
