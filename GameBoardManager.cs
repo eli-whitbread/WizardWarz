@@ -18,15 +18,15 @@ namespace WizardWarz
     public partial class GameBoardManager : MainWindow
     {
         
+        //initialise the game board
         public static void InitializeGameBoard2(Grid gameGrid)
         {
             Int32 tileSize = 64;
             //set the grid size
-            Int32 rows = 12;
-            Int32 cols = 12;
+            Int32 rows = 13;
+            Int32 cols = 13;
 
-            //setup an array of grid positions (int[,]) for inner walls
-            Int16[,] innerWallPos = { { 3, 5 }, { 5, 5 }  };
+            Int16[,] innerWallPos = { { 3, 5 }, { 5, 5 } };
 
             GridLengthConverter myGridLengthConverter = new GridLengthConverter();
             GridLength side = (GridLength)myGridLengthConverter.ConvertFromString("Auto");
@@ -53,9 +53,14 @@ namespace WizardWarz
                 {
                     flrTiles[c, r] = new Rectangle();
                     //add a wall tile if along the grid extremes
-                    if (r == 0 || r == rows - 1 || c == 0 || c == cols - 1)
+                    if(InitialTilePlacementCheck(c,r, cols, rows) == true)
                     {
                         flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\WallTile_64x64.png", UriKind.Relative)));
+                    }
+                    //add destructible walls within the game grid
+                    else if (DestructableWallPlacementCheck(c, r) == true)
+                    {
+                        flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\DestructTile_64x64.png", UriKind.Relative)));
                     }
                     //otherwise add a floor tile
                     else
@@ -74,6 +79,53 @@ namespace WizardWarz
                 }
             }
             
+        }
+
+        public static bool InitialTilePlacementCheck(Int32 c, Int32 r, Int32 colsLength, Int32 rowsLength)
+        {
+            //setup an array of grid positions (int[,]) for inner walls
+            Int32[,] innerWallPos = { { 2, 2 }, { 2, 4 }, { 2, 6 }, { 2, 8 }, { 2, 10 },
+                { 4, 2 }, { 4, 4 }, { 4, 6 }, { 4, 8 }, { 4, 10 },
+                { 6, 2 }, { 6, 4 }, { 6, 6 }, { 6, 8 }, { 6, 10 },
+                { 8, 2 }, { 8, 4 }, { 8, 6 }, { 8, 8 }, { 8, 10 },
+                { 10, 2 }, { 10, 4 }, { 10, 6 }, { 10, 8 }, { 10, 10 }
+
+            };
+
+            //if both r and c are along the outer edge of the game borad grid then return true - outer wall generation
+            if (r == 0 || r == rowsLength - 1 || c == 0 || c == colsLength - 1)
+            {
+                return true;
+            }
+            //itterate through the innerWallPos 2D array and return true if both values match the passed in Row x Coll pos (r,c) - inner solid-wall generation
+            //we devide innerWallPos.Length by 2 because each "subarray" {x,y} is 2 elements long
+            for (int i = 0; i < innerWallPos.Length / 2; i++)
+            {
+                if(innerWallPos[i, 0] == c && innerWallPos[i, 1] == r)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool DestructableWallPlacementCheck(Int32 c, Int32 r)
+        {
+            //setup an array of grid positions (int[,]) for destructable walls
+            Int32[,] destructibleWallPos = { { 5, 3 }, { 7, 9 } };
+
+            //itterate through the destructableWallPos 2D array and return true if both values match the passed in Row x Coll pos (r,c) - inner destructible-wall generation
+            //we devide destructibleWallPos.Length by 2 because each "subarray" {x,y} is 2 elements long
+            for (int i = 0; i < destructibleWallPos.Length / 2; i++)
+            {
+                if (destructibleWallPos[i, 0] == c && destructibleWallPos[i, 1] == r)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
 
