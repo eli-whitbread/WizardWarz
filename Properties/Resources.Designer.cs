@@ -63,6 +63,16 @@ namespace WizardWarz.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Destructible {
+            get {
+                object obj = ResourceManager.GetObject("Destructible", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DestructTile_64x64 {
             get {
                 object obj = ResourceManager.GetObject("DestructTile_64x64", resourceCulture);
@@ -73,9 +83,29 @@ namespace WizardWarz.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Floor {
+            get {
+                object obj = ResourceManager.GetObject("Floor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FloorTile_64x64 {
             get {
                 object obj = ResourceManager.GetObject("FloorTile_64x64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Indesructable {
+            get {
+                object obj = ResourceManager.GetObject("Indesructable", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

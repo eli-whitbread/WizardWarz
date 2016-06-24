@@ -55,17 +55,17 @@ namespace WizardWarz
                     //add a wall tile if along the grid extremes
                     if(InitialTilePlacementCheck(c,r, cols, rows) == true)
                     {
-                        flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\WallTile_64x64.png", UriKind.Relative)));
+                        flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Indesructable.png", UriKind.Relative)));
                     }
                     //add destructible walls within the game grid
                     else if (DestructableWallPlacementCheck(c, r) == true)
                     {
-                        flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\DestructTile_64x64.png", UriKind.Relative)));
+                        flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Destructible.png", UriKind.Relative)));
                     }
                     //otherwise add a floor tile
                     else
                     {
-                        flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\FloorTile_64x64.png", UriKind.Relative)));
+                        flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Floor.png", UriKind.Relative)));
                     }
                     //
                     //inner solid and destrutable walls still required!!
@@ -83,7 +83,7 @@ namespace WizardWarz
 
         public static bool InitialTilePlacementCheck(Int32 c, Int32 r, Int32 colsLength, Int32 rowsLength)
         {
-            //setup an array of grid positions (int[,]) for inner walls
+            //setup an array of grid positions (int[,]) for inner walls  = {column,Row} - count starts from "outer wall". ie. 5 = 5 + wall.
             Int32[,] innerWallPos = { { 2, 2 }, { 2, 4 }, { 2, 6 }, { 2, 8 }, { 2, 10 },
                 { 4, 2 }, { 4, 4 }, { 4, 6 }, { 4, 8 }, { 4, 10 },
                 { 6, 2 }, { 6, 4 }, { 6, 6 }, { 6, 8 }, { 6, 10 },
@@ -112,7 +112,7 @@ namespace WizardWarz
 
         public static bool DestructableWallPlacementCheck(Int32 c, Int32 r)
         {
-            //setup an array of grid positions (int[,]) for destructable walls
+            //setup an array of grid positions (int[,]) for destructable walls = {column,Row} - count starts from "outer wall". ie. 5 = 5 + wall.
             Int32[,] destructibleWallPos = { { 5, 3 }, { 7, 9 } };
 
             //itterate through the destructableWallPos 2D array and return true if both values match the passed in Row x Coll pos (r,c) - inner destructible-wall generation
