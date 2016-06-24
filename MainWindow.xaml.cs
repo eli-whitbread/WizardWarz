@@ -31,7 +31,8 @@ namespace WizardWarz
             InitializeComponent();
 
             GameBoardManager.InitializeGameBoard2(GameBoardGrid);
-           
+
+            PlayerController.InitialisePlayerController(GameBoardGrid);
         }
 
         
