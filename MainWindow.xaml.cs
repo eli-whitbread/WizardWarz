@@ -30,12 +30,34 @@ namespace WizardWarz
         {
             InitializeComponent();
 
+            
+
             GameBoardManager.InitializeGameBoard2(GameBoardGrid);
 
             PlayerController.InitialisePlayerController(GameBoardGrid);
+
+            PlayerController.InitialisePlayerMovement(GameBoardGrid);
+
+            //this.GameBoardGrid.MouseDown += new MouseButtonEventHandler(controller_MouseLeftButtonDown);
+
         }
 
-        
+        //public void controller_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+
+        //    var mousewasdownOn = e.Source as FrameworkElement;
+
+        //    if (mousewasdownOn != null)
+        //    {
+        //        int elementNameC = (int)mousewasdownOn.GetValue(Grid.ColumnProperty);
+        //        int elementNameR = (int)mousewasdownOn.GetValue(Grid.RowProperty);
+
+        //        MessageBox.Show(string.Format("Grid clicked at column {0}, row {1}", elementNameC, elementNameR));
+
+        //    }
+
+
+        //}
 
     }
 }

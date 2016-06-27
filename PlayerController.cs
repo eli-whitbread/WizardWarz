@@ -9,7 +9,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Input;
-using WizardWarz;
 
 namespace WizardWarz
 {
@@ -31,7 +30,32 @@ namespace WizardWarz
             Grid.SetColumn(playerTile, 1);
             Grid.SetRow(playerTile, 1);
 
-            gameGrid.Children.Add(playerTile);          
+            gameGrid.Children.Add(playerTile);
+
+            
         }
+
+        public static void InitialisePlayerMovement(Grid gameGrid)
+        {
+            gameGrid.MouseDown += new MouseButtonEventHandler(controller_MouseLeftButtonDown);
+        }
+        public static void controller_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+            var mousewasdownOn = e.Source as FrameworkElement;
+
+            if (mousewasdownOn != null)
+            {
+                int elementNameC = (int)mousewasdownOn.GetValue(Grid.ColumnProperty);
+                int elementNameR = (int)mousewasdownOn.GetValue(Grid.RowProperty);
+
+                MessageBox.Show(string.Format("Grid clicked at column {0}, row {1}", elementNameC, elementNameR));
+
+            }
+
+
+        }
+
+
     }
 }

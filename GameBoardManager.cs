@@ -75,6 +75,7 @@ namespace WizardWarz
                     Grid.SetColumn(flrTiles[c, r], c);
                     Grid.SetRow(flrTiles[c, r], r);
 
+
                     gameGrid.Children.Add(flrTiles[c, r]);
                 }
             }
