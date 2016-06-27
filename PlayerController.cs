@@ -41,7 +41,6 @@ namespace WizardWarz
         }
         public static void controller_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
             var mousewasdownOn = e.Source as FrameworkElement;
 
             if (mousewasdownOn != null)
@@ -50,11 +49,27 @@ namespace WizardWarz
                 int elementNameR = (int)mousewasdownOn.GetValue(Grid.RowProperty);
 
                 MessageBox.Show(string.Format("Grid clicked at column {0}, row {1}", elementNameC, elementNameR));
-
             }
 
-
         }
+
+        //public static int[] playerMovement(Grid gameGrid, Object mouseEventArg)
+        //{
+
+        //    int[] playerPos;
+        //    var mousewasdownOn = e.Source as FrameworkElement;
+
+
+        //    int elementNameC = (int)mousewasdownOn.GetValue(Grid.ColumnProperty);
+        //    int elementNameR = (int)mousewasdownOn.GetValue(Grid.RowProperty);
+
+
+        //    playerPos = new Int32[2];
+        //    playerPos[0] = elementNameC;
+        //    playerPos[1] = elementNameR;
+
+        //    return playerPos;
+        //}
 
 
     }
