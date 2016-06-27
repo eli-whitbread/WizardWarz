@@ -12,14 +12,12 @@ using System.Windows.Shapes;
 
 namespace WizardWarz
 {
-    /// <summary>
-    /// Not yet working - can't draw grid to window. Refer MainWindow.xaml.cs "InitializeGameBoard()"
-    /// </summary>
-    public partial class GameBoardManager : MainWindow
+    
+    public class GameBoardManager
     {
         
         //initialise the game board
-        public static void InitializeGameBoard2(Grid gameGrid)
+        public void InitializeGameBoard(Grid gameGrid)
         {
             Int32 tileSize = 64;
             //set the grid size
@@ -82,7 +80,7 @@ namespace WizardWarz
             
         }
 
-        public static bool InitialTilePlacementCheck(Int32 c, Int32 r, Int32 colsLength, Int32 rowsLength)
+        public bool InitialTilePlacementCheck(Int32 c, Int32 r, Int32 colsLength, Int32 rowsLength)
         {
             //setup an array of grid positions (int[,]) for inner walls  = {column,Row} - count starts from "outer wall". ie. 5 = 5 + wall.
             Int32[,] innerWallPos = { { 2, 2 }, { 2, 4 }, { 2, 6 }, { 2, 8 }, { 2, 10 },
@@ -111,7 +109,7 @@ namespace WizardWarz
             return false;
         }
 
-        public static bool DestructableWallPlacementCheck(Int32 c, Int32 r)
+        public bool DestructableWallPlacementCheck(Int32 c, Int32 r)
         {
             //setup an array of grid positions (int[,]) for destructable walls = {column,Row} - count starts from "outer wall". ie. 5 = 5 + wall.
             Int32[,] destructibleWallPos = { { 5, 3 }, { 7, 9 } };

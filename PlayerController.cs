@@ -12,9 +12,9 @@ using System.Windows.Input;
 
 namespace WizardWarz
 {
-    class PlayerController : MainWindow
+    class PlayerController
     {
-        public static void InitialisePlayerController(Grid gameGrid)
+        public void InitialisePlayerController(Grid gameGrid)
         {
             Int32 tileSize = 64;
 
@@ -29,17 +29,16 @@ namespace WizardWarz
             playerTile.Width = tileSize;
             Grid.SetColumn(playerTile, 1);
             Grid.SetRow(playerTile, 1);
-
             gameGrid.Children.Add(playerTile);
 
             
         }
 
-        public static void InitialisePlayerMovement(Grid gameGrid)
+        public void InitialisePlayerMovement(Grid gameGrid)
         {
             gameGrid.MouseDown += new MouseButtonEventHandler(controller_MouseLeftButtonDown);
         }
-        public static void controller_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        public void controller_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var mousewasdownOn = e.Source as FrameworkElement;
 
