@@ -30,13 +30,13 @@ namespace WizardWarz
         {
             InitializeComponent();
 
-            
-
             GameBoardManager.InitializeGameBoard2(GameBoardGrid);
 
             PlayerController.InitialisePlayerController(GameBoardGrid);
 
             PlayerController.InitialisePlayerMovement(GameBoardGrid);
+
+            GameTimer gT = new GameTimer();
 
             //this.GameBoardGrid.MouseDown += new MouseButtonEventHandler(controller_MouseLeftButtonDown);
 
