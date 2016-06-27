@@ -9,7 +9,7 @@
         Title="MainWindow" Height="1080" Width="1080">
     
     <Canvas Name="GameCanvas">
-        <Grid Name="GameBoardGrid">
+        <Grid Name="GameBoardGrid" >
             
         </Grid>
     </Canvas>
