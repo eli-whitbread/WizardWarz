@@ -14,30 +14,42 @@ namespace WizardWarz
 {
     class PlayerController
     {
-        public void InitialisePlayerController(Grid gameGrid)
+        public Rectangle playerTile;
+        public Point currentPOS;
+        public Point lastClickPOS;
+        public Point relativePosition;
+        public Grid localGameGrid;
+
+        public PlayerController(Grid gameGrid)
+        {
+            localGameGrid = gameGrid;
+
+            InitialisePlayerController();
+
+            gameGrid.MouseDown += new MouseButtonEventHandler(controller_MouseLeftButtonDown);
+        }
+
+        public void InitialisePlayerController()
         {
             Int32 tileSize = 64;
 
-            Rectangle playerTile = new Rectangle();
+            playerTile = new Rectangle();            
 
-            //playerTile = new Rectangle();
+            currentPOS = new Point(0, 0);
 
             playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\WIZARD1.png", UriKind.Relative)));
 
+            int playerX = (int)currentPOS.X;
+            int playerY = (int)currentPOS.Y;
 
             playerTile.Height = tileSize;
             playerTile.Width = tileSize;
-            Grid.SetColumn(playerTile, 1);
-            Grid.SetRow(playerTile, 1);
-            gameGrid.Children.Add(playerTile);
-
-            
+            Grid.SetColumn(playerTile, playerX);
+            Grid.SetRow(playerTile, playerY);
+            localGameGrid.Children.Add(playerTile);
         }
 
-        public void InitialisePlayerMovement(Grid gameGrid)
-        {
-            gameGrid.MouseDown += new MouseButtonEventHandler(controller_MouseLeftButtonDown);
-        }
+
         public void controller_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var mousewasdownOn = e.Source as FrameworkElement;
@@ -47,29 +59,34 @@ namespace WizardWarz
                 int elementNameC = (int)mousewasdownOn.GetValue(Grid.ColumnProperty);
                 int elementNameR = (int)mousewasdownOn.GetValue(Grid.RowProperty);
 
-                MessageBox.Show(string.Format("Grid clicked at column {0}, row {1}", elementNameC, elementNameR));
+                relativePosition = mousewasdownOn.TransformToAncestor(localGameGrid).Transform(new Point(0, 0));
+
+
+
+
+                lastClickPOS = new Point(elementNameC, elementNameR);
+
+                //MessageBox.Show(string.Format("Grid clicked at column {0}, row {1}", elementNameC, elementNameR));
+                testPlayerMove(relativePosition);
+
             }
+
 
         }
 
-        //public static int[] playerMovement(Grid gameGrid, Object mouseEventArg)
-        //{
+        public void testPlayerMove(Point lastClickNEW)
+        {
+            TranslateTransform translateTransform1 = new TranslateTransform(relativePosition.X, relativePosition.Y);
 
-        //    int[] playerPos;
-        //    var mousewasdownOn = e.Source as FrameworkElement;
+            playerTile.RenderTransform = translateTransform1;
+
+            localGameGrid.Children.Remove(playerTile);
+            localGameGrid.Children.Add(playerTile);
+
+            //MessageBox.Show(string.Format("I should be moving to {0}", relativePosition));
 
 
-        //    int elementNameC = (int)mousewasdownOn.GetValue(Grid.ColumnProperty);
-        //    int elementNameR = (int)mousewasdownOn.GetValue(Grid.RowProperty);
-
-
-        //    playerPos = new Int32[2];
-        //    playerPos[0] = elementNameC;
-        //    playerPos[1] = elementNameR;
-
-        //    return playerPos;
-        //}
-
+        }
 
     }
 }
