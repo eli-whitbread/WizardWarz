@@ -16,6 +16,7 @@ using Microsoft.Surface;
 using Microsoft.Surface.Core;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
+using System.Diagnostics;
 
 namespace WizardWarz
 {
@@ -26,6 +27,11 @@ namespace WizardWarz
     {
         public Int32 tileSize = 64;
 
+        public Canvas mainCanvas
+        {
+            get { return GameCanvas; }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,9 +39,17 @@ namespace WizardWarz
             GameBoardManager _gameBoardManager = new GameBoardManager();
             _gameBoardManager.InitializeGameBoard(GameBoardGrid);
 
-            PlayerController _playerController = new PlayerController(GameBoardGrid);
+            PlayerController _playerController1 = new PlayerController(GameBoardGrid);
+            _playerController1.mangerRef = _gameBoardManager;
+            _playerController1.InitialiseRefs();
+
+            Debug.WriteLine(mainCanvas.Name);
 
             GameTimer gT = new GameTimer();
+            gT.GameCanRef = mainCanvas;
+            gT.p1Ref = _playerController1;
+            gT.Initialise();
+            
         }
 
     }

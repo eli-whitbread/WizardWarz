@@ -9,16 +9,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Input;
+using System.Diagnostics;
 
 namespace WizardWarz
 {
-    class PlayerController
+    public class PlayerController
     {
         public Rectangle playerTile;
         public Point currentPOS;
         public Point lastClickPOS;
         public Point relativePosition;
         public Grid localGameGrid;
+        public Int32 tileSize = 64;
+
+        public GameBoardManager mangerRef = null;
+
+        public int playerX = 0;
+        public int playerY = 0;
 
         public PlayerController(Grid gameGrid)
         {
@@ -26,12 +33,15 @@ namespace WizardWarz
 
             InitialisePlayerController();
 
+            relativePosition.Offset(tileSize, tileSize);
+
+            testPlayerMove();
+
             gameGrid.MouseDown += new MouseButtonEventHandler(controller_MouseLeftButtonDown);
         }
 
         public void InitialisePlayerController()
         {
-            Int32 tileSize = 64;
 
             playerTile = new Rectangle();            
 
@@ -50,11 +60,16 @@ namespace WizardWarz
         }
 
 
+        public void InitialiseRefs()
+        {
+
+        }
+
         public void controller_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var mousewasdownOn = e.Source as FrameworkElement;
 
-            if (mousewasdownOn != null)
+            if (mousewasdownOn != null && e.RightButton == MouseButtonState.Pressed)
             {
                 int elementNameC = (int)mousewasdownOn.GetValue(Grid.ColumnProperty);
                 int elementNameR = (int)mousewasdownOn.GetValue(Grid.RowProperty);
@@ -67,14 +82,14 @@ namespace WizardWarz
                 lastClickPOS = new Point(elementNameC, elementNameR);
 
                 //MessageBox.Show(string.Format("Grid clicked at column {0}, row {1}", elementNameC, elementNameR));
-                testPlayerMove(relativePosition);
+                testPlayerMove();
 
             }
 
 
         }
 
-        public void testPlayerMove(Point lastClickNEW)
+        public void testPlayerMove()
         {
             TranslateTransform translateTransform1 = new TranslateTransform(relativePosition.X, relativePosition.Y);
 

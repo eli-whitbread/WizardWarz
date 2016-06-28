@@ -15,7 +15,9 @@ namespace WizardWarz
     
     public class GameBoardManager
     {
-        
+        public PlayerController p1Ref = null;
+        public Rectangle[,] flrTiles = null;
+
         //initialise the game board
         public void InitializeGameBoard(Grid gameGrid)
         {
@@ -42,7 +44,7 @@ namespace WizardWarz
             }
 
             //create an empty Rectangle array
-            Rectangle[,] flrTiles = new Rectangle[cols, rows];
+            flrTiles = new Rectangle[cols, rows];
 
             //fill each element in the Rectangle array with an image "tile".
             for (int c = 0; c < cols; c++)
