@@ -81,6 +81,7 @@ namespace WizardWarz
 
                 lastClickPOS = new Point(elementNameC, elementNameR);
 
+                MessageBox.Show(string.Format("Grid Tile State = {0}", GameBoardManager._curTileState[elementNameC, elementNameR]));
                 //MessageBox.Show(string.Format("Grid clicked at column {0}, row {1}", elementNameC, elementNameR));
                 testPlayerMove();
 
@@ -99,7 +100,7 @@ namespace WizardWarz
             localGameGrid.Children.Add(playerTile);
 
             //MessageBox.Show(string.Format("I should be moving to {0}", relativePosition));
-
+            
 
         }
 

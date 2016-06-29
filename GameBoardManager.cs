@@ -12,11 +12,18 @@ using System.Windows.Shapes;
 
 namespace WizardWarz
 {
-    
+    public enum TileStates
+    {
+        Floor,
+        SolidWall,
+        DestructibleWall
+    }
+
     public class GameBoardManager
     {
         public PlayerController p1Ref = null;
         public Rectangle[,] flrTiles = null;
+        public static TileStates[,] _curTileState = null;
 
         //initialise the game board
         public void InitializeGameBoard(Grid gameGrid)
@@ -25,6 +32,7 @@ namespace WizardWarz
             //set the grid size
             Int32 rows = 13;
             Int32 cols = 13;
+            _curTileState = new TileStates[cols, rows];
 
             Int16[,] innerWallPos = { { 3, 5 }, { 5, 5 } };
 
@@ -56,16 +64,19 @@ namespace WizardWarz
                     if(InitialTilePlacementCheck(c,r, cols, rows) == true)
                     {
                         flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Indesructable.png", UriKind.Relative)));
+                        _curTileState[c, r] = TileStates.SolidWall;
                     }
                     //add destructible walls within the game grid
                     else if (DestructableWallPlacementCheck(c, r) == true)
                     {
                         flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Destructible.png", UriKind.Relative)));
+                        _curTileState[c, r] = TileStates.DestructibleWall;
                     }
                     //otherwise add a floor tile
                     else
                     {
                         flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Floor.png", UriKind.Relative)));
+                        _curTileState[c, r] = TileStates.Floor;
                     }
                     //
                     //inner solid and destrutable walls still required!!
