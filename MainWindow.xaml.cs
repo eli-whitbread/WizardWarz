@@ -49,7 +49,11 @@ namespace WizardWarz
             gT.GameCanRef = mainCanvas;
             gT.p1Ref = _playerController1;
             gT.Initialise();
-            
+
+            Bomb _masterBombClass = new Bomb();
+            _masterBombClass.curGameGrid = GameBoardGrid;
+            //test bomb
+            _masterBombClass.InitialiseBomb(7, 3, 3);
         }
 
     }

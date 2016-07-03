@@ -71,6 +71,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Bomb.cs" />
     <Compile Include="GameBoardManager.cs" />
     <Compile Include="GameTimer.cs" />
     <Compile Include="MainWindow.xaml.cs">
