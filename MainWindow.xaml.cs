@@ -40,7 +40,7 @@ namespace WizardWarz
             _gameBoardManager.InitializeGameBoard(GameBoardGrid);
 
             PlayerController _playerController1 = new PlayerController(GameBoardGrid);
-            _playerController1.mangerRef = _gameBoardManager;
+            _playerController1.managerRef = _gameBoardManager;
             _playerController1.InitialiseRefs();
 
             Debug.WriteLine(mainCanvas.Name);
@@ -50,10 +50,8 @@ namespace WizardWarz
             gT.p1Ref = _playerController1;
             gT.Initialise();
 
-            Bomb _masterBombClass = new Bomb();
-            _masterBombClass.curGameGrid = GameBoardGrid;
+            Bomb _masterBombClass = new Bomb(GameBoardGrid);
             //test bomb
-            _masterBombClass.InitialiseBomb(7, 3, 3);
         }
 
     }

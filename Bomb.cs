@@ -16,6 +16,11 @@ namespace WizardWarz
         public Grid curGameGrid;
         bool fillDir_up, fillDir_down, fillDir_left, fillDir_right;
 
+        public Bomb(Grid localGameGrid)
+        {
+            curGameGrid = localGameGrid;
+        }
+
         public void InitialiseBomb(Int32 startX, Int32 startY, Int32 explosionDist)
         {
             //set all fill directions as true (ie: explosion can expand in direction)
@@ -192,7 +197,7 @@ namespace WizardWarz
         //note: x = Columns y = Rows
         TileStates ReturnCellTileState(Int32 xPos, Int32 yPos)
         {
-            return GameBoardManager._curTileState[xPos, yPos];
+            return GameBoardManager.curTileState[xPos, yPos];
         }
 
     }
