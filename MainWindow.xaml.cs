@@ -46,6 +46,8 @@ namespace WizardWarz
 
             Debug.WriteLine(mainCanvas.Name);
 
+            StaticCollections _staticColections = new StaticCollections();
+
             GameTimer gT = new GameTimer();
             gT.GameCanRef = mainCanvas;
             gT.p1Ref = _playerController1;
@@ -54,7 +56,7 @@ namespace WizardWarz
             _playerController1.timerRef = gT;
 
             Bomb _masterBombClass = new Bomb(GameBoardGrid);
-            //test bomb
+            
         }
 
     }

@@ -14,15 +14,51 @@ namespace WizardWarz
     public class Bomb
     {
         public Grid curGameGrid;
+        public float effectLifeTime;
+        float myTime, myTickIncrement;
         bool fillDir_up, fillDir_down, fillDir_left, fillDir_right;
+        Int32[,] explosionMatrix;
+        Rectangle explosion;
+        List<Rectangle> explosionTiles;
 
         public Bomb(Grid localGameGrid)
         {
             curGameGrid = localGameGrid;
         }
 
+        //called by GameTimer
+        public void BombTickUpdate()
+        {
+            myTime += myTickIncrement;
+
+            Debug.WriteLine("Bomb alive {0} seconds", myTime); //debug the timer
+            if(myTime >= effectLifeTime)
+            {
+                DestroyBomb();
+            }
+
+        }
+
+        //remove the bomb from the level
+        private void DestroyBomb()
+        {
+           
+            foreach(Rectangle exp in explosionTiles)
+            {
+                curGameGrid.Children.Remove(exp);
+            }
+
+            StaticCollections.RemoveBomb(this);
+            
+        }
+
         public void InitialiseBomb(Int32 startX, Int32 startY, Int32 explosionDist)
         {
+            explosionTiles = new List<Rectangle>();
+            myTime = 0.0f;
+            myTickIncrement = 0.1f;
+            effectLifeTime = 7.0f;
+
             //set all fill directions as true (ie: explosion can expand in direction)
             fillDir_up = true;
             fillDir_down = true;
@@ -37,7 +73,7 @@ namespace WizardWarz
 
 
             //create a new 2D array of grid cell positions
-            Int32[,] explosionMatrix = new Int32[(explosionDist * 4) + 1, 2];
+            explosionMatrix = new Int32[(explosionDist * 4) + 1, 2];
 
             //set the initial bomb position (player's position)
             explosionMatrix[0, 0] = startX;
@@ -163,7 +199,7 @@ namespace WizardWarz
 
                 if (colPos != 0 || rowPos != 0)
                 {
-                    Rectangle explosion = new Rectangle();
+                    explosion = new Rectangle();
                     explosion.Height = 64;
                     explosion.Width = 64;
 
@@ -174,6 +210,7 @@ namespace WizardWarz
                     Grid.SetColumn(explosion, colPos);
                     Grid.SetRow(explosion, rowPos);
                     curGameGrid.Children.Add(explosion);
+                    explosionTiles.Add(explosion);
                 }
 
 

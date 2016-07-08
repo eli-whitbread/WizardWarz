@@ -33,6 +33,7 @@ namespace WizardWarz
 
         public PlayerController p1Ref = null;
 
+        
         public GameTimer()
         {
             DispatcherTimer gameLoopTimer = new DispatcherTimer(DispatcherPriority.Render);
@@ -57,6 +58,9 @@ namespace WizardWarz
             curTdelta += deltaTime;
             if (curTdelta % 5 == 0)
             {
+                //for all bombs currently active in the level fire "BombUpdateTick"
+                StaticCollections.SendBombUpdate();
+                
                 Debug.WriteLine("Elapsed = {0}", curTdelta);
             }
 

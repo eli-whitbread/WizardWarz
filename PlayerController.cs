@@ -292,7 +292,7 @@ namespace WizardWarz
             //if (mousewasdownOn != null && e.RightButton == MouseButtonState.Pressed)
             //{
             //    relativePosition = mousewasdownOn.TransformToAncestor(localGameGrid).Transform(new Point(0, 0));
-                
+
             //    lastClickPOS = new Point(elementNameC, elementNameR);
 
             //    MessageBox.Show(string.Format("Grid Tile State = {0}", GameBoardManager.curTileState[elementNameC, elementNameR]));
@@ -312,6 +312,9 @@ namespace WizardWarz
                 localGameGrid.Children.Remove(playerTile);
 
                 fireBomb.InitialiseBomb((int)(localCol / tileSize), (int)(localRow / tileSize), bombRadius);
+
+                StaticCollections.AddBomb(fireBomb);
+
                 localGameGrid.Children.Add(playerTile);
             }
 
