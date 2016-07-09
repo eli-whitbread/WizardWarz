@@ -312,10 +312,11 @@ namespace WizardWarz
                 localGameGrid.Children.Remove(playerTile);
 
                 fireBomb.InitialiseBomb((int)(localCol / tileSize), (int)(localRow / tileSize), bombRadius);
-
-                StaticCollections.AddBomb(fireBomb);
-
+                
                 localGameGrid.Children.Add(playerTile);
+
+                //add bomb reference to bomb collection
+                StaticCollections.AddBomb(fireBomb);
             }
 
         }

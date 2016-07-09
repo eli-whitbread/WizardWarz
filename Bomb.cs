@@ -204,13 +204,13 @@ namespace WizardWarz
                     explosion.Width = 64;
 
                     explosion.Fill = new SolidColorBrush(Colors.Red);
-
-
+                    explosion.IsHitTestVisible = false;
+                    explosionTiles.Add(explosion);
 
                     Grid.SetColumn(explosion, colPos);
                     Grid.SetRow(explosion, rowPos);
                     curGameGrid.Children.Add(explosion);
-                    explosionTiles.Add(explosion);
+                    
                 }
 
 
