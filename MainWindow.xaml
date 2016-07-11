@@ -9,8 +9,16 @@
         Title="MainWindow" Height="1080" Width="1080">
     
     <Canvas Name="GameCanvas">
-        <Grid Name="GameBoardGrid" >
-            
-        </Grid>
+        <DockPanel LastChildFill="True">
+
+            <!--docked panels grids (score and lives grids)-->
+            <Grid Name="TopPanel" DockPanel.Dock="Top" HorizontalAlignment="Left" Height="64" Background="LightSteelBlue" />
+            <Grid Name="LeftPanel" DockPanel.Dock="Left" VerticalAlignment="Stretch" Width="64" Background="LightSteelBlue" />
+            <Grid Name="RightPanel" DockPanel.Dock="Right" VerticalAlignment="Stretch" Width="64" Background="LightSteelBlue" />
+            <Grid Name="BottomPanel" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Height="64" Background="LightSteelBlue" />
+
+            <!--game board-->
+            <Grid Name="GameBoardGrid" HorizontalAlignment="Center" VerticalAlignment="Center"></Grid>
+        </DockPanel>
     </Canvas>
 </Custom:SurfaceWindow>
