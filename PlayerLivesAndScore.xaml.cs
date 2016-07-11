@@ -30,7 +30,8 @@ namespace WizardWarz
         public string finalScore;
         public Canvas mainCanvasLocalRef;
         public int tileSizeLocal;
-
+        SoundManager playMusic = new SoundManager();
+        SoundManager playMusic2 = new SoundManager();
 
         public PlayerLivesAndScore(Canvas mainCanvas, Int32 tileSize)
         {
@@ -63,12 +64,16 @@ namespace WizardWarz
             {
                 if (playerLivesNumber > 0)
                 {
-
+                    // ---------------------- Subtract a life, recalculate heart images drawn within User Control --------------------
                     playerLivesNumber -= 1;
+                    
                     CalculateLives();
                 }
                 else
                 {
+                    // -------------------- Player out of lives, they get this message - Will ultimately also no respawn. ---------------------------
+                    
+                    playMusic.playPlayerDeath();
                     MessageBox.Show(string.Format("Sorry, Player {0}, you have died!", 1));
                 }
 
@@ -77,6 +82,7 @@ namespace WizardWarz
 
             if (mousewasdownOn != null && e.MiddleButton == MouseButtonState.Pressed)
             {
+                // ----------------------- Add points to score, recalculate current disaplayed score ------------------------------------------
                 currentScore += 10;
                 CalculateScore();
             }
@@ -93,14 +99,15 @@ namespace WizardWarz
             playerHomeTile.Height = tileSizeLocal;
             playerHomeTile.Width = tileSizeLocal;
 
+            // --------------- Set position, within the local grid (livesGrid) of this element ------------------------------
             Grid.SetRow(playerHomeTile, 0);
             Grid.SetColumn(playerHomeTile, 0);
 
 
-
+            // ------------------ Add element to the grid, according to the above -------------------------------------
             livesGrid.Children.Add(playerHomeTile);
-            //--------------------------------------------------------------------------------------------------------------
-            //--------------------------------------------------------------------------------------------------------------
+            playMusic2.playMainMusic();
+            
 
         }
 
@@ -117,7 +124,7 @@ namespace WizardWarz
                 playerLivesTile.Height = tileSizeLocal;
                 playerLivesTile.Width = tileSizeLocal;
 
-
+                // --------------- Set position, within the local grid (livesGrid) of this element ------------------------------
                 Grid.SetRow(playerLivesTile, 0);
                 Grid.SetColumn(playerLivesTile, i);
 
@@ -146,6 +153,7 @@ namespace WizardWarz
                 //MessageBox.Show("Nothing at index: " + 1);
             }
 
+            playMusic.playPickupBomb();
             initialiseLives();
         }
 
@@ -166,7 +174,7 @@ namespace WizardWarz
             playerScore.Height = 64;
 
 
-
+            // --------------- Set position, within the local grid (scoreGrid) of this element ------------------------------
 
             Grid.SetRow(playerScore, 0);
             Grid.SetColumn(playerScore, 0);
@@ -185,6 +193,7 @@ namespace WizardWarz
         {
             try
             {
+                // ------------------ Remove Score from Grid ----------------------------------
                 scoreGrid.Children.RemoveAt(0);
             }
             catch
@@ -192,6 +201,9 @@ namespace WizardWarz
 
                 //throw;
             }
+
+            // ----------------- Run initialise Score method again, to populate grid with new score information ------------------
+            playMusic.playEnemyAttack();
 
             initialiseScore();
 

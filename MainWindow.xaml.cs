@@ -26,6 +26,7 @@ namespace WizardWarz
     public partial class MainWindow : SurfaceWindow
     {
         public Int32 tileSize = 64;
+        
 
         public Canvas mainCanvas
         {
@@ -35,6 +36,10 @@ namespace WizardWarz
         public MainWindow()
         {
             InitializeComponent();
+
+            
+            // HAVE TO FOR SOME REASON DO THIS TWICE - IT'S LIKE IT DOESN'T INITIALISE PROPERLY ....????
+            
 
             GameBoardManager _gameBoardManager = new GameBoardManager();
             _gameBoardManager.InitializeGameBoard(GameBoardGrid);
@@ -60,8 +65,18 @@ namespace WizardWarz
             _playerController1.timerRef = gT;
 
             Bomb _masterBombClass = new Bomb(GameBoardGrid);
+
+            //StartMainMusic();
+
             
+
+
         }
 
+        public void StartMainMusic()
+        {       
+            //SoundManager _newSoundManager = new SoundManager();
+            //_newSoundManager.playMainMusic();
+        }
     }
 }

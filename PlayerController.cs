@@ -24,6 +24,7 @@ namespace WizardWarz
 
         public GameBoardManager managerRef = null;
         public GameTimer timerRef = null;
+        SoundManager playMusic = new SoundManager();
 
         int p1PathCellCount = 0;
         public int playerX = 0;
@@ -314,6 +315,10 @@ namespace WizardWarz
                 fireBomb.InitialiseBomb((int)(localCol / tileSize), (int)(localRow / tileSize), bombRadius);
                 
                 localGameGrid.Children.Add(playerTile);
+
+                
+                // Play Bomb Explode Sound (Should also play the tick sound here)
+                playMusic.playBombExplode();
 
                 //add bomb reference to bomb collection
                 StaticCollections.AddBomb(fireBomb);
