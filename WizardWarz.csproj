@@ -63,12 +63,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AudioManager.xaml.cs">
+      <DependentUpon>AudioManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameManager.cs" />
     <Compile Include="PlayerLivesAndScore.xaml.cs">
       <DependentUpon>PlayerLivesAndScore.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SoundManager.cs" />
     <Compile Include="StaticCollections.cs" />
+    <Page Include="AudioManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -176,14 +182,21 @@
     <None Include="Resources\timer_fuse.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <EmbeddedResource Include="Resources\8_bit_wizard.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\wizard2.wav">
+    <None Include="Resources\8_bit_wizard.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\audio.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\audioOn.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

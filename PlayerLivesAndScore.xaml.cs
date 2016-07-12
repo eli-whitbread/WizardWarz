@@ -30,8 +30,7 @@ namespace WizardWarz
         public string finalScore;
         public Canvas mainCanvasLocalRef;
         public int tileSizeLocal;
-        SoundManager playMusic = new SoundManager();
-        SoundManager playMusic2 = new SoundManager();
+        AudioManager playMusic = new AudioManager();
 
         public PlayerLivesAndScore(Canvas mainCanvas, Int32 tileSize)
         {
@@ -106,7 +105,7 @@ namespace WizardWarz
 
             // ------------------ Add element to the grid, according to the above -------------------------------------
             livesGrid.Children.Add(playerHomeTile);
-            playMusic2.playMainMusic();
+            
             
 
         }

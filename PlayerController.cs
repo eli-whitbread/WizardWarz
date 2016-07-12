@@ -24,7 +24,7 @@ namespace WizardWarz
 
         public GameBoardManager managerRef = null;
         public GameTimer timerRef = null;
-        SoundManager playMusic = new SoundManager();
+        AudioManager playMusic = new AudioManager();
 
         int p1PathCellCount = 0;
         public int playerX = 0;

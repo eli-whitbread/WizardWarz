@@ -35,11 +35,7 @@ namespace WizardWarz
 
         public MainWindow()
         {
-            InitializeComponent();
-
-            
-            // HAVE TO FOR SOME REASON DO THIS TWICE - IT'S LIKE IT DOESN'T INITIALISE PROPERLY ....????
-            
+            InitializeComponent();   
 
             GameBoardManager _gameBoardManager = new GameBoardManager();
             _gameBoardManager.InitializeGameBoard(GameBoardGrid);
@@ -66,17 +62,17 @@ namespace WizardWarz
 
             Bomb _masterBombClass = new Bomb(GameBoardGrid);
 
-            //StartMainMusic();
+            // Initialising Audio (visual pushing to the far right)
+            AudioManager _newAudioManager = new AudioManager();
+            _newAudioManager.playMainMusic();
+            Canvas.SetLeft(_newAudioManager, tileSize * 15);            
+            GameCanvas.Children.Add(_newAudioManager);
 
             
 
 
         }
 
-        public void StartMainMusic()
-        {       
-            //SoundManager _newSoundManager = new SoundManager();
-            //_newSoundManager.playMainMusic();
-        }
+        
     }
 }
