@@ -14,12 +14,15 @@ namespace WizardWarz
     public class Bomb
     {
         public Grid curGameGrid;
-        public float effectLifeTime;
+        public float effectLifeTime, timeToExplode;
         float myTime, myTickIncrement;
         bool fillDir_up, fillDir_down, fillDir_left, fillDir_right;
+        Int32 explosionStep;
         Int32[,] explosionMatrix;
-        Rectangle explosion;
+        bool canDrawExplosion, iHaveBlownUp, iCanDestroy;
+        Rectangle bombImage;
         List<Rectangle> explosionTiles;
+        AudioManager playBombSndFX = new AudioManager();
 
         public Bomb(Grid localGameGrid)
         {
@@ -32,9 +35,13 @@ namespace WizardWarz
             myTime += myTickIncrement;
 
             Debug.WriteLine("Bomb alive {0} seconds", myTime); //debug the timer
-            if(myTime >= effectLifeTime)
+            if(myTime >= (effectLifeTime + timeToExplode) && iCanDestroy == true)
             {
                 DestroyBomb();
+            }
+            else if(myTime >= timeToExplode)
+            {
+                DrawExplosion();
             }
 
         }
@@ -56,8 +63,10 @@ namespace WizardWarz
         {
             explosionTiles = new List<Rectangle>();
             myTime = 0.0f;
+            explosionStep = 0;
             myTickIncrement = 0.1f;
-            effectLifeTime = 7.0f;
+            effectLifeTime = 5.0f;
+            timeToExplode = 6.0f;
 
             //set all fill directions as true (ie: explosion can expand in direction)
             fillDir_up = true;
@@ -190,51 +199,80 @@ namespace WizardWarz
 
             }
 
-            //draw explosion on the gameBoard
-
-            for (int c = 0; c < explosionMatrix.GetLength(0); c++)
-            {
-                Int32 colPos = explosionMatrix[c, 0];
-                Int32 rowPos = explosionMatrix[c, 1];
-
-                if (colPos != 0 || rowPos != 0)
-                {
-                    explosion = new Rectangle();
-                    explosion.Height = 64;
-                    explosion.Width = 64;
-
-                    explosion.Fill = new SolidColorBrush(Colors.Red);
-                    explosion.IsHitTestVisible = false;
-                    explosionTiles.Add(explosion);
-
-                    Grid.SetColumn(explosion, colPos);
-                    Grid.SetRow(explosion, rowPos);
-                    curGameGrid.Children.Add(explosion);
-                    
-                }
-
-
-            }
+            //draw unexploded bomb image
+            DrawBomb();
+           
 
         }
-
-        //note: x = Columns y = Rows
-        //bool CheckCellTileState(Int32 xPos, Int32 yPos )     //*changed to ReturnCellTileState() 
-        //{
-        //    if (GameBoardManager._curTileState[xPos, yPos] == TileStates.Floor)
-        //    {
-        //        //can place bomb or "spread" explosion to cell
-        //        return true;
-        //    }
-
-        //    return false;
-        //}
 
         //check the current state (enum) of the tile at gameGrid position (xPos,yPos)
         //note: x = Columns y = Rows
         TileStates ReturnCellTileState(Int32 xPos, Int32 yPos)
         {
             return GameBoardManager.curTileState[xPos, yPos];
+        }
+
+        void DrawBomb()
+        {
+            Int32 colPos = explosionMatrix[0, 0];
+            Int32 rowPos = explosionMatrix[0, 1];
+
+
+            bombImage = new Rectangle();
+            bombImage.Height = 64;
+            bombImage.Width = 64;
+
+            bombImage.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Bomb.png", UriKind.Relative)));
+            bombImage.IsHitTestVisible = false;
+
+            Grid.SetColumn(bombImage, colPos);
+            Grid.SetRow(bombImage, rowPos);
+            curGameGrid.Children.Add(bombImage);
+            playBombSndFX.playBombTick();
+
+
+        }
+
+        void DrawExplosion()
+        {
+
+            if (explosionStep < explosionMatrix.GetLength(0))
+            {
+                Int32 colPos = explosionMatrix[explosionStep, 0];
+                Int32 rowPos = explosionMatrix[explosionStep, 1];
+
+                if (explosionStep == 0)
+                {
+                    curGameGrid.Children.Remove(bombImage);
+                    playBombSndFX.playBombExplode();
+                }
+
+                if (colPos != 0 || rowPos != 0)
+                {
+                    Rectangle explosion = new Rectangle();
+                    explosion.Height = 64;
+                    explosion.Width = 64;
+
+                    explosion.Fill = new SolidColorBrush(Colors.Red);
+                    explosion.Fill.Opacity = 0.7f;
+                    explosion.IsHitTestVisible = false;
+                    explosionTiles.Add(explosion);
+
+                    Grid.SetColumn(explosion, colPos);
+                    Grid.SetRow(explosion, rowPos);
+                    curGameGrid.Children.Add(explosion);
+
+                }
+
+                explosionStep++;
+
+            }
+            else
+            {
+                iCanDestroy = true;
+            }
+
+
         }
 
     }

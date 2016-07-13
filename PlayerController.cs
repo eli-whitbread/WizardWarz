@@ -318,10 +318,10 @@ namespace WizardWarz
 
                 
                 // Play Bomb Explode Sound (Should also play the tick sound here)
-                playMusic.playBombExplode();
+                //playMusic.playBombExplode(); - move to Bomb.cs
 
                 //add bomb reference to bomb collection
-                StaticCollections.AddBomb(fireBomb);
+                StaticCollections.AddBomb(fireBomb, (int)(localCol / tileSize), (int)(localRow / tileSize));
             }
 
         }

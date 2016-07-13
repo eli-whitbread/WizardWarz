@@ -58,11 +58,12 @@ namespace WizardWarz
             curTdelta += deltaTime;
             if (curTdelta % 5 == 0)
             {
-                //for all bombs currently active in the level fire "BombUpdateTick"
-                StaticCollections.SendBombUpdate();
                 
                 Debug.WriteLine("Elapsed = {0}", curTdelta);
             }
+
+            //for all bombs currently active in the level fire "BombUpdateTick"
+            StaticCollections.SendBombUpdate();
 
             //PROCESS FRAMES FOR ALL OBJECTS ON SCREEN
             p1Ref.ProcessFrame();
