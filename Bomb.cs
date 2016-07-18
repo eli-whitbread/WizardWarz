@@ -18,6 +18,8 @@ namespace WizardWarz
         float myTime, myTickIncrement;
         bool fillDir_up, fillDir_down, fillDir_left, fillDir_right;
         Int32 explosionStep;
+        Int32 count = 1, distCount = 0;
+        Int32 countUp = 1, countDown = 1, countLeft = 1, countRight = 1;
         Int32[,] explosionMatrix;
         bool canDrawExplosion, iHaveBlownUp, iCanDestroy;
         Rectangle bombImage;
@@ -79,8 +81,7 @@ namespace WizardWarz
             {
                 return;
             }
-
-
+            
             //create a new 2D array of grid cell positions
             explosionMatrix = new Int32[(explosionDist * 4) + 1, 2];
 
@@ -89,106 +90,29 @@ namespace WizardWarz
             explosionMatrix[0, 1] = startY;
             Debug.WriteLine("x = {0}, y = {1} ", explosionMatrix[0, 0], explosionMatrix[0, 1]);
 
-            //fill the explosion matrix with valid floor tile positions
-
-            Int32 count = 1, distCount = 0;
-            Int32 countUp = 1, countDown = 1, countLeft = 1, countRight = 1;
-
+            //fill the explosion matrix with valid tile positions
             while ((fillDir_up == true || fillDir_down == true || fillDir_left == true || fillDir_right == true) && distCount < explosionDist)
             {
-                if (fillDir_up == true)
+                
+                if(fillDir_up == true)
                 {
-                    //if (CheckCellTileState(startX, startY - countUp) == true)
-                    if (ReturnCellTileState(startX, startY - countUp) == TileStates.Floor)
-                    {
-                        explosionMatrix[count, 0] = startX;
-                        explosionMatrix[count, 1] = startY - countUp;
-                        countUp++;
-                        count++;
-                    }
-                    else if (ReturnCellTileState(startX, startY - countUp) == TileStates.DestructibleWall)
-                    {
-                        explosionMatrix[count, 0] = startX;
-                        explosionMatrix[count, 1] = startY - countUp;
-                        countUp++;
-                        count++;
-                        fillDir_up = false;
-                    }
-                    else
-                    {
-                        fillDir_up = false;
-                    }
+                    fillDir_up = AddTileToExplosionArea(startX, startY - countUp, countUp, out countUp);
                 }
-                if (fillDir_down == true)
+                if(fillDir_down == true)
                 {
-                    if (ReturnCellTileState(startX, startY + countDown) == TileStates.Floor)
-                    {
-                        explosionMatrix[count, 0] = startX;
-                        explosionMatrix[count, 1] = startY + countDown;
-                        countDown++;
-                        count++;
-                    }
-                    else if (ReturnCellTileState(startX, startY + countDown) == TileStates.DestructibleWall)
-                    {
-                        explosionMatrix[count, 0] = startX;
-                        explosionMatrix[count, 1] = startY + countDown;
-                        countDown++;
-                        count++;
-                        fillDir_down = false;
-                    }
-                    else
-                    {
-                        fillDir_down = false;
-                    }
+                    fillDir_down = AddTileToExplosionArea(startX, startY + countDown, countDown, out countDown);
                 }
-                if (fillDir_left == true)
+                if(fillDir_left == true)
                 {
-                    if (ReturnCellTileState(startX - countLeft, startY) == TileStates.Floor)
-                    {
-                        explosionMatrix[count, 0] = startX - countLeft;
-                        explosionMatrix[count, 1] = startY;
-                        countLeft++;
-                        count++;
-                    }
-                    else if (ReturnCellTileState(startX - countLeft, startY) == TileStates.DestructibleWall)
-                    {
-                        explosionMatrix[count, 0] = startX - countLeft;
-                        explosionMatrix[count, 1] = startY;
-                        countLeft++;
-                        count++;
-                        fillDir_left = false;
-                    }
-                    else
-                    {
-                        fillDir_left = false;
-                    }
-
-
+                    fillDir_left = AddTileToExplosionArea(startX - countLeft, startY, countLeft, out countLeft);
                 }
-                if (fillDir_right == true)
+                if(fillDir_right == true)
                 {
-                    if (ReturnCellTileState(startX + countRight, startY) == TileStates.Floor)
-                    {
-                        explosionMatrix[count, 0] = startX + countRight;
-                        explosionMatrix[count, 1] = startY;
-                        countRight++;
-                        count++;
-                    }
-                    else if (ReturnCellTileState(startX + countRight, startY) == TileStates.DestructibleWall)
-                    {
-                        explosionMatrix[count, 0] = startX + countRight;
-                        explosionMatrix[count, 1] = startY;
-                        countRight++;
-                        count++;
-                        fillDir_right = false;
-                    }
-                    else
-                    {
-                        fillDir_right = false;
-                    }
+                    fillDir_right = AddTileToExplosionArea(startX + countRight, startY, countRight, out countRight);
                 }
 
                 distCount++;
+
             }
 
 
@@ -210,6 +134,35 @@ namespace WizardWarz
         TileStates ReturnCellTileState(Int32 xPos, Int32 yPos)
         {
             return GameBoardManager.curTileState[xPos, yPos];
+        }
+
+        bool AddTileToExplosionArea(Int32 x, Int32 y, Int32 countDir, out Int32 countDirOut)
+        {
+            
+            if (ReturnCellTileState(x, y) == TileStates.Floor)
+            {
+                explosionMatrix[count, 0] = x;
+                explosionMatrix[count, 1] = y;
+                countDir++;
+                count++;
+                countDirOut = countDir;
+                return true;
+            }
+            else if (ReturnCellTileState(x, y) == TileStates.DestructibleWall)
+            {
+                explosionMatrix[count, 0] = x;
+                explosionMatrix[count, 1] = y;
+                countDir++;
+                count++;
+                countDirOut = countDir;
+                return false;
+            }
+            else
+            {
+                countDirOut = count;
+                return false;
+            }
+
         }
 
         void DrawBomb()
