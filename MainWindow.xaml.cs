@@ -40,13 +40,16 @@ namespace WizardWarz
             GameBoardManager _gameBoardManager = new GameBoardManager();
             _gameBoardManager.InitializeGameBoard(GameBoardGrid);
 
-            PlayerLivesAndScore _player_1_Lives = new PlayerLivesAndScore(mainCanvas, tileSize);
+
+            PlayerLivesAndScore _player_1_Lives = new PlayerLivesAndScore();
 
             TopPanel.Children.Add(_player_1_Lives);
 
             PlayerController _playerController1 = new PlayerController(GameBoardGrid);
             _playerController1.managerRef = _gameBoardManager;
             _playerController1.gameCanRef = mainCanvas;
+            _playerController1.gridCellsArray = _gameBoardManager.flrTiles;
+            _playerController1.myLivesAndScore = _player_1_Lives;
             _playerController1.InitialiseRefs();
 
             Debug.WriteLine(mainCanvas.Name);

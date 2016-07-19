@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 
 namespace WizardWarz
@@ -103,7 +104,7 @@ namespace WizardWarz
 
             };
 
-            //if both r and c are along the outer edge of the game borad grid then return true - outer wall generation
+            //if both r and c are along the outer edge of the game board grid then return true - outer wall generation
             if (r == 0 || r == rowsLength - 1 || c == 0 || c == colsLength - 1)
             {
                 return true;
@@ -139,6 +140,10 @@ namespace WizardWarz
             return false;
         }
 
-
+        public void ChangeTileImage(int tileX, int tileY)
+        {
+            flrTiles[tileX, tileY].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Floor.png", UriKind.Relative)));
+            Debug.WriteLine("Tile fill changed to floor!");
+        }
     }
 }

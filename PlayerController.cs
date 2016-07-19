@@ -39,7 +39,9 @@ namespace WizardWarz
         Point curMousePos = new Point(0, 0);
 
         public List<FrameworkElement> pathCells = new List<FrameworkElement>();
+        public Rectangle[,] gridCellsArray = null;
         public Canvas gameCanRef = null;
+        public PlayerLivesAndScore myLivesAndScore = null;
 
         public PlayerController(Grid gameGrid)
         {
@@ -309,11 +311,12 @@ namespace WizardWarz
                 double localRow = localBombRelative.Y;
 
                 Bomb fireBomb = new Bomb(localGameGrid);
+                fireBomb.managerRef = managerRef;
+                fireBomb.myOwner = this;
 
                 localGameGrid.Children.Remove(playerTile);
 
                 fireBomb.InitialiseBomb((int)(localCol / tileSize), (int)(localRow / tileSize), bombRadius);
-                
                 localGameGrid.Children.Add(playerTile);
 
                 

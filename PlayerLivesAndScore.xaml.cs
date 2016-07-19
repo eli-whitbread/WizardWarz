@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace WizardWarz
 {
@@ -32,12 +33,14 @@ namespace WizardWarz
         public int tileSizeLocal;
         AudioManager playMusic = new AudioManager();
 
-        public PlayerLivesAndScore(Canvas mainCanvas, Int32 tileSize)
+        // public PlayerLivesAndScore(Canvas mainCanvas, Int32 tileSize)
+
+        public PlayerLivesAndScore()
         {
             InitializeComponent();
 
-            mainCanvasLocalRef = mainCanvas;
-            tileSizeLocal = tileSize;
+            //mainCanvasLocalRef = mainCanvas;
+            tileSizeLocal = 64;
 
             //--------------- Player Lives (HAS TO BE CHANGED HERE)--------------------------
             playerLivesNumber = playerLivesNumber + 3;
@@ -52,7 +55,7 @@ namespace WizardWarz
 
 
             // -------------- Adding Click Event (Remove for player damage/ score events)------------
-            mainCanvasLocalRef.MouseDown += new MouseButtonEventHandler(controller_MouseLeftButtonDown);
+           // mainCanvasLocalRef.MouseDown += new MouseButtonEventHandler(controller_MouseLeftButtonDown);
         }
 
         public void controller_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -64,9 +67,7 @@ namespace WizardWarz
                 if (playerLivesNumber > 0)
                 {
                     // ---------------------- Subtract a life, recalculate heart images drawn within User Control --------------------
-                    playerLivesNumber -= 1;
-                    
-                    CalculateLives();
+                    ReduceLives(1);
                 }
                 else
                 {
@@ -131,6 +132,14 @@ namespace WizardWarz
 
             }
 
+        }
+
+        public void ReduceLives(int count)
+        {
+            playerLivesNumber -= count;
+
+            CalculateLives();
+            Debug.WriteLine("Player lives reduced!");
         }
 
         public void CalculateLives()

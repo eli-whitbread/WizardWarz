@@ -7,7 +7,9 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Input;
 using System.Diagnostics;
+using System.Windows;
 
 namespace WizardWarz
 {
@@ -24,7 +26,11 @@ namespace WizardWarz
         bool canDrawExplosion, iHaveBlownUp, iCanDestroy;
         Rectangle bombImage;
         List<Rectangle> explosionTiles;
+        List<FrameworkElement> bombedCells = new List<FrameworkElement>();
         AudioManager playBombSndFX = new AudioManager();
+
+        public GameBoardManager managerRef = null;
+        public PlayerController myOwner = null;
 
         public Bomb(Grid localGameGrid)
         {
@@ -43,6 +49,7 @@ namespace WizardWarz
             }
             else if(myTime >= timeToExplode)
             {
+                ProcessExplosion();
                 DrawExplosion();
             }
 
@@ -88,6 +95,8 @@ namespace WizardWarz
             //set the initial bomb position (player's position)
             explosionMatrix[0, 0] = startX;
             explosionMatrix[0, 1] = startY;
+
+            bombedCells.Add(myOwner.gridCellsArray[startX,startY]);
             Debug.WriteLine("x = {0}, y = {1} ", explosionMatrix[0, 0], explosionMatrix[0, 1]);
 
             //fill the explosion matrix with valid tile positions
@@ -146,6 +155,8 @@ namespace WizardWarz
                 countDir++;
                 count++;
                 countDirOut = countDir;
+
+                bombedCells.Add(myOwner.gridCellsArray[x,y]);
                 return true;
             }
             else if (ReturnCellTileState(x, y) == TileStates.DestructibleWall)
@@ -155,6 +166,8 @@ namespace WizardWarz
                 countDir++;
                 count++;
                 countDirOut = countDir;
+
+                bombedCells.Add(myOwner.gridCellsArray[x, y]);
                 return false;
             }
             else
@@ -184,6 +197,42 @@ namespace WizardWarz
             playBombSndFX.playBombTick();
 
 
+        }
+
+        void ProcessExplosion()
+        {
+            if (explosionStep < explosionMatrix.GetLength(0))
+            {
+                Int32 colPos = explosionMatrix[explosionStep, 0];
+                Int32 rowPos = explosionMatrix[explosionStep, 1];
+
+                if (explosionStep == 0)
+                {
+                    checkEffectedPlayers();
+                    foreach (Rectangle curCellInterrogated in bombedCells)
+                    {
+                        int curCellC = (int)curCellInterrogated.GetValue(Grid.ColumnProperty);
+                        int curCellR = (int)curCellInterrogated.GetValue(Grid.RowProperty);
+                        TileStates curCellTS = new TileStates();
+                        curCellTS = GameBoardManager.curTileState[curCellC, curCellR];
+
+                        if (curCellTS == TileStates.Floor)
+                        {
+
+                        }
+                        else if (curCellTS == TileStates.DestructibleWall)
+                        {
+                            GameBoardManager.curTileState[curCellC, curCellR] = TileStates.Floor;
+                            managerRef.ChangeTileImage(curCellC, curCellR);
+                        }
+                    }
+                }
+
+                if (colPos != 0 || rowPos != 0)
+                {
+                    checkEffectedPlayers();
+                }
+            }
         }
 
         void DrawExplosion()
@@ -216,9 +265,7 @@ namespace WizardWarz
                     curGameGrid.Children.Add(explosion);
 
                 }
-
                 explosionStep++;
-
             }
             else
             {
@@ -226,6 +273,19 @@ namespace WizardWarz
             }
 
 
+        }
+
+        private Tuple<int> checkEffectedPlayers()
+        {
+            int colPos = explosionMatrix[explosionStep, 0];
+            int rowPos = explosionMatrix[explosionStep, 1];
+
+            if (colPos == myOwner.playerX && rowPos == myOwner.playerY)
+            {
+                myOwner.myLivesAndScore.ReduceLives(1);
+            }
+
+            return new Tuple<int>(0);
         }
 
     }
