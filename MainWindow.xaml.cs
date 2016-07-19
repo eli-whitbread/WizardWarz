@@ -63,8 +63,6 @@ namespace WizardWarz
 
             _playerController1.timerRef = gT;
 
-            Bomb _masterBombClass = new Bomb(GameBoardGrid);
-
             // Initialising Audio (visual pushing to the far right)
             AudioManager _newAudioManager = new AudioManager();
             _newAudioManager.playMainMusic();

@@ -23,7 +23,7 @@ namespace WizardWarz
         Int32 count = 1, distCount = 0;
         Int32 countUp = 1, countDown = 1, countLeft = 1, countRight = 1;
         Int32[,] explosionMatrix;
-        bool canDrawExplosion, iHaveBlownUp, iCanDestroy;
+        bool iCanDestroy;
         Rectangle bombImage;
         List<Rectangle> explosionTiles;
         List<FrameworkElement> bombedCells = new List<FrameworkElement>();
@@ -212,14 +212,19 @@ namespace WizardWarz
                     {
                         int curCellC = (int)curCellInterrogated.GetValue(Grid.ColumnProperty);
                         int curCellR = (int)curCellInterrogated.GetValue(Grid.RowProperty);
-                        TileStates curCellTS = new TileStates();
-                        curCellTS = GameBoardManager.curTileState[curCellC, curCellR];
+                        //TileStates curCellTS = new TileStates();
+                        //curCellTS = GameBoardManager.curTileState[curCellC, curCellR];
 
-                        if (curCellTS == TileStates.Floor)
-                        {
+                        //if (curCellTS == TileStates.Floor)
+                        //{
 
-                        }
-                        else if (curCellTS == TileStates.DestructibleWall)
+                        //}
+                        //else if (curCellTS == TileStates.DestructibleWall)
+                        //{
+                        //    GameBoardManager.curTileState[curCellC, curCellR] = TileStates.Floor;
+                        //    managerRef.ChangeTileImage(curCellC, curCellR);
+                        //}
+                        if(ReturnCellTileState(curCellC, curCellR) == TileStates.DestructibleWall )
                         {
                             GameBoardManager.curTileState[curCellC, curCellR] = TileStates.Floor;
                             managerRef.ChangeTileImage(curCellC, curCellR);

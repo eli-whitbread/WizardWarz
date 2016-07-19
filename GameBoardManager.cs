@@ -125,7 +125,13 @@ namespace WizardWarz
         public bool DestructableWallPlacementCheck(Int32 c, Int32 r)
         {
             //setup an array of grid positions (int[,]) for destructable walls = {column,Row} - count starts from "outer wall". ie. 5 = 5 + wall.
-            Int32[,] destructibleWallPos = { { 5, 3 }, { 7, 9 } };
+            Int32[,] destructibleWallPos = { { 1, 4 }, { 1, 5 }, { 1, 9 },
+                { 4, 3 }, { 4, 5 }, { 4, 9 },
+                { 5, 1 }, { 5, 3 },
+                { 7, 4 }, { 7, 9 },
+                { 8, 3 }, { 8, 7 },
+                { 9, 4 },{ 9, 6 },{ 9, 8 },
+                { 11,1  }, { 11, 3 }, { 11, 4 } };
 
             //itterate through the destructableWallPos 2D array and return true if both values match the passed in Row x Coll pos (r,c) - inner destructible-wall generation
             //we devide destructibleWallPos.Length by 2 because each "subarray" {x,y} is 2 elements long
