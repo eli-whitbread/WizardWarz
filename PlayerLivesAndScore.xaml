@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WizardWarz"
              mc:Ignorable="d" 
-             d:DesignHeight="64" d:DesignWidth="320">
+             d:DesignHeight="64" d:DesignWidth="384">
     <Grid Name="display">
         <StackPanel Orientation="Horizontal">
             <Grid Name="livesGrid" VerticalAlignment="Center" HorizontalAlignment="Left">
@@ -22,7 +22,8 @@
 
             <Grid Name="scoreGrid" VerticalAlignment="Center" HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition  Width="64" Name="col5" />
+                    <ColumnDefinition  Width="32" Name="col5" />
+                    <ColumnDefinition Width="96" Name="col6"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />

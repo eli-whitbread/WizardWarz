@@ -222,6 +222,7 @@ namespace WizardWarz
                         else if (curCellTS == TileStates.DestructibleWall)
                         {
                             GameBoardManager.curTileState[curCellC, curCellR] = TileStates.Floor;
+                            myOwner.myLivesAndScore.ChangeScore(50, true);
                             managerRef.ChangeTileImage(curCellC, curCellR);
                         }
                     }
@@ -282,6 +283,7 @@ namespace WizardWarz
             if (colPos == myOwner.playerX && rowPos == myOwner.playerY)
             {
                 myOwner.myLivesAndScore.ReduceLives(1);
+                myOwner.myLivesAndScore.ChangeScore(50, false);
             }
 
             return new Tuple<int>(0);

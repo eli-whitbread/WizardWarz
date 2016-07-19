@@ -54,40 +54,10 @@ namespace WizardWarz
             initialiseScore();
 
 
-            // -------------- Adding Click Event (Remove for player damage/ score events)------------
-           // mainCanvasLocalRef.MouseDown += new MouseButtonEventHandler(controller_MouseLeftButtonDown);
+          
         }
 
-        public void controller_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var mousewasdownOn = e.Source as FrameworkElement;
-
-            if (mousewasdownOn != null && e.RightButton == MouseButtonState.Pressed)
-            {
-                if (playerLivesNumber > 0)
-                {
-                    // ---------------------- Subtract a life, recalculate heart images drawn within User Control --------------------
-                    ReduceLives(1);
-                }
-                else
-                {
-                    // -------------------- Player out of lives, they get this message - Will ultimately also no respawn. ---------------------------
-                    
-                    playMusic.playPlayerDeath();
-                    MessageBox.Show(string.Format("Sorry, Player {0}, you have died!", 1));
-                }
-
-
-            }
-
-            if (mousewasdownOn != null && e.MiddleButton == MouseButtonState.Pressed)
-            {
-                // ----------------------- Add points to score, recalculate current disaplayed score ------------------------------------------
-                currentScore += 10;
-                CalculateScore();
-            }
-
-        }
+        
 
         public void initialiseHomeBases()
         {
@@ -178,14 +148,14 @@ namespace WizardWarz
             playerScore.Content = currentScore.ToString();
             playerScore.FontSize = 32;
             playerScore.Foreground = new SolidColorBrush(Colors.Black);
-            playerScore.Width = 64;
+            playerScore.Width = 128;
             playerScore.Height = 64;
 
 
             // --------------- Set position, within the local grid (scoreGrid) of this element ------------------------------
 
             Grid.SetRow(playerScore, 0);
-            Grid.SetColumn(playerScore, 0);
+            Grid.SetColumn(playerScore, 1);
 
             
 
@@ -195,6 +165,17 @@ namespace WizardWarz
             //--------------------------------------------------------------------------------------------------------------
             //--------------------------------------------------------------------------------------------------------------
 
+        }
+
+        public void ChangeScore(int scoreUpOrDown, bool Up)
+        {
+            string info;
+            if (Up)
+            { currentScore += scoreUpOrDown; info = " + " + scoreUpOrDown.ToString(); Debug.WriteLine("Player score changed by:" + info); }
+            else if (!Up)
+            { currentScore -= scoreUpOrDown; info = " - " + scoreUpOrDown.ToString(); Debug.WriteLine("Player score changed by:" + info); }            
+
+            CalculateScore();            
         }
 
         public void CalculateScore()

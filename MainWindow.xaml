@@ -12,7 +12,7 @@
         <DockPanel LastChildFill="True">
 
             <!--docked panels grids (score and lives grids)-->
-            <Grid Name="TopPanel" DockPanel.Dock="Top" HorizontalAlignment="Left" Height="64" Background="LightSteelBlue" />
+            <Grid Name="TopPanel" DockPanel.Dock="Top" HorizontalAlignment="Left" Height="64" Background="LightGray" />
             <Grid Name="LeftPanel" DockPanel.Dock="Left" VerticalAlignment="Stretch" Width="64" Background="LightSteelBlue" />
             <Grid Name="RightPanel" DockPanel.Dock="Right" VerticalAlignment="Stretch" Width="64" Background="LightSteelBlue" />
             <Grid Name="BottomPanel" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Height="64" Background="LightSteelBlue" />
