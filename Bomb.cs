@@ -208,7 +208,6 @@ namespace WizardWarz
 
                 if (explosionStep == 0)
                 {
-                    checkEffectedPlayers();
                     foreach (Rectangle curCellInterrogated in bombedCells)
                     {
                         int curCellC = (int)curCellInterrogated.GetValue(Grid.ColumnProperty);
