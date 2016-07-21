@@ -64,7 +64,7 @@ namespace WizardWarz
             //--------------------------------------------| Initialise Player Home Base |-------------------------------------------           
             playerHomeTile = new Rectangle();
 
-            playerHomeTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\castleWizardBlue.png", UriKind.Relative)));
+            playerHomeTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\castleWizardBlue1.png", UriKind.Relative)));
 
             playerHomeTile.Height = tileSizeLocal;
             playerHomeTile.Width = tileSizeLocal;

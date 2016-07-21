@@ -59,7 +59,7 @@ namespace WizardWarz
 
             playerTile = new Rectangle();            
             
-            playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\WIZARD1.png", UriKind.Relative)));
+            playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerRight1.png", UriKind.Relative)));
 
             playerTile.Height = tileSize;
             playerTile.Width = tileSize;
@@ -258,6 +258,25 @@ namespace WizardWarz
 
         public void PlayerMoveToCell()
         {
+            if (relativePosition.X > pathCells[0].TransformToAncestor(localGameGrid).Transform(new Point(0, 0)).X)
+            {
+                playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerLeft1.png", UriKind.Relative)));
+            }
+            else if(relativePosition.X < pathCells[0].TransformToAncestor(localGameGrid).Transform(new Point(0, 0)).X)
+            {
+                playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerRight1.png", UriKind.Relative)));
+
+            }
+            if (relativePosition.Y > pathCells[0].TransformToAncestor(localGameGrid).Transform(new Point(0, 0)).Y)
+            {
+                playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerBack1.png", UriKind.Relative)));
+            }
+            else if (relativePosition.Y < pathCells[0].TransformToAncestor(localGameGrid).Transform(new Point(0, 0)).Y)
+            {
+                playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerFront1.png", UriKind.Relative)));
+
+            }
+
             relativePosition = pathCells[0].TransformToAncestor(localGameGrid).Transform(new Point(0, 0));
 
             TranslateTransform translateTransform1 = new TranslateTransform(relativePosition.X, relativePosition.Y);
