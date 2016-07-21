@@ -58,13 +58,14 @@ namespace WizardWarz
         {
 
             playerTile = new Rectangle();            
-
+            
             playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\WIZARD1.png", UriKind.Relative)));
 
             playerTile.Height = tileSize;
             playerTile.Width = tileSize;
             Grid.SetColumn(playerTile, playerX);
             Grid.SetRow(playerTile, playerY);
+            Grid.SetZIndex(playerTile,10); //set the layering position of the playerTile - can use Grid.SetZIndex or Canvas.SetZIndex(object,int layer)
             localGameGrid.Children.Add(playerTile);
 
             relativePosition = new Point (tileSize, tileSize);
@@ -310,21 +311,24 @@ namespace WizardWarz
                 double localCol = localBombRelative.X;
                 double localRow = localBombRelative.Y;
 
-                Bomb fireBomb = new Bomb(localGameGrid);
-                fireBomb.managerRef = managerRef;
-                fireBomb.myOwner = this;
+                if (StaticCollections.CheckBombPosition((int)(localCol / tileSize), (int)(localRow / tileSize)) == true)
+                {
+                    Bomb fireBomb = new Bomb(localGameGrid);
+                    fireBomb.managerRef = managerRef;
+                    fireBomb.myOwner = this;
 
-                localGameGrid.Children.Remove(playerTile);
+                    localGameGrid.Children.Remove(playerTile);
 
-                fireBomb.InitialiseBomb((int)(localCol / tileSize), (int)(localRow / tileSize), bombRadius);
-                localGameGrid.Children.Add(playerTile);
+                    fireBomb.InitialiseBomb((int)(localCol / tileSize), (int)(localRow / tileSize), bombRadius);
+                    localGameGrid.Children.Add(playerTile);
 
-                
-                // Play Bomb Explode Sound (Should also play the tick sound here)
-                //playMusic.playBombExplode(); - move to Bomb.cs
 
-                //add bomb reference to bomb collection
-                StaticCollections.AddBomb(fireBomb, (int)(localCol / tileSize), (int)(localRow / tileSize));
+                    // Play Bomb Explode Sound (Should also play the tick sound here)
+                    //playMusic.playBombExplode(); - move to Bomb.cs
+
+                    //add bomb reference to bomb collection
+                    StaticCollections.AddBomb(fireBomb, (int)(localCol / tileSize), (int)(localRow / tileSize));
+                }
             }
 
         }
