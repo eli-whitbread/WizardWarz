@@ -21,7 +21,7 @@ using WizardWarz;
 
 namespace WizardWarz
 {
-    public class GameTimer
+    public class GameTimer /*GAME MANAGER*/
     {
         float deltaTime = 0;
         public float exposedDT = 0;
@@ -32,7 +32,6 @@ namespace WizardWarz
         public Canvas GameCanRef = null;
 
         public PlayerController p1Ref = null;
-
         
         public GameTimer()
         {
@@ -54,11 +53,9 @@ namespace WizardWarz
 
         public void timer_Tick(object sender, EventArgs e)
         {
-
             curTdelta += deltaTime;
             if (curTdelta % 5 == 0)
-            {
-                
+            {                
                 Debug.WriteLine("Elapsed = {0}", curTdelta);
             }
 
@@ -71,6 +68,8 @@ namespace WizardWarz
             //RENDER FRAMES FOR ALL OBJECTS ON SCREEN
             p1Ref.RenderFrame();
         }
+
+
 
         private double FramesPerSecond()
         {

@@ -104,10 +104,11 @@ namespace WizardWarz
 
         }
 
+        // REDUCE LIVES FUNCTION
         public void ReduceLives(int count)
         {
             playerLivesNumber -= count;
-
+            
             CalculateLives();
             Debug.WriteLine("Player lives reduced!");
         }
@@ -132,7 +133,9 @@ namespace WizardWarz
             }
 
             playMusic.playPickupBomb();
-            initialiseLives();
+            if(playerLivesNumber <= 0) { MessageBox.Show(string.Format("Sorry Player {0}, you are out of lives, and cannot respawn..", /*playerID*/ 1)); }
+            else if(playerLivesNumber > 0) { initialiseLives(); }
+            
         }
 
         public void initialiseScore()
@@ -173,7 +176,9 @@ namespace WizardWarz
             if (Up)
             { currentScore += scoreUpOrDown; info = " + " + scoreUpOrDown.ToString(); Debug.WriteLine("Player score changed by:" + info); }
             else if (!Up)
-            { currentScore -= scoreUpOrDown; info = " - " + scoreUpOrDown.ToString(); Debug.WriteLine("Player score changed by:" + info); }            
+            {
+                currentScore -= scoreUpOrDown; info = " - " + scoreUpOrDown.ToString(); Debug.WriteLine("Player score changed by:" + info);
+            }            
 
             CalculateScore();            
         }

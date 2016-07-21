@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WizardWarz"
         xmlns:Custom="http://schemas.microsoft.com/surface/2008" x:Class="WizardWarz.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1080">
+        Title="Wizard Warz" Height="1080" Width="1080">
     
     <Canvas Name="GameCanvas">
         <DockPanel LastChildFill="True">
@@ -20,5 +20,11 @@
             <!--game board-->
             <Grid Name="GameBoardGrid" HorizontalAlignment="Center" VerticalAlignment="Center"></Grid>
         </DockPanel>
+        <Grid Name="audioTile">
+            <Label x:Name="label" Content="Volume" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontFamily="Stencil"/>
+            <Image x:Name="volImage" HorizontalAlignment="Center" Height="64" Margin="0,0,0,0" VerticalAlignment="Center" Width="64"
+               Source="Resources/audioOn.png" Stretch="Fill" TouchDown="image_TouchDown" MouseLeftButtonDown="image_MouseLeftButtonDown">
+            </Image>
+        </Grid>
     </Canvas>
 </Custom:SurfaceWindow>

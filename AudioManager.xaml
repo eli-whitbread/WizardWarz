@@ -5,24 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WizardWarz"
              mc:Ignorable="d" 
-             d:DesignHeight="900" d:DesignWidth="64">
-    <Grid Margin="0,0,0,0">
-        <Slider x:Name="slider" HorizontalAlignment="Left" Margin="-348,502,-342,0" VerticalAlignment="Top" Height="18" Width="754" RenderTransformOrigin="0.5,0.5" Value="0.5" Maximum="1" LargeChange="0" ValueChanged="slider_ValueChanged">
-            <Slider.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="90"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Slider.RenderTransform>
-        </Slider>
+             d:DesignHeight="64" d:DesignWidth="64">
+    <!--<Grid Margin="0,0,0,0">        
         <Label x:Name="label" Content="Volume" HorizontalAlignment="Left" Margin="0,54,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontFamily="Stencil"/>
-        <Image x:Name="volImage" HorizontalAlignment="Center" Height="39" Margin="10,10,10,851" VerticalAlignment="Center" Width="44"
-               Source="Resources/audio.png" Stretch="Fill" TouchDown="image_TouchDown" MouseLeftButtonDown="image_MouseLeftButtonDown">
+        <Image x:Name="volImage" HorizontalAlignment="Center" Height="42" Margin="0,0,0,0" VerticalAlignment="Center" Width="42"
+               Source="Resources/audioOn.png" Stretch="Fill" TouchDown="image_TouchDown" MouseLeftButtonDown="image_MouseLeftButtonDown">
 
 
         </Image>
 
-    </Grid>
+    </Grid>-->
 </UserControl>

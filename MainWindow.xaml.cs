@@ -26,11 +26,16 @@ namespace WizardWarz
     public partial class MainWindow : SurfaceWindow
     {
         public Int32 tileSize = 64;
-        
+        AudioManager newAudioManager; 
 
         public Canvas mainCanvas
         {
             get { return GameCanvas; }
+        }
+
+        public static bool GlobalAudio1
+        {
+            get; set;
         }
 
         public MainWindow()
@@ -40,9 +45,9 @@ namespace WizardWarz
             GameBoardManager _gameBoardManager = new GameBoardManager();
             _gameBoardManager.InitializeGameBoard(GameBoardGrid);
 
+            newAudioManager = new AudioManager();
 
             PlayerLivesAndScore _player_1_Lives = new PlayerLivesAndScore();
-
             TopPanel.Children.Add(_player_1_Lives);
 
             PlayerController _playerController1 = new PlayerController(GameBoardGrid);
@@ -66,16 +71,43 @@ namespace WizardWarz
             Bomb _masterBombClass = new Bomb(GameBoardGrid);
 
             // Initialising Audio (visual pushing to the far right)
-            AudioManager _newAudioManager = new AudioManager();
-            _newAudioManager.playMainMusic();
-            Canvas.SetLeft(_newAudioManager, tileSize * 15);            
-            GameCanvas.Children.Add(_newAudioManager);
+            GlobalAudio1 = true;
+            newAudioManager.audioOn = GlobalAudio1;
+            newAudioManager.playMainMusic();
+            Canvas.SetLeft(audioTile, tileSize * 15);            
+            GameCanvas.Children.Add(newAudioManager);   
+    }
+                
 
-            
-
-
+        private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            volume_off_On();
         }
 
-        
+        private void volume_off_On()
+        {
+            if (!GlobalAudio1)
+            {
+                GlobalAudio1 = true;
+                volImage.Source = new BitmapImage(new Uri("Resources/audioOn.png", UriKind.Relative));
+                newAudioManager = new AudioManager();
+                newAudioManager.playMainMusic();
+            }
+            else
+            {
+                GlobalAudio1 = false;
+                volImage.Source = new BitmapImage(new Uri("Resources/audio.png", UriKind.Relative));
+                newAudioManager.StopTrack();
+                newAudioManager = null;
+            }
+
+            // UPDATE AUDIO MANAGER AS TO WHETHER AUDIO SHOULD BE ON
+            //newAudioManager.audioOn = GlobalAudio1;
+        }
+
+        private void image_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
+        {
+            volume_off_On();
+        }
     }
 }

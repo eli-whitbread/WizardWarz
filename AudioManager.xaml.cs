@@ -21,76 +21,44 @@ namespace WizardWarz
     public partial class AudioManager : UserControl
     {
         MediaPlayer jukeBox = new MediaPlayer();
-
         public string trackLocation;
-        public double volume;
+        public double newVolume;
         bool isLooping = false;
+        public bool audioOn = true;
 
         // All sound plays have a 'Stop Track', this is to prevent stacking sounds. 
 
 
         public AudioManager()
         {
-            InitializeComponent();
-            volume = slider.Value;
+            InitializeComponent();            
+            audioOn = MainWindow.GlobalAudio1;
         }
+
+        
 
         public void playMainMusic()
         {
             isLooping = true;
             trackLocation = "8_bit_wizard.mp3";
-            volume = 0.15;
+            newVolume = 0.15;
             PlayTrack();
         }
 
-        public void playBombExplode()
+        
+
+        public void CalculateAudioVolume()
         {
-            StopTrack();
-            trackLocation = "bomb_explode.wav";
-            volume = 0.8;
-            PlayTrack();
+            if (!audioOn)
+            {
+                jukeBox.Volume = 0;
+            }
+            else if(audioOn)
+            {
+                jukeBox.Volume = newVolume;
+                
+            }
         }
-
-        public void playBombTick()
-        {
-            StopTrack();
-            trackLocation = "timer_fuse.wav";
-            volume = 1.2;
-            PlayTrack();
-        }
-
-        public void playPickupLife()
-        {
-            StopTrack();
-            trackLocation = "pickup.wav";
-            volume = 0.8;
-            PlayTrack();
-        }
-
-        public void playPickupBomb()
-        {
-            StopTrack();
-            trackLocation = "pickup.wav";
-            volume = 0.8;
-            PlayTrack();
-        }
-
-        public void playEnemyAttack()
-        {
-            StopTrack();
-            trackLocation = "break_wall.wav";
-            volume = 2;
-            PlayTrack();
-        }
-
-        public void playPlayerDeath()
-        {
-            StopTrack();
-            trackLocation = "defeat.wav";
-            volume = 1;
-            PlayTrack();
-        }
-
 
         public void StopTrack()
         {
@@ -106,7 +74,7 @@ namespace WizardWarz
 
                 Uri uriStreaming = new Uri(@"./Resources/" + trackLocation, UriKind.Relative);
 
-                slider_ChangedCustom();
+                CalculateAudioVolume();
                 jukeBox.Open(uriStreaming);
                 jukeBox.MediaEnded += new EventHandler(mediaElement_MediaEnded);
                 jukeBox.Play();
@@ -115,18 +83,13 @@ namespace WizardWarz
             else
             {
                 Uri uriStreaming = new Uri(@"./Resources/" + trackLocation, UriKind.Relative);
-
-                slider_ChangedCustom();
-                
+                CalculateAudioVolume();
                 jukeBox.Open(uriStreaming);
                 jukeBox.Play();
             }
-
-
-
-
         }
 
+        // This event fires when the main audio track stops - thus looping the music
         void mediaElement_MediaEnded(object sender, EventArgs e)
         {
             // Loops a particular track
@@ -134,70 +97,52 @@ namespace WizardWarz
             playMainMusic();
         }
 
-        private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        public void playBombExplode()
         {
-            if (slider.Value > 0)
-            {
-                try
-                {
-                    volImage.Source = new BitmapImage(new Uri("Resources/audio.png", UriKind.Relative));
-                }
-                catch 
-                {
-
-                    
-                }
-                
-            }
-            else
-            {
-                try
-                {
-                    volImage.Source = new BitmapImage(new Uri("Resources/audioOn.png", UriKind.Relative));
-                }
-                catch
-                {
-
-
-                }
-                
-
-            }
-            slider_ChangedCustom();
+            StopTrack();
+            trackLocation = "bomb_explode.wav";
+            newVolume = 0.8;
+            PlayTrack();
         }
 
-        private void slider_ChangedCustom()
-        {            
-            jukeBox.Volume = volume * slider.Value;
-        }
-
-        private void image_TouchDown(object sender, TouchEventArgs e)
+        public void playBombTick()
         {
-            volume_off_On();
+            StopTrack();
+            trackLocation = "timer_fuse.wav";
+            newVolume = 1.2;
+            PlayTrack();
         }
 
-        private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        public void playPickupLife()
         {
-            volume_off_On();
+            StopTrack();
+            trackLocation = "pickup.wav";
+            newVolume = 0.8;
+            PlayTrack();
         }
 
-        private void volume_off_On()
+        public void playPickupBomb()
         {
-            if (slider.Value == 0)
-            {
-                slider.Value = 0.5;
-                slider_ChangedCustom();
-                volImage.Source = new BitmapImage(new Uri("Resources/audio.png", UriKind.Relative));
-            }
-            else
-            {
-                slider.Value = 0;
-                slider_ChangedCustom();
-                volImage.Source = new BitmapImage(new Uri("Resources/audioOn.png", UriKind.Relative));
-            }
-            
-            
+            StopTrack();
+            trackLocation = "pickup.wav";
+            newVolume = 0.8;
+            PlayTrack();
         }
 
+        public void playEnemyAttack()
+        {
+            StopTrack();
+            trackLocation = "break_wall.wav";
+            newVolume = 2;
+            PlayTrack();
+        }
+
+        public void playPlayerDeath()
+        {
+            StopTrack();
+            trackLocation = "defeat.wav";
+            newVolume = 0.5;
+            PlayTrack();
+        }        
     }
 }
