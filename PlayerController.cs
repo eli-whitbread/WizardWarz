@@ -3,6 +3,7 @@ using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -38,7 +39,7 @@ namespace WizardWarz
 
         Point curMousePos = new Point(0, 0);
 
-        public List<FrameworkElement> pathCells = new List<FrameworkElement>();
+        public List<FrameworkElement> pathCells = new List<FrameworkElement>();      
         public Rectangle[,] gridCellsArray = null;
         public Canvas gameCanRef = null;
         public PlayerLivesAndScore myLivesAndScore = null;
@@ -124,6 +125,10 @@ namespace WizardWarz
                         if (cellStateCheck(mouseOver) && firstCellAxisCheck(mouseOver))
                         {
                             pathCells.Add(mouseOver);
+
+                            //HIGHLIGHT
+                            HighlightPathCalc(elementNameC, elementNameR);
+                            
                             p1PathCellCount++;
                             p1HasPath = true;
 
@@ -145,6 +150,8 @@ namespace WizardWarz
                             if (cellStateCheck(mouseOver) && genericCellAxisCheck(mouseOver))
                             {
                                 pathCells.Add(mouseOver);
+                                //HIGHLIGHT
+                                HighlightPathCalc(elementNameC, elementNameR);
                                 ++p1PathCellCount;
 
                                 Debug.WriteLine("Element added!");
@@ -169,6 +176,37 @@ namespace WizardWarz
                 }
             }
         }
+
+        
+
+
+        private void HighlightPathCalc(int elementC, int elementR)
+        {
+            Ellipse highlight = new Ellipse();
+            
+            //---------------------ADD HIGHLIGHT  
+            highlight.Height = 64 * 0.2;
+            highlight.Width = 64 * 0.2;
+
+            highlight.Fill = new SolidColorBrush(Colors.Blue);
+            highlight.Fill.Opacity = 0.4f;
+            highlight.IsHitTestVisible = false;
+
+
+            Grid.SetColumn(highlight, elementC);
+            Grid.SetRow(highlight, elementR);
+
+            localGameGrid.Children.Add(highlight);
+            
+            //----------------------------------            
+
+
+
+        }
+
+       
+
+        
 
         public void RenderFrame()
         {
@@ -273,6 +311,7 @@ namespace WizardWarz
             playerY = Convert.ToInt32(relativePosition.Y) / tileSize;
             Debug.WriteLine("New Player x = {0}, New Player y = {1}", playerX, playerY);
 
+            
             pathCells.RemoveAt(0);
         }
 
