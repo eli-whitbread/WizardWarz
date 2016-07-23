@@ -21,6 +21,7 @@ namespace WizardWarz
         public Point lastClickPOS;
         public Point relativePosition, localBombRelative;
         public Grid localGameGrid;
+        Grid highlightLocalGrid;
         public Int32 tileSize = 64, bombRadius = 3;
 
         public GameBoardManager managerRef = null;
@@ -39,7 +40,8 @@ namespace WizardWarz
 
         Point curMousePos = new Point(0, 0);
 
-        public List<FrameworkElement> pathCells = new List<FrameworkElement>();      
+        public List<FrameworkElement> pathCells = new List<FrameworkElement>();
+        List<Ellipse> pathHighlightTile = new List<Ellipse>();
         public Rectangle[,] gridCellsArray = null;
         public Canvas gameCanRef = null;
         public PlayerLivesAndScore myLivesAndScore = null;
@@ -47,6 +49,8 @@ namespace WizardWarz
         public PlayerController(Grid gameGrid)
         {
             localGameGrid = gameGrid;
+
+            highlightLocalGrid = gameGrid;
 
             InitialisePlayerController();
 
@@ -96,6 +100,7 @@ namespace WizardWarz
                 //gameCanRef.ReleaseMouseCapture();
                 isTouched = false;
                 isP1Influenced = false;
+                DeleteHighlight();
                 Debug.WriteLine("Finished capturing!");
             }
 
@@ -179,9 +184,9 @@ namespace WizardWarz
 
         
 
-
         private void HighlightPathCalc(int elementC, int elementR)
         {
+            
             Ellipse highlight = new Ellipse();
             
             //---------------------ADD HIGHLIGHT  
@@ -191,12 +196,12 @@ namespace WizardWarz
             highlight.Fill = new SolidColorBrush(Colors.Blue);
             highlight.Fill.Opacity = 0.4f;
             highlight.IsHitTestVisible = false;
-
+            pathHighlightTile.Add(highlight);
 
             Grid.SetColumn(highlight, elementC);
             Grid.SetRow(highlight, elementR);
 
-            localGameGrid.Children.Add(highlight);
+            highlightLocalGrid.Children.Add(highlight);
             
             //----------------------------------            
 
@@ -204,9 +209,20 @@ namespace WizardWarz
 
         }
 
-       
+        private void DeleteHighlight()
+        {
 
-        
+            foreach (Ellipse highlight in pathHighlightTile)
+            {
+
+                highlightLocalGrid.Children.Remove(highlight);
+            }
+
+
+
+        }
+
+
 
         public void RenderFrame()
         {
@@ -250,6 +266,7 @@ namespace WizardWarz
             else
             {
                 Debug.WriteLine("Cell state confirmed as not floor!");
+                DeleteHighlight();
                 return false;
             }
         }
