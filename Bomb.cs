@@ -32,28 +32,48 @@ namespace WizardWarz
         public GameBoardManager managerRef = null;
         public PlayerController myOwner = null;
 
+        GameTimer myGameTimerRef = null;
+
         public Bomb(Grid localGameGrid)
         {
             curGameGrid = localGameGrid;
+            myGameTimerRef = MainWindow.ReturnTimerInstance();
+            myGameTimerRef.tickEvent += MyGameTimerRef_tickEvent;
         }
 
-        //called by GameTimer
-        public void BombTickUpdate()
+        private void MyGameTimerRef_tickEvent(object sender, EventArgs e)
         {
             myTime += myTickIncrement;
 
             Debug.WriteLine("Bomb alive {0} seconds", myTime); //debug the timer
-            if(myTime >= (effectLifeTime + timeToExplode) && iCanDestroy == true)
+            if (myTime >= (effectLifeTime + timeToExplode) && iCanDestroy == true)
             {
                 DestroyBomb();
             }
-            else if(myTime >= timeToExplode)
+            else if (myTime >= timeToExplode)
             {
                 ProcessExplosion();
                 DrawExplosion();
             }
-
         }
+
+        //called by GameTimer !! replaced by MyGameTimerRef_tickEvent
+        //public void BombTickUpdate()
+        //{
+        //    myTime += myTickIncrement;
+
+        //    Debug.WriteLine("Bomb alive {0} seconds", myTime); //debug the timer
+        //    if(myTime >= (effectLifeTime + timeToExplode) && iCanDestroy == true)
+        //    {
+        //        DestroyBomb();
+        //    }
+        //    else if(myTime >= timeToExplode)
+        //    {
+        //        ProcessExplosion();
+        //        DrawExplosion();
+        //    }
+
+        //}
 
         //remove the bomb from the level
         private void DestroyBomb()
@@ -64,6 +84,7 @@ namespace WizardWarz
                 curGameGrid.Children.Remove(exp);
             }
 
+            myGameTimerRef.tickEvent -= MyGameTimerRef_tickEvent;
             StaticCollections.RemoveBomb(this);
             
         }

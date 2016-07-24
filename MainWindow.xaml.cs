@@ -26,7 +26,9 @@ namespace WizardWarz
     public partial class MainWindow : SurfaceWindow
     {
         public Int32 tileSize = 64;
-        AudioManager newAudioManager; 
+        AudioManager newAudioManager;
+
+        protected static GameTimer gameTimerInstance;
 
         public Canvas mainCanvas
         {
@@ -36,6 +38,11 @@ namespace WizardWarz
         public static bool GlobalAudio1
         {
             get; set;
+        }
+
+        public static GameTimer ReturnTimerInstance()
+        {
+            return gameTimerInstance;
         }
 
         public MainWindow()
@@ -61,12 +68,21 @@ namespace WizardWarz
 
             StaticCollections _staticColections = new StaticCollections();
 
-            GameTimer gT = new GameTimer();
-            gT.GameCanRef = mainCanvas;
-            gT.p1Ref = _playerController1;
-            gT.Initialise();
+            //GameTimer gT = new GameTimer();
+            //gT.GameCanRef = mainCanvas;
+            //gT.p1Ref = _playerController1;
+            //gT.Initialise();
 
-            _playerController1.timerRef = gT;
+            if (gameTimerInstance == null)
+            {
+                gameTimerInstance = new GameTimer();
+            }
+            gameTimerInstance.GameCanRef = mainCanvas;
+            gameTimerInstance.p1Ref = _playerController1;
+            gameTimerInstance.Initialise();
+
+            _playerController1.timerRef = gameTimerInstance;
+            //_playerController1.timerRef = gT;
 
             // Initialising Audio (visual pushing to the far right)
             GlobalAudio1 = true;

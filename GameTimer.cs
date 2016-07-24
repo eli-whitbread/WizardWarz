@@ -32,6 +32,8 @@ namespace WizardWarz
         public Canvas GameCanRef = null;
 
         public PlayerController p1Ref = null;
+
+        public event EventHandler tickEvent;
         
         public GameTimer()
         {
@@ -59,8 +61,14 @@ namespace WizardWarz
                 Debug.WriteLine("Elapsed = {0}", curTdelta);
             }
 
+            //send public tick event
+            if(tickEvent != null)
+            {
+                tickEvent.Invoke(this,e);
+            }
+
             //for all bombs currently active in the level fire "BombUpdateTick"
-            StaticCollections.SendBombUpdate();
+            //StaticCollections.SendBombUpdate();
 
             //PROCESS FRAMES FOR ALL OBJECTS ON SCREEN
             p1Ref.ProcessFrame();

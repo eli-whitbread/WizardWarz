@@ -22,18 +22,19 @@ namespace WizardWarz
             levelBombGridPositions = new Int32[levelBombInstances.Length,2];
         }
 
-        public static void SendBombUpdate()
-        {
-            for (int i = 0; i < levelBombInstances.Length; i++)
-            {
-                if (levelBombInstances[i] != null)
-                {
-                    levelBombInstances[i].BombTickUpdate();
+        //no longer needed - changed to event system
+        //public static void SendBombUpdate()
+        //{
+        //    for (int i = 0; i < levelBombInstances.Length; i++)
+        //    {
+        //        if (levelBombInstances[i] != null)
+        //        {
+        //            levelBombInstances[i].BombTickUpdate();
                     
-                }
+        //        }
                 
-            }
-        }
+        //    }
+        //}
 
         //add a bomb to the collection
         public static void AddBomb(Bomb bombToAdd, Int32 colPos, Int32 rowPos)
