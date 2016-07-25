@@ -133,8 +133,15 @@ namespace WizardWarz
             }
 
             playMusic.playPickupBomb();
-            if(playerLivesNumber <= 0) { MessageBox.Show(string.Format("Sorry Player {0}, you are out of lives, and cannot respawn..", /*playerID*/ 1)); }
-            else if(playerLivesNumber > 0) { initialiseLives(); }
+            if(playerLivesNumber <= 0)
+            {                
+                Debug.WriteLine(string.Format("Sorry Player {0}, you are out of lives, and cannot respawn..", /*playerID*/ 1));
+                
+            }
+            else if(playerLivesNumber > 0)
+            {
+                initialiseLives();
+            }
             
         }
 

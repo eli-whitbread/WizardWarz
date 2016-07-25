@@ -66,11 +66,21 @@
     <Compile Include="AudioManager.xaml.cs">
       <DependentUpon>AudioManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameWindow.xaml.cs">
+      <DependentUpon>GameWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PlayerLivesAndScore.xaml.cs">
       <DependentUpon>PlayerLivesAndScore.xaml</DependentUpon>
     </Compile>
     <Compile Include="StaticCollections.cs" />
+    <Compile Include="TitleScreen.xaml.cs">
+      <DependentUpon>TitleScreen.xaml</DependentUpon>
+    </Compile>
     <Page Include="AudioManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -90,6 +100,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PlayerLivesAndScore.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TitleScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -221,6 +235,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\PlayerFront1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\titleTest1.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\titleTest2.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

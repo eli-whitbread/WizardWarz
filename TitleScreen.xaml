@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="WizardWarz.TitleScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WizardWarz"
+             mc:Ignorable="d"  >
+    <Grid Background="#FF892A2A" Height="1080" Width="1080">
+        <Label x:Name="label" Content="Wizard Warz" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#00BF9393" Foreground="White" Width="368" Height="90" FontSize="64" Margin="0,0,0,0" Grid.Row="1"/>
+
+    </Grid>
+</UserControl>

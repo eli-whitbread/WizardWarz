@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="WizardWarz.GameWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WizardWarz"
+             mc:Ignorable="d" 
+             Height="1080" Width="1080">
+    <Canvas Name="GameCanvas">
+        <DockPanel LastChildFill="True">
+
+            <!--docked panels grids (score and lives grids)-->
+            <Grid Name="TopPanel" DockPanel.Dock="Top" HorizontalAlignment="Left" Height="64" Background="LightGray" />
+            <Grid Name="LeftPanel" DockPanel.Dock="Left" VerticalAlignment="Stretch" Width="64" Background="LightSteelBlue" />
+            <Grid Name="RightPanel" DockPanel.Dock="Right" VerticalAlignment="Stretch" Width="64" Background="LightSteelBlue" />
+            <Grid Name="BottomPanel" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Height="64" Background="LightSteelBlue" />
+
+            <!--game board-->
+            <Grid Name="GameBoardGrid" HorizontalAlignment="Center" VerticalAlignment="Center"></Grid>
+        </DockPanel>
+        
+    </Canvas>
+</UserControl>

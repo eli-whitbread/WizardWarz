@@ -37,7 +37,7 @@ namespace WizardWarz
         public Bomb(Grid localGameGrid)
         {
             curGameGrid = localGameGrid;
-            myGameTimerRef = MainWindow.ReturnTimerInstance();
+            myGameTimerRef = GameWindow.ReturnTimerInstance();
             myGameTimerRef.tickEvent += MyGameTimerRef_tickEvent;
         }
 
@@ -216,7 +216,6 @@ namespace WizardWarz
             Grid.SetRow(bombImage, rowPos);
             curGameGrid.Children.Add(bombImage);
             playBombSndFX.playBombTick();
-
 
         }
 

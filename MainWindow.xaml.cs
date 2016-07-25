@@ -12,10 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Microsoft.Surface;
-using Microsoft.Surface.Core;
-using Microsoft.Surface.Presentation.Controls;
-using Microsoft.Surface.Presentation.Input;
+//using Microsoft.Surface;
+//using Microsoft.Surface.Core;
+//using Microsoft.Surface.Presentation.Controls;
+//using Microsoft.Surface.Presentation.Input;
 using System.Diagnostics;
 
 namespace WizardWarz
@@ -23,83 +23,53 @@ namespace WizardWarz
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : SurfaceWindow
+    public partial class MainWindow : Window
     {
-        public Int32 tileSize = 64;
         AudioManager newAudioManager;
-
-        protected static GameTimer gameTimerInstance;
-
-        public Canvas mainCanvas
-        {
-            get { return GameCanvas; }
-        }
+        GameWindow newgame;
+        TitleScreen title;
 
         public static bool GlobalAudio1
         {
             get; set;
         }
 
-        public static GameTimer ReturnTimerInstance()
-        {
-            return gameTimerInstance;
-        }
-
         public MainWindow()
         {
-            InitializeComponent();   
-
-            GameBoardManager _gameBoardManager = new GameBoardManager();
-            _gameBoardManager.InitializeGameBoard(GameBoardGrid);
-
+            InitializeComponent();
+            // Initialise the Audio Manager
             newAudioManager = new AudioManager();
 
-            PlayerLivesAndScore _player_1_Lives = new PlayerLivesAndScore();
-            TopPanel.Children.Add(_player_1_Lives);
+            // Load the TitleScreen, and a click event for it to use (to remove it after)
+            title = new TitleScreen();
+            title.MouseDown += Title_MouseDown;
+            // Add Title screen to the Main Window
+            MainCanvas.Children.Add(title);            
 
-            PlayerController _playerController1 = new PlayerController(GameBoardGrid);
-            _playerController1.managerRef = _gameBoardManager;
-            _playerController1.gameCanRef = mainCanvas;
-            _playerController1.gridCellsArray = _gameBoardManager.flrTiles;
-            _playerController1.myLivesAndScore = _player_1_Lives;
-            _playerController1.InitialiseRefs();
-
-            Debug.WriteLine(mainCanvas.Name);
-
-            StaticCollections _staticColections = new StaticCollections();
-
-            //GameTimer gT = new GameTimer();
-            //gT.GameCanRef = mainCanvas;
-            //gT.p1Ref = _playerController1;
-            //gT.Initialise();
-
-            if (gameTimerInstance == null)
-            {
-                gameTimerInstance = new GameTimer();
-            }
-            gameTimerInstance.GameCanRef = mainCanvas;
-            gameTimerInstance.p1Ref = _playerController1;
-            gameTimerInstance.Initialise();
-
-            _playerController1.timerRef = gameTimerInstance;
-            //_playerController1.timerRef = gT;
-
-            // Initialising Audio (visual pushing to the far right)
+            // Initialising Audio (visual pushing to the far right), Play open track.
             GlobalAudio1 = true;
             newAudioManager.audioOn = GlobalAudio1;
-            newAudioManager.playMainMusic();
-            Canvas.SetLeft(audioTile, tileSize * 15);            
-            GameCanvas.Children.Add(newAudioManager);   
-    }
-                
+            newAudioManager.playTitleSound();
+            Canvas.SetLeft(audioTile, 960);
+            MainCanvas.Children.Add(newAudioManager);
+        }
 
-        private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Title_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            volume_off_On();
+            //On any mouse click, load the Game Window, remove the title from the Main Window (along with it's tied event)
+            newgame = new GameWindow();
+            title.MouseDown -= Title_MouseDown;
+            MainCanvas.Children.Remove(title);
+            // Add Game to the Main Window
+            newAudioManager.playMainMusic();
+            MainCanvas.Children.Add(newgame);
         }
 
         private void volume_off_On()
         {
+            // Event run when the audio button is pressed (either click or touch) - essentially turns audio on or off, and swaps the image to match. 
+            // (On turning the audio on) Load a new instance of Audio Manager, and play the main music track
+            // (On turning the audio off) unload the current instance of audio manager, and stock the music track
             if (!GlobalAudio1)
             {
                 GlobalAudio1 = true;
@@ -114,11 +84,13 @@ namespace WizardWarz
                 newAudioManager.StopTrack();
                 newAudioManager = null;
             }
-
             // UPDATE AUDIO MANAGER AS TO WHETHER AUDIO SHOULD BE ON
-            //newAudioManager.audioOn = GlobalAudio1;
         }
 
+        private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            volume_off_On();
+        }
         private void image_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
             volume_off_On();

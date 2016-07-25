@@ -33,12 +33,18 @@ namespace WizardWarz
         {
             InitializeComponent();            
             audioOn = MainWindow.GlobalAudio1;
+
         }
 
         
 
         public void playMainMusic()
         {
+            /// <summary>
+            /// Runs the main music track within the Audio Manager. Audio Manager is required to be instanced within each class where a track is to be played. Ex. AudioManager newAudioMan = new AudioManager(); ... newAudioMan.playMainMusic();
+            /// </summary> 
+
+            
             isLooping = true;
             trackLocation = "8_bit_wizard.mp3";
             newVolume = 0.15;
@@ -143,6 +149,15 @@ namespace WizardWarz
             trackLocation = "defeat.wav";
             newVolume = 0.5;
             PlayTrack();
-        }        
+        } 
+        
+        public void playTitleSound()
+        {
+            StopTrack();
+            trackLocation = "titleTest2.wav";
+            newVolume = 0.5;
+            PlayTrack();
+
+        }       
     }
 }
