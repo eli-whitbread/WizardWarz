@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="WizardWarz.MainMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WizardWarz"
+             mc:Ignorable="d" 
+             Height="1080" Width="1080">
+    <Canvas Background="#FF892A2A">
+        <Grid>
+
+        </Grid>
+        <Button x:Name="button" Content="4" Canvas.Left="412" Canvas.Top="348" Width="256" Height="64" FontSize="32" MouseLeftButtonDown="four_MouseLeftButtonDown"/>
+        <Button x:Name="button1" Content="6" Canvas.Left="412" Canvas.Top="640" Width="256" Height="64" FontSize="32" MouseLeftButtonDown="six_MouseLeftButtonDown"/>
+        <Label x:Name="label" Content="Number of Players" Canvas.Left="284" Canvas.Top="192" Height="128" Width="542" FontSize="64"/>
+    </Canvas>
+</UserControl>

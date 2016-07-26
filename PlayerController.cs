@@ -75,7 +75,7 @@ namespace WizardWarz
 
         public void initialisePlayerGridRef()
         {
-            playerGridLocArray = new Int32[6, 2] { {0, 0 }, { 11, 0}, { 0, 11}, { 11, 11 }, { 0, 5}, { 11, 5} };
+            playerGridLocArray = new Int32[6, 2] { {0, 0 }, { 12, 0}, { 0, 11}, { 11, 11 }, { 0, 5}, { 11, 5} };
 
             setPlayerPos(playerPosition);
 
@@ -91,16 +91,56 @@ namespace WizardWarz
             playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerRight1.png", UriKind.Relative)));
             playerTile.Height = tileSize;
             playerTile.Width = tileSize;
-            Debug.WriteLine("HEEEEEELLLLLLOOO" + playerGridLocArray[gridStartPos, 0]);
+            //Debug.WriteLine("HEEEEEELLLLLLOOO" + playerGridLocArray[gridStartPos, 0]);
             Grid.SetColumn(playerTile, playerGridLocArray[gridStartPos, 0]);
             Grid.SetRow(playerTile, playerGridLocArray[gridStartPos, 1]);
 
             Grid.SetZIndex(playerTile, 10); //set the layering position of the playerTile - can use Grid.SetZIndex or Canvas.SetZIndex(object,int layer)
             localGameGrid.Children.Add(playerTile);
 
-            relativePosition = new Point(tileSize, tileSize);
-            playerX = Convert.ToInt32(relativePosition.X) / tileSize;
-            playerY = Convert.ToInt32(relativePosition.Y) / tileSize;
+            if(gridStartPos == 0)
+            {
+                relativePosition = new Point(tileSize, tileSize);
+                playerX = Convert.ToInt32(relativePosition.X) / tileSize;
+                playerY = Convert.ToInt32(relativePosition.Y) / tileSize;
+                Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
+            }
+            else if(gridStartPos == 1)
+            {
+                relativePosition = new Point(tileSize, tileSize);
+                playerX = Convert.ToInt32(relativePosition.X) / tileSize;
+                playerY = Convert.ToInt32(relativePosition.Y) / tileSize;
+                Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
+            }
+            else if (gridStartPos == 2)
+            {
+                relativePosition = new Point(tileSize, tileSize);
+                playerX = Convert.ToInt32(relativePosition.X) / tileSize;
+                playerY = Convert.ToInt32(relativePosition.Y) / tileSize;
+                Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
+
+            }
+            else if (gridStartPos == 3)
+            {
+                relativePosition = new Point(tileSize, tileSize);
+                playerX = Convert.ToInt32(relativePosition.X) / tileSize;
+                playerY = Convert.ToInt32(relativePosition.Y) / tileSize;
+                Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
+            }
+            else if (gridStartPos == 4)
+            {
+                relativePosition = new Point(tileSize, tileSize);
+                playerX = Convert.ToInt32(relativePosition.X) / tileSize;
+                playerY = Convert.ToInt32(relativePosition.Y) / tileSize;
+                Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
+            }
+            else if (gridStartPos == 5)
+            {
+                relativePosition = new Point(tileSize, tileSize);
+                playerX = Convert.ToInt32(relativePosition.X) / tileSize;
+                playerY = Convert.ToInt32(relativePosition.Y) / tileSize;
+                Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
+            }
 
         }
         

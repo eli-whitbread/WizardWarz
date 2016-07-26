@@ -50,7 +50,7 @@ namespace WizardWarz
             GlobalAudio1 = true;
             newAudioManager.audioOn = GlobalAudio1;
             newAudioManager.playTitleSound();
-            Canvas.SetLeft(audioTile, 960);
+            Canvas.SetLeft(audioTile, 0);
             MainCanvas.Children.Add(newAudioManager);
         }
 

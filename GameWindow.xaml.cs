@@ -23,6 +23,7 @@ namespace WizardWarz
     {
         public Int32 tileSize = 64;
         double varRotTransform = 90;
+        double gameLevelTime = 120;
         protected static GameTimer gameTimerInstance;
         protected static GameBoardManager gameBoardManager;
         protected static Canvas GameCanvasInstance;
@@ -31,16 +32,7 @@ namespace WizardWarz
         protected static int noOfPlayers = 4;
         public PlayerController[] playerControllers = null;
         public PlayerLivesAndScore[] playerLives;
-        //PlayerLivesAndScore _player_1_Lives = null;
-        //PlayerLivesAndScore _player_2_Lives = null;
-        //PlayerLivesAndScore _player_3_Lives = null;
-        //PlayerLivesAndScore _player_4_Lives = null;
-
-
-        //public Canvas mainCanvas
-        //{
-        //    get { return GameCanvas; }
-        //}        
+             
 
         public static Canvas ReturnnMainCanvas()
         {
@@ -56,14 +48,12 @@ namespace WizardWarz
         public static GameBoardManager ReturnGameBoardInstance()
         {
             return gameBoardManager;
-
         }
 
 
         public static int ReturnNumberOfPlayer()
         {
             return noOfPlayers;
-
         }
 
         public GameWindow()
@@ -80,8 +70,8 @@ namespace WizardWarz
 
             gameTimerInstance.Initialise();
 
+            initialiseGameBoardSize();
             
-
             gameBoardManager = new GameBoardManager();
             gameBoardManager.gameGrid = MainGameGrid;
             gameBoardManager.InitializeGameBoard();
@@ -94,27 +84,22 @@ namespace WizardWarz
             Debug.WriteLine(GameCanvasInstance.Name);
 
             StaticCollections _staticColections = new StaticCollections();
+        }
 
-            //GameTimer gT = new GameTimer();
-            //gT.GameCanRef = mainCanvas;
-            //gT.p1Ref = _playerController1;
-            //gT.Initialise();
-
-            
-            //gameTimerInstance.GameCanRef = mainCanvas;
-             
-            //gameTimerInstance.p1Ref = _playerController1; (REMEMBER TO RECONNECT THIS with EVENT IN PLAYERCONTROLLER)
-            
-
-            //_playerController1.timerRef = gameTimerInstance;
-            
-
-           
+        private void initialiseGameBoardSize()
+        {
+            if (noOfPlayers == 4)
+            {
+                gameTimeText.Margin = new Thickness(384, 0, -10, 0);
+                TopPanel.HorizontalAlignment = HorizontalAlignment.Center;
+                BottomPanel.HorizontalAlignment = HorizontalAlignment.Center;
+                BottomPanel.Margin = new Thickness(60, 0, 0, 0);
+            }
         }
 
         public void initialisePlayerReferences()
         {
-            // --------------------------- Initialise Player References ------------------------------------------------
+            // ------------------------------- Initialise Player References ------------------------------------------------
             for (int i = 0; i <= noOfPlayers - 1; i++)
             {
                 playerControllers[i] = new PlayerController();
@@ -126,17 +111,14 @@ namespace WizardWarz
                 playerControllers[i].gridCellsArray = gameBoardManager.flrTiles;
                 playerControllers[i].myLivesAndScore = playerLives[i];
                 playerControllers[i].initialisePlayerGridRef();
-                //Debug.WriteLine("Player Controler {0} initialised /n", playerControllers[i]);
+                
                 // --------------------------- Initialise All Players Lives and Score Controls -----------------------------
                 initialisePlayerLivesAndScore(i);
             }
-
-            
         }
 
         public void initialisePlayerLivesAndScore(int currentPlayer)
         {
-            
             switch(currentPlayer + 1)
             {
                 case 1:
@@ -145,7 +127,6 @@ namespace WizardWarz
                     trRot = new RotateTransform(varRotTransform);
                     playerLives[currentPlayer].LayoutTransform = trRot;
                     TopPanel.Children.Add(playerLives[currentPlayer]);
-                    
                     break;
 
                 case 2:
@@ -153,7 +134,6 @@ namespace WizardWarz
                     trRot = new RotateTransform(varRotTransform);
                     playerLives[currentPlayer].LayoutTransform = trRot;
                     RightPanel.Children.Add(playerLives[currentPlayer]);
-                    
                     break;
 
                 case 3:
@@ -167,18 +147,20 @@ namespace WizardWarz
                     LeftPanel.Children.Add(playerLives[currentPlayer]);
                     break;
 
-                case 5:
-                    Debug.WriteLine("Not enough for five players!");
+                case 5:                    
+                    varRotTransform = 180;
+                    trRot = new RotateTransform(varRotTransform);
+                    playerLives[currentPlayer].LayoutTransform = trRot;
+                    TopPanel2.Children.Add(playerLives[currentPlayer]);
                     break;
 
                 case 6:
-                    Debug.WriteLine("Not enough for six players!");
+                    BottomPanel2.Children.Add(playerLives[currentPlayer]);
                     break;
 
                 default:
                     Debug.WriteLine("Nothing Happened!!");
                     break;
-
             }
         }
     }

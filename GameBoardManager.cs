@@ -25,8 +25,9 @@ namespace WizardWarz
         public Grid gameGrid = null;
         public PlayerController p1Ref = null;
         public Rectangle[,] flrTiles = null;
+        Int32 rows = 13;
+        Int32 cols = 13;
         public static TileStates[,] curTileState = null;
-
         
         //initialise the game board
         public void InitializeGameBoard()
@@ -34,8 +35,13 @@ namespace WizardWarz
             
             Int32 tileSize = 64;
             //set the grid size
-            Int32 rows = 13;
-            Int32 cols = 13;
+            if(GameWindow.ReturnNumberOfPlayer() == 6)
+            {
+                rows = 14;
+                cols = 16;
+            }            
+            
+            
 
             curTileState = new TileStates[cols, rows];
 
