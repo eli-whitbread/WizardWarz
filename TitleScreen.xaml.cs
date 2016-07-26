@@ -24,6 +24,7 @@ namespace WizardWarz
         System.Windows.Threading.DispatcherTimer dTimer1 = new System.Windows.Threading.DispatcherTimer();
         public bool dTimerBool = false;
         int picCount = 0;
+        int picWaitMove = 0;
         public TitleScreen()
         {
             InitializeComponent();
@@ -36,33 +37,28 @@ namespace WizardWarz
 
         private void DTimer1_Tick(object sender, EventArgs e)
         {
-            if(picCount <= 3)
+            picWaitMove++;
+
+            if (picCount <= 3)
             {
                 flashText();
-
             }
             else
             {
                 picCount = 0;
                 flashText();
             }
+
+            if(picWaitMove == 4)
+            {
+                RandomiseWizards();
+                picWaitMove = 0;
+            }
             
         }
 
         private void flashText()
         {
-            //if (!dTimerBool)
-            //{
-            //    wizardText.Source = new BitmapImage(new Uri("Resources/WizardWarzText2.png", UriKind.Relative));
-            //    dTimerBool = true;
-            //}
-            //else
-            //{
-
-            //    wizardText.Source = new BitmapImage(new Uri("Resources/WizardWarzText1.png", UriKind.Relative));
-            //    dTimerBool = false;
-            //}
-
             switch (picCount)
             {
                 case 0:
@@ -90,6 +86,30 @@ namespace WizardWarz
                     picCount = 0;
                     break;
             }
+        }
+
+        private void RandomiseWizards()
+        {
+            Image[] wizards = { wizard1, wizard2, wizard3, wizard4};
+            Random rnd = new Random();
+
+            for (int i = 0; i < 4; i++)
+            {
+
+                int winY = (int)Canvas1.ActualHeight / 2;
+                int winX = (int)Canvas1.ActualWidth / 2 ;
+
+                int positionY = rnd.Next(0, winY);
+                int positionX = rnd.Next(0, winX);
+
+                //Console.Write(string.Format("X = {0}, Y = {1} /n", positionX, positionY));
+
+                Canvas.SetLeft(wizards[i], positionX);
+                Canvas.SetTop(wizards[i], positionY);
+                
+            }
+            
+            
 
         }
     }

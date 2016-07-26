@@ -21,9 +21,17 @@ namespace WizardWarz
     /// </summary>
     public partial class GameWindow : UserControl
     {
-        public Int32 tileSize = 64;        
-
+        public Int32 tileSize = 64;
+        double varRotTransform = 90;
         protected static GameTimer gameTimerInstance;
+        public int noOfPlayers;
+        GameBoardManager _gameBoardManager = null;
+        PlayerController _playerController1 = null;
+        PlayerLivesAndScore _player_1_Lives = null;
+        PlayerLivesAndScore _player_2_Lives = null;
+        PlayerLivesAndScore _player_3_Lives = null;
+        PlayerLivesAndScore _player_4_Lives = null;
+
 
         public Canvas mainCanvas
         {
@@ -39,20 +47,10 @@ namespace WizardWarz
         {
             InitializeComponent();            
 
-            GameBoardManager _gameBoardManager = new GameBoardManager();
+            _gameBoardManager = new GameBoardManager();
             _gameBoardManager.InitializeGameBoard(GameBoardGrid);
 
-            
-
-            PlayerLivesAndScore _player_1_Lives = new PlayerLivesAndScore();
-            TopPanel.Children.Add(_player_1_Lives);
-
-            PlayerController _playerController1 = new PlayerController(GameBoardGrid);
-            _playerController1.managerRef = _gameBoardManager;
-            _playerController1.gameCanRef = mainCanvas;
-            _playerController1.gridCellsArray = _gameBoardManager.flrTiles;
-            _playerController1.myLivesAndScore = _player_1_Lives;
-            _playerController1.InitialiseRefs();
+            initialisePlayerReferences();            
 
             Debug.WriteLine(mainCanvas.Name);
 
@@ -75,6 +73,58 @@ namespace WizardWarz
             //_playerController1.timerRef = gT;
 
            
+        }
+
+        public void initialisePlayerReferences()
+        {
+            // --------------------------- Initialise All Players Lives and Score Controls -----------------------------
+            initialisePlayerLivesAndScore();
+
+            // --------------------------- Initialise Player References ------------------------------------------------
+            _playerController1 = new PlayerController(GameBoardGrid);
+            _playerController1.managerRef = _gameBoardManager;
+            _playerController1.gameCanRef = mainCanvas;
+            _playerController1.gridCellsArray = _gameBoardManager.flrTiles;
+            _playerController1.myLivesAndScore = _player_1_Lives;
+            _playerController1.InitialiseRefs();
+        }
+
+        public void initialisePlayerLivesAndScore()
+        {
+            _player_1_Lives = new PlayerLivesAndScore();
+            _player_2_Lives = new PlayerLivesAndScore();
+            _player_3_Lives = new PlayerLivesAndScore();
+            _player_4_Lives = new PlayerLivesAndScore();
+
+            varRotTransform = 180;
+            RotateTransform trRot = new RotateTransform(varRotTransform);
+            _player_1_Lives.LayoutTransform = trRot;
+            TopPanel.Children.Add(_player_1_Lives);
+            trRot = null;
+
+            varRotTransform = -90;
+            trRot = new RotateTransform(varRotTransform);
+            _player_2_Lives.LayoutTransform = trRot;
+            RightPanel.Children.Add(_player_2_Lives);
+            trRot = null;
+
+            BottomPanel.Children.Add(_player_3_Lives);
+
+            varRotTransform = 90;
+            trRot = new RotateTransform(varRotTransform);
+            _player_4_Lives.LayoutTransform = trRot;
+            LeftPanel.Children.Add(_player_4_Lives);
+
+        }
+
+        public void initialiseEachPlayer()
+        {
+            for(int i = 0; i < noOfPlayers; i++)
+            {
+
+
+            }
+
         }
 
         
