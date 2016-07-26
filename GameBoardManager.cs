@@ -22,13 +22,16 @@ namespace WizardWarz
 
     public class GameBoardManager
     {
+        public Grid gameGrid = null;
         public PlayerController p1Ref = null;
         public Rectangle[,] flrTiles = null;
         public static TileStates[,] curTileState = null;
 
+        
         //initialise the game board
-        public void InitializeGameBoard(Grid gameGrid)
+        public void InitializeGameBoard()
         {
+            
             Int32 tileSize = 64;
             //set the grid size
             Int32 rows = 13;

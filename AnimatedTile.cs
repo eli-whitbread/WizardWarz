@@ -41,7 +41,7 @@ namespace WizardWarz
             imageRect.Height = tileHeight;
             imageRect.Fill = new ImageBrush(imageSource);
             myGameTimerInstance = GameWindow.ReturnTimerInstance();
-            myGameTimerInstance.tickEvent += MyGameTimerInstance_tickEvent;
+            myGameTimerInstance.processFrameEvent_TICK += MyGameTimerInstance_tickEvent;
             playAnimation = false;
         }
 
@@ -56,7 +56,7 @@ namespace WizardWarz
         public void AnimStop()
         {
             playAnimation = false;
-            myGameTimerInstance.tickEvent -= MyGameTimerInstance_tickEvent;
+            myGameTimerInstance.processFrameEvent_TICK -= MyGameTimerInstance_tickEvent;
         }
 
         //function subscribed to GameTimer "tickEvent" - executes every "timerTick" that instance is active

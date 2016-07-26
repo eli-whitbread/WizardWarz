@@ -24,35 +24,74 @@ namespace WizardWarz
         public Int32 tileSize = 64;
         double varRotTransform = 90;
         protected static GameTimer gameTimerInstance;
-        public int noOfPlayers;
-        GameBoardManager _gameBoardManager = null;
-        PlayerController _playerController1 = null;
-        PlayerLivesAndScore _player_1_Lives = null;
-        PlayerLivesAndScore _player_2_Lives = null;
-        PlayerLivesAndScore _player_3_Lives = null;
-        PlayerLivesAndScore _player_4_Lives = null;
+        protected static GameBoardManager gameBoardManager;
+        protected static Canvas GameCanvasInstance;
+        public Grid MainGameGrid;
+        public RotateTransform trRot = null;
+        protected static int noOfPlayers = 4;
+        public PlayerController[] playerControllers = null;
+        public PlayerLivesAndScore[] playerLives;
+        //PlayerLivesAndScore _player_1_Lives = null;
+        //PlayerLivesAndScore _player_2_Lives = null;
+        //PlayerLivesAndScore _player_3_Lives = null;
+        //PlayerLivesAndScore _player_4_Lives = null;
 
 
-        public Canvas mainCanvas
+        //public Canvas mainCanvas
+        //{
+        //    get { return GameCanvas; }
+        //}        
+
+        public static Canvas ReturnnMainCanvas()
         {
-            get { return GameCanvas; }
-        }        
+            return GameCanvasInstance;
+
+        }
 
         public static GameTimer ReturnTimerInstance()
         {
             return gameTimerInstance;
         }
 
+        public static GameBoardManager ReturnGameBoardInstance()
+        {
+            return gameBoardManager;
+
+        }
+
+
+        public static int ReturnNumberOfPlayer()
+        {
+            return noOfPlayers;
+
+        }
+
         public GameWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
 
-            _gameBoardManager = new GameBoardManager();
-            _gameBoardManager.InitializeGameBoard(GameBoardGrid);
+            GameCanvasInstance = GameCanvas;
+            MainGameGrid = GameBoardGrid;
 
+            if (gameTimerInstance == null)
+            {
+                gameTimerInstance = new GameTimer();
+            }
+
+            gameTimerInstance.Initialise();
+
+            
+
+            gameBoardManager = new GameBoardManager();
+            gameBoardManager.gameGrid = MainGameGrid;
+            gameBoardManager.InitializeGameBoard();
+
+            playerControllers = new PlayerController[noOfPlayers];
+            playerLives = new PlayerLivesAndScore[noOfPlayers];
+           
             initialisePlayerReferences();            
 
-            Debug.WriteLine(mainCanvas.Name);
+            Debug.WriteLine(GameCanvasInstance.Name);
 
             StaticCollections _staticColections = new StaticCollections();
 
@@ -61,72 +100,86 @@ namespace WizardWarz
             //gT.p1Ref = _playerController1;
             //gT.Initialise();
 
-            if (gameTimerInstance == null)
-            {
-                gameTimerInstance = new GameTimer();
-            }
-            gameTimerInstance.GameCanRef = mainCanvas;
-            gameTimerInstance.p1Ref = _playerController1;
-            gameTimerInstance.Initialise();
+            
+            //gameTimerInstance.GameCanRef = mainCanvas;
+             
+            //gameTimerInstance.p1Ref = _playerController1; (REMEMBER TO RECONNECT THIS with EVENT IN PLAYERCONTROLLER)
+            
 
-            _playerController1.timerRef = gameTimerInstance;
-            //_playerController1.timerRef = gT;
+            //_playerController1.timerRef = gameTimerInstance;
+            
 
            
         }
 
         public void initialisePlayerReferences()
         {
-            // --------------------------- Initialise All Players Lives and Score Controls -----------------------------
-            initialisePlayerLivesAndScore();
-
             // --------------------------- Initialise Player References ------------------------------------------------
-            _playerController1 = new PlayerController(GameBoardGrid);
-            _playerController1.managerRef = _gameBoardManager;
-            _playerController1.gameCanRef = mainCanvas;
-            _playerController1.gridCellsArray = _gameBoardManager.flrTiles;
-            _playerController1.myLivesAndScore = _player_1_Lives;
-            _playerController1.InitialiseRefs();
-        }
-
-        public void initialisePlayerLivesAndScore()
-        {
-            _player_1_Lives = new PlayerLivesAndScore();
-            _player_2_Lives = new PlayerLivesAndScore();
-            _player_3_Lives = new PlayerLivesAndScore();
-            _player_4_Lives = new PlayerLivesAndScore();
-
-            varRotTransform = 180;
-            RotateTransform trRot = new RotateTransform(varRotTransform);
-            _player_1_Lives.LayoutTransform = trRot;
-            TopPanel.Children.Add(_player_1_Lives);
-            trRot = null;
-
-            varRotTransform = -90;
-            trRot = new RotateTransform(varRotTransform);
-            _player_2_Lives.LayoutTransform = trRot;
-            RightPanel.Children.Add(_player_2_Lives);
-            trRot = null;
-
-            BottomPanel.Children.Add(_player_3_Lives);
-
-            varRotTransform = 90;
-            trRot = new RotateTransform(varRotTransform);
-            _player_4_Lives.LayoutTransform = trRot;
-            LeftPanel.Children.Add(_player_4_Lives);
-
-        }
-
-        public void initialiseEachPlayer()
-        {
-            for(int i = 0; i < noOfPlayers; i++)
+            for (int i = 0; i <= noOfPlayers - 1; i++)
             {
-
-
+                playerControllers[i] = new PlayerController();
+                playerLives[i] = new PlayerLivesAndScore();
+                playerControllers[i].playerPosition = i;
+                playerControllers[i].localGameGrid = MainGameGrid;                               
+                playerControllers[i].highlightLocalGrid = MainGameGrid;
+                playerControllers[i].managerRef = gameBoardManager;
+                playerControllers[i].gridCellsArray = gameBoardManager.flrTiles;
+                playerControllers[i].myLivesAndScore = playerLives[i];
+                playerControllers[i].initialisePlayerGridRef();
+                //Debug.WriteLine("Player Controler {0} initialised /n", playerControllers[i]);
+                // --------------------------- Initialise All Players Lives and Score Controls -----------------------------
+                initialisePlayerLivesAndScore(i);
             }
 
+            
         }
 
-        
+        public void initialisePlayerLivesAndScore(int currentPlayer)
+        {
+            
+            switch(currentPlayer + 1)
+            {
+                case 1:
+
+                    varRotTransform = 180;
+                    trRot = new RotateTransform(varRotTransform);
+                    playerLives[currentPlayer].LayoutTransform = trRot;
+                    TopPanel.Children.Add(playerLives[currentPlayer]);
+                    
+                    break;
+
+                case 2:
+                    varRotTransform = -90;
+                    trRot = new RotateTransform(varRotTransform);
+                    playerLives[currentPlayer].LayoutTransform = trRot;
+                    RightPanel.Children.Add(playerLives[currentPlayer]);
+                    
+                    break;
+
+                case 3:
+                    BottomPanel.Children.Add(playerLives[currentPlayer]);
+                    break;
+
+                case 4:
+                    varRotTransform = 90;
+                    trRot = new RotateTransform(varRotTransform);
+                    playerLives[currentPlayer].LayoutTransform = trRot;
+                    LeftPanel.Children.Add(playerLives[currentPlayer]);
+                    break;
+
+                case 5:
+                    Debug.WriteLine("Not enough for five players!");
+                    break;
+
+                case 6:
+                    Debug.WriteLine("Not enough for six players!");
+                    break;
+
+                default:
+                    Debug.WriteLine("Nothing Happened!!");
+                    break;
+
+            }
+        }
     }
 }

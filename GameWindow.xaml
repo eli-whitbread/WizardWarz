@@ -10,9 +10,11 @@
         <DockPanel LastChildFill="True">
 
             <!--docked panels grids (score and lives grids)-->
-            <Grid Name="TopPanel" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Height="64" Background="LightGray" />         
+            <Grid Name="TopPanel" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Height="64" Background="LightGray" />
+            <Grid Name="TopPanel2" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Height="auto" Background="Pink" />
             <Grid Name="RightPanel" DockPanel.Dock="Right" VerticalAlignment="Stretch" Width="64" Background="Plum" />
             <Grid Name="BottomPanel" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Height="64" Background="LightSteelBlue" />
+            <Grid Name="BottomPanel2" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Height="Auto" Background="DarkGreen" />
             <Grid Name="LeftPanel" DockPanel.Dock="Left" VerticalAlignment="Stretch" Width="64" Height="Auto" Background="Khaki"/>
             <!--game board-->
             <Grid Name="GameBoardGrid" HorizontalAlignment="Center" VerticalAlignment="Center"></Grid>

@@ -20,12 +20,14 @@ namespace WizardWarz
         public Point currentPOS;
         public Point lastClickPOS;
         public Point relativePosition, localBombRelative;
-        public Grid localGameGrid;
-        Grid highlightLocalGrid;
+        public Grid localGameGrid = null;
+        public Grid highlightLocalGrid = null;
         public Int32 tileSize = 64, bombRadius = 3;
+        public Int32 playerPosition;
+        public Int32[,] playerGridLocArray;
 
         public GameBoardManager managerRef = null;
-        public GameTimer timerRef = null;
+        public GameTimer playerTimerRef = null;
         AudioManager playMusic = new AudioManager();
 
         int p1PathCellCount = 0;
@@ -46,43 +48,62 @@ namespace WizardWarz
         public Canvas gameCanRef = null;
         public PlayerLivesAndScore myLivesAndScore = null;
 
-        public PlayerController(Grid gameGrid)
+        // ------------------------- Player Controller Constructor ------------
+        public PlayerController()
         {
-            localGameGrid = gameGrid;
+            playerTimerRef = GameWindow.ReturnTimerInstance();
+            
+            Debug.WriteLine("HELLO " + playerTimerRef);
+            playerTimerRef.processFrameEvent_TICK += PlayerTimerRef_tickEventPROCESS;
+        }
 
-            highlightLocalGrid = gameGrid;
+        // ---------------------------------------------------------------------
+        // ----------------------PLAYER TICK PROCESS -----------------------------------
+        // ---------------------------------------------------------------------
+        private void PlayerTimerRef_tickEventPROCESS(object sender, EventArgs e)
+        {
+            //myTime += myTickIncrement;
+            ProcessFrame();
 
-            InitialisePlayerController();
+            RenderFrame();
+            
+        }
+
+        // ---------------------------------------------------------------------
+        // ---------------------- END PLAYER TICK ------------------------------
+        // ---------------------------------------------------------------------
+
+        public void initialisePlayerGridRef()
+        {
+            playerGridLocArray = new Int32[6, 2] { {0, 0 }, { 11, 0}, { 0, 11}, { 11, 11 }, { 0, 5}, { 11, 5} };
+
+            setPlayerPos(playerPosition);
 
             testPlayerMove();
 
-            gameGrid.MouseDown += new MouseButtonEventHandler(controller_MouseLeftButtonDown);
+            localGameGrid.MouseDown += new MouseButtonEventHandler(controller_MouseLeftButtonDown);
         }
+                
 
-        public void InitialisePlayerController()
+        private void setPlayerPos(int gridStartPos)
         {
-
-            playerTile = new Rectangle();            
-            
+            playerTile = new Rectangle();
             playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerRight1.png", UriKind.Relative)));
-
             playerTile.Height = tileSize;
             playerTile.Width = tileSize;
-            Grid.SetColumn(playerTile, playerX);
-            Grid.SetRow(playerTile, playerY);
-            Grid.SetZIndex(playerTile,10); //set the layering position of the playerTile - can use Grid.SetZIndex or Canvas.SetZIndex(object,int layer)
+            Debug.WriteLine("HEEEEEELLLLLLOOO" + playerGridLocArray[gridStartPos, 0]);
+            Grid.SetColumn(playerTile, playerGridLocArray[gridStartPos, 0]);
+            Grid.SetRow(playerTile, playerGridLocArray[gridStartPos, 1]);
+
+            Grid.SetZIndex(playerTile, 10); //set the layering position of the playerTile - can use Grid.SetZIndex or Canvas.SetZIndex(object,int layer)
             localGameGrid.Children.Add(playerTile);
 
-            relativePosition = new Point (tileSize, tileSize);
+            relativePosition = new Point(tileSize, tileSize);
             playerX = Convert.ToInt32(relativePosition.X) / tileSize;
             playerY = Convert.ToInt32(relativePosition.Y) / tileSize;
-        }
-
-
-        public void InitialiseRefs()
-        {
 
         }
+        
 
         public void ProcessFrame()
         {
@@ -228,7 +249,7 @@ namespace WizardWarz
         {
             if (!isP1Influenced && p1HasPath)
             {
-                movementTimer += timerRef.exposedDT;
+                //movementTimer += timerRef.exposedDT;
 
                 if (movementTimer % 10 == 0)
                 {

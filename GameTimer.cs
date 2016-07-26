@@ -31,9 +31,10 @@ namespace WizardWarz
 
         public Canvas GameCanRef = null;
 
-        public PlayerController p1Ref = null;
+        public PlayerController playerReference = null;
 
-        public event EventHandler tickEvent;
+        public event EventHandler renderFrameEvent_TICK;
+        public event EventHandler processFrameEvent_TICK;
         
         public GameTimer()
         {
@@ -41,13 +42,14 @@ namespace WizardWarz
             gameLoopTimer.Interval = TimeSpan.FromMilliseconds(FramesPerSecond());
             gameLoopTimer.Tick += new EventHandler(timer_Tick);
             gameLoopTimer.Start();
+            GameCanRef = GameWindow.ReturnnMainCanvas();
             Debug.WriteLine("gameLoopTimer Initialised");
         }
 
         public void Initialise()
         {
             Debug.WriteLine(GameCanRef.Name);
-            if (p1Ref != null)
+            if (playerReference != null)
             {
                 Debug.WriteLine("Controller ref passed successfully!");
             }
@@ -61,20 +63,30 @@ namespace WizardWarz
                 Debug.WriteLine("Elapsed = {0}", curTdelta);
             }
 
-            //send public tick event
-            if(tickEvent != null)
+            // Send Public Tick Event For PROCESSING
+            if (processFrameEvent_TICK != null)
             {
-                tickEvent.Invoke(this,e);
+                processFrameEvent_TICK.Invoke(this, e);
+
             }
+
+            //send public tick event for RENDERING
+            if (renderFrameEvent_TICK != null)
+            {
+                renderFrameEvent_TICK.Invoke(this,e);
+            }
+
+            
+            
 
             //for all bombs currently active in the level fire "BombUpdateTick"
             //StaticCollections.SendBombUpdate();
 
             //PROCESS FRAMES FOR ALL OBJECTS ON SCREEN
-            p1Ref.ProcessFrame();
+            //playerReference.ProcessFrame();
 
             //RENDER FRAMES FOR ALL OBJECTS ON SCREEN
-            p1Ref.RenderFrame();
+            //playerReference.RenderFrame();
         }
 
 

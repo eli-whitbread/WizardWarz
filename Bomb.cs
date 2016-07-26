@@ -38,7 +38,7 @@ namespace WizardWarz
         {
             curGameGrid = localGameGrid;
             myGameTimerRef = GameWindow.ReturnTimerInstance();
-            myGameTimerRef.tickEvent += MyGameTimerRef_tickEvent;
+            myGameTimerRef.processFrameEvent_TICK += MyGameTimerRef_tickEvent;
         }
 
         private void MyGameTimerRef_tickEvent(object sender, EventArgs e)
@@ -84,7 +84,7 @@ namespace WizardWarz
                 curGameGrid.Children.Remove(exp);
             }
 
-            myGameTimerRef.tickEvent -= MyGameTimerRef_tickEvent;
+            myGameTimerRef.processFrameEvent_TICK -= MyGameTimerRef_tickEvent;
             StaticCollections.RemoveBomb(this);
             
         }
