@@ -1,0 +1,157 @@
+﻿using System;
+using System.Windows;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.Windows.Input;
+using System.Diagnostics;
+
+namespace WizardWarz
+{
+    public enum TileStates
+    {
+        Floor,
+        SolidWall,
+        DestructibleWall,
+    }
+
+    public class GameBoardManager
+    {
+        public PlayerController p1Ref = null;
+        public Rectangle[,] flrTiles = null;
+        public static TileStates[,] _curTileState = null;
+
+        //public Powerups powerUpRef = new Powerups();
+
+        //setup an array of grid positions (int[,]) for inner walls  = {column,Row} - count starts from "outer wall". ie. 5 = 5 + wall.
+        public Int32[,] innerWallPos = { { 2, 2 }, { 2, 4 }, { 2, 6 }, { 2, 8 }, { 2, 10 },
+                { 4, 2 }, { 4, 4 }, { 4, 6 }, { 4, 8 }, { 4, 10 },
+                { 6, 2 }, { 6, 4 }, { 6, 6 }, { 6, 8 }, { 6, 10 },
+                { 8, 2 }, { 8, 4 }, { 8, 6 }, { 8, 8 }, { 8, 10 },
+                { 10, 2 }, { 10, 4 }, { 10, 6 }, { 10, 8 }, { 10, 10 },
+                { 12, 2 }, { 12, 4 }, { 12, 6 }, { 12, 8 }, { 12, 10 },
+                { 14, 2 }, { 14, 4 }, { 14, 6 }, { 14, 8 }, { 14, 10 }
+            };
+
+        //setup an array of grid positions (int[,]) for destructable walls = {column,Row} - count starts from "outer wall". ie. 5 = 5 + wall.
+        public Int32[,] destructibleWallPos = {  { 2, 5 }, { 2, 7 },
+            { 5, 2 }, { 7, 2 }, { 9, 2 }, { 11, 2 },
+            { 5, 10 }, { 7, 10 },
+            { 9, 10 }, { 11, 10 }, { 14, 5 }, { 14, 7 }
+            };
+
+        //initialise the game board
+        public void InitializeGameBoard(Grid gameGrid)
+        {
+            Int32 tileSize = 64;
+            //set the grid size
+            Int32 rows = 13;
+            Int32 cols = 17;
+            _curTileState = new TileStates[cols, rows];
+
+            Int16[,] innerWallPos = { { 3, 5 }, { 5, 5 } };
+            
+
+            GridLengthConverter myGridLengthConverter = new GridLengthConverter();
+            GridLength side = (GridLength)myGridLengthConverter.ConvertFromString("Auto");
+
+
+            //Setup the grid Rows and Columns
+            for (int i = 0; i < cols; i++)
+            {
+                gameGrid.ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition());
+                gameGrid.ColumnDefinitions[i].Width = side;
+            }
+            for (int x = 0; x < rows; x++)
+            {
+                gameGrid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition());
+                gameGrid.RowDefinitions[x].Height = side;
+            }
+
+            //create an empty Rectangle array
+            flrTiles = new Rectangle[cols, rows];
+
+            //fill each element in the Rectangle array with an image "tile".
+            for (int c = 0; c < cols; c++)
+            {
+                for (int r = 0; r < rows; r++)
+                {
+                    flrTiles[c, r] = new Rectangle();
+                    //add a wall tile if along the grid extremes
+                    if(InitialTilePlacementCheck(c,r, cols, rows) == true)
+                    {
+                        flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Indesructable.png", UriKind.Relative)));
+                        _curTileState[c, r] = TileStates.SolidWall;
+                    }
+                    //add destructible walls within the game grid
+                    else if (DestructableWallPlacementCheck(c, r) == true)
+                    {
+                        flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Destructible.png", UriKind.Relative)));
+                        _curTileState[c, r] = TileStates.DestructibleWall;
+                    }
+                    //otherwise add a floor tile
+                    else
+                    {
+                        flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Floor.png", UriKind.Relative)));
+                        _curTileState[c, r] = TileStates.Floor;
+                    }
+                    //
+                    //inner solid and destrutable walls still required!!
+                    //
+                    flrTiles[c, r].Height = tileSize;
+                    flrTiles[c, r].Width = tileSize;
+                    Grid.SetColumn(flrTiles[c, r], c);
+                    Grid.SetRow(flrTiles[c, r], r);
+
+
+                    gameGrid.Children.Add(flrTiles[c, r]);
+                }
+            }
+            
+        }
+
+        public bool InitialTilePlacementCheck(Int32 c, Int32 r, Int32 colsLength, Int32 rowsLength)
+        {
+
+            //if both r and c are along the outer edge of the game borad grid then return true - outer wall generation
+            if (r == 0 || r == rowsLength - 1 || c == 0 || c == colsLength - 1)
+            {
+                return true;
+            }
+            //itterate through the innerWallPos 2D array and return true if both values match the passed in Row x Coll pos (r,c) - inner solid-wall generation
+            //we devide innerWallPos.Length by 2 because each "subarray" {x,y} is 2 elements long
+            for (int i = 0; i < innerWallPos.Length / 2; i++)
+            {
+                if(innerWallPos[i, 0] == c && innerWallPos[i, 1] == r)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool DestructableWallPlacementCheck(Int32 c, Int32 r)
+        {
+
+            //itterate through the destructableWallPos 2D array and return true if both values match the passed in Row x Coll pos (r,c) - inner destructible-wall generation
+            //we devide destructibleWallPos.Length by 2 because each "subarray" {x,y} is 2 elements long
+            for (int i = 0; i < destructibleWallPos.Length / 2; i++)
+            {
+                if (destructibleWallPos[i, 0] == c && destructibleWallPos[i, 1] == r)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+    }
+}

@@ -1,0 +1,76 @@
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\bin\Debug\WizardWarz.exe.config
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\FloorTile_64x64.png
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\WallTile_64x64.png
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\DestructTile_64x64.png
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\WIZARD1.png
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\Destructible.png
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\Floor.png
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\Indesructable.png
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\bin\Debug\WizardWarz.exe
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\bin\Debug\WizardWarz.pdb
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz.csprojResolveAssemblyReference.cache
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\obj\Debug\MainWindow.g.cs
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\obj\Debug\App.g.cs
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz_MarkupCompile.cache
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz_MarkupCompile.lref
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\obj\Debug\MainWindow.baml
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz.g.resources
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz.Properties.Resources.resources
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz.csproj.GenerateResource.Cache
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz.exe
+C:\Users\zclarke\Desktop\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz.pdb
+F:\Current Project\Wizardwarz-master\WizardWarz-master\bin\Debug\WizardWarz.exe.config
+F:\Current Project\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz.exe
+F:\Current Project\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz.pdb
+F:\Current Project\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz.csprojResolveAssemblyReference.cache
+F:\Current Project\Wizardwarz-master\WizardWarz-master\obj\Debug\MainWindow.g.cs
+F:\Current Project\Wizardwarz-master\WizardWarz-master\obj\Debug\App.g.cs
+F:\Current Project\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz_MarkupCompile.cache
+F:\Current Project\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz_MarkupCompile.lref
+F:\Current Project\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\FloorTile_64x64.png
+F:\Current Project\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\WallTile_64x64.png
+F:\Current Project\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\DestructTile_64x64.png
+F:\Current Project\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\WIZARD1.png
+F:\Current Project\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\Destructible.png
+F:\Current Project\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\Floor.png
+F:\Current Project\Wizardwarz-master\WizardWarz-master\bin\Debug\Resources\Indesructable.png
+F:\Current Project\Wizardwarz-master\WizardWarz-master\bin\Debug\WizardWarz.exe
+F:\Current Project\Wizardwarz-master\WizardWarz-master\bin\Debug\WizardWarz.pdb
+F:\Current Project\Wizardwarz-master\WizardWarz-master\obj\Debug\MainWindow.baml
+F:\Current Project\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz.g.resources
+F:\Current Project\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz.Properties.Resources.resources
+F:\Current Project\Wizardwarz-master\WizardWarz-master\obj\Debug\WizardWarz.csproj.GenerateResource.Cache
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\WizardWarz.exe.config
+C:\Users\Zac\Desktop\Wizardwarz-master\obj\Debug\WizardWarz.exe
+C:\Users\Zac\Desktop\Wizardwarz-master\obj\Debug\WizardWarz.pdb
+C:\Users\Zac\Desktop\Wizardwarz-master\obj\Debug\WizardWarz.csprojResolveAssemblyReference.cache
+C:\Users\Zac\Desktop\Wizardwarz-master\obj\Debug\MainWindow.g.cs
+C:\Users\Zac\Desktop\Wizardwarz-master\obj\Debug\App.g.cs
+C:\Users\Zac\Desktop\Wizardwarz-master\obj\Debug\WizardWarz_MarkupCompile.cache
+C:\Users\Zac\Desktop\Wizardwarz-master\obj\Debug\WizardWarz_MarkupCompile.lref
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\FloorTile_64x64.png
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\WallTile_64x64.png
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\DestructTile_64x64.png
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\WIZARD1.png
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\Destructible.png
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\Floor.png
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\Indesructable.png
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\WizardWarz.exe
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\WizardWarz.pdb
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Microsoft.Surface.Core.dll
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Microsoft.Surface.dll
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Microsoft.Surface.Presentation.dll
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Microsoft.Surface.xml
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Microsoft.Surface.Core.xml
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Microsoft.Surface.Presentation.xml
+C:\Users\Zac\Desktop\Wizardwarz-master\obj\Debug\MainWindow.baml
+C:\Users\Zac\Desktop\Wizardwarz-master\obj\Debug\WizardWarz.g.resources
+C:\Users\Zac\Desktop\Wizardwarz-master\obj\Debug\WizardWarz.Properties.Resources.resources
+C:\Users\Zac\Desktop\Wizardwarz-master\obj\Debug\WizardWarz.csproj.GenerateResource.Cache
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\WIZARD2.png
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\WIZARD3.png
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\WIZARD4.png
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\shield.png
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\superbomb.png
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\WIZARD5.png
+C:\Users\Zac\Desktop\Wizardwarz-master\bin\Debug\Resources\WIZARD6.png
