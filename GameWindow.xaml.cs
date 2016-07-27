@@ -29,7 +29,7 @@ namespace WizardWarz
         protected static Canvas GameCanvasInstance;
         public Grid MainGameGrid;
         public RotateTransform trRot = null;
-        protected static int noOfPlayers = 4;
+        protected static int noOfPlayers = 6;
         public PlayerController[] playerControllers = null;
         public PlayerLivesAndScore[] playerLives;
              
