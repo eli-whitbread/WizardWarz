@@ -17,7 +17,17 @@ namespace WizardWarz
     {
         Floor,
         SolidWall,
-        DestructibleWall
+        DestructibleWall,
+        Powerup
+    }
+
+    // Secondary enum for specific powerup types
+    // Default state of each tile should be "Empty"
+    public enum PowerupStates
+    {
+        Empty,
+        Superbomb,
+        Shield
     }
 
     public class GameBoardManager
@@ -28,7 +38,19 @@ namespace WizardWarz
         Int32 rows = 13;
         Int32 cols = 13;
         public static TileStates[,] curTileState = null;
-        
+        public static PowerupStates[,] powerupTileState = null;
+
+
+        public int[,] innerWallPos = { { 2, 2 }, { 2, 4 }, { 2, 6 }, { 2, 8 }, { 2, 10 },
+                { 4, 2 }, { 4, 4 }, { 4, 6 }, { 4, 8 }, { 4, 10 },
+                { 6, 2 }, { 6, 4 }, { 6, 6 }, { 6, 8 }, { 6, 10 },
+                { 8, 2 }, { 8, 4 }, { 8, 6 }, { 8, 8 }, { 8, 10 },
+                { 10, 2 }, { 10, 4 }, { 10, 6 }, { 10, 8 }, { 10, 10 }
+            };
+
+        public int[,] destructibleWallPos = { {9, 1 }, { 3, 2 }, { 3, 5 }, { 5, 5 }, { 5, 9 }, { 7, 1 }, { 7, 6 }, { 9, 6 }, { 5, 3 }, { 7, 9 } };
+
+
         //initialise the game board
         public void InitializeGameBoard()
         {
@@ -40,10 +62,11 @@ namespace WizardWarz
                 rows = 14;
                 cols = 16;
             }            
-            
-            
+                        
 
             curTileState = new TileStates[cols, rows];
+            powerupTileState = new PowerupStates[cols, rows];
+
 
             GridLengthConverter myGridLengthConverter = new GridLengthConverter();
             GridLength side = (GridLength)myGridLengthConverter.ConvertFromString("Auto");
@@ -69,8 +92,11 @@ namespace WizardWarz
                 for (int r = 0; r < rows; r++)
                 {
                     flrTiles[c, r] = new Rectangle();
+
+                    powerupTileState[c, r] = PowerupStates.Empty;
+
                     //add a wall tile if along the grid extremes
-                    if(InitialTilePlacementCheck(c,r, cols, rows) == true)
+                    if (InitialTilePlacementCheck(c,r, cols, rows) == true)
                     {
                         flrTiles[c, r].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Indesructable.png", UriKind.Relative)));
                         curTileState[c, r] = TileStates.SolidWall;
@@ -134,7 +160,7 @@ namespace WizardWarz
         public bool DestructableWallPlacementCheck(Int32 c, Int32 r)
         {
             //setup an array of grid positions (int[,]) for destructable walls = {column,Row} - count starts from "outer wall". ie. 5 = 5 + wall.
-            Int32[,] destructibleWallPos = { {9, 1 }, { 3, 2 }, { 3, 5 }, { 5, 5 }, { 5, 9 }, { 7, 1 }, { 7, 6 }, { 9, 6 }, { 5, 3 }, { 7, 9 } };
+            
 
             //itterate through the destructableWallPos 2D array and return true if both values match the passed in Row x Coll pos (r,c) - inner destructible-wall generation
             //we devide destructibleWallPos.Length by 2 because each "subarray" {x,y} is 2 elements long
@@ -154,5 +180,22 @@ namespace WizardWarz
             flrTiles[tileX, tileY].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Floor.png", UriKind.Relative)));
             Debug.WriteLine("Tile fill changed to floor!");
         }
+
+        public void ChangeTileState(int PosX, int PosY, string tileState)
+        {
+            switch (tileState)
+            {
+                case ("Superbomb"):
+                    curTileState[PosX, PosY] = TileStates.Powerup;
+                    powerupTileState[PosX, PosY] = PowerupStates.Superbomb;
+                    break;
+
+                case ("Shield"):
+                    curTileState[PosX, PosY] = TileStates.Powerup;
+                    powerupTileState[PosX, PosY] = PowerupStates.Shield;
+                    break;
+            }
+        }
+
     }
 }

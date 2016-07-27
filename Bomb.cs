@@ -32,6 +32,8 @@ namespace WizardWarz
         public GameBoardManager managerRef = null;
         public PlayerController myOwner = null;
 
+        public Powerup puRef = new Powerup();
+
         GameTimer myGameTimerRef = null;
 
         public Bomb(Grid localGameGrid)
@@ -45,7 +47,7 @@ namespace WizardWarz
         {
             myTime += myTickIncrement;
 
-            Debug.WriteLine("Bomb alive {0} seconds", myTime); //debug the timer
+            //Debug.WriteLine("Bomb alive {0} seconds", myTime); //debug the timer
             if (myTime >= (effectLifeTime + timeToExplode) && iCanDestroy == true)
             {
                 DestroyBomb();
@@ -169,7 +171,7 @@ namespace WizardWarz
         bool AddTileToExplosionArea(Int32 x, Int32 y, Int32 countDir, out Int32 countDirOut)
         {
             
-            if (ReturnCellTileState(x, y) == TileStates.Floor)
+            if (ReturnCellTileState(x, y) == TileStates.Floor || ReturnCellTileState(x, y) == TileStates.Powerup)
             {
                 explosionMatrix[count, 0] = x;
                 explosionMatrix[count, 1] = y;
@@ -249,6 +251,22 @@ namespace WizardWarz
                             GameBoardManager.curTileState[curCellC, curCellR] = TileStates.Floor;
                             myOwner.myLivesAndScore.ChangeScore(50, true);
                             managerRef.ChangeTileImage(curCellC, curCellR);
+
+                            //// Attempt to spawn powerup
+                            //Random r = new Random();
+                            //int rand = r.Next(1,2);
+                            ////MessageBox.Show(string.Format("Attempting to spawn powerup. Random number: {0}", rand));
+                            //if (rand == 1)
+                            //{
+                            //    puRef.Count();
+                            //    MessageBox.Show("attempting to spawn powerup");
+                            //}
+                            //    //
+                            //else if (rand == 2)
+                            //{
+                            //    puRef.Count();
+                            //    MessageBox.Show("attempting to spawn powerup");
+                            //}
                         }
                     }
                 }
@@ -307,8 +325,18 @@ namespace WizardWarz
 
             if (colPos == myOwner.playerX && rowPos == myOwner.playerY)
             {
-                myOwner.myLivesAndScore.ReduceLives(1);
-                myOwner.myLivesAndScore.ChangeScore(50, false);
+
+                if (myOwner.playerState == "Shield")
+                {
+                    myOwner.playerState = null;
+                }
+
+                else
+                {
+                    myOwner.myLivesAndScore.ReduceLives(1);
+                    myOwner.myLivesAndScore.ChangeScore(50, false);
+                }
+
             }
 
             return new Tuple<int>(0);

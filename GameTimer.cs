@@ -65,6 +65,7 @@ namespace WizardWarz
                 Debug.WriteLine("Elapsed = {0}", curTdelta);
             }
 
+            if (curTdelta % 3000 == 0)
             {
                 puRef.Count();
             }
