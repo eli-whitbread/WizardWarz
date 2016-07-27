@@ -33,11 +33,21 @@ namespace WizardWarz
 
         public PlayerController playerReference = null;
 
+        /// <summary>
+        /// Event Flag for the games Render Tick Event. <para> Anything using this tick will be added to the Rendering tick thread (not an extra thread). </para>
+        /// </summary> 
         public event EventHandler renderFrameEvent_TICK;
+
+        /// <summary>
+        /// Event Flag for the games Process Tick Event. <para> Anything using this tick will be added to the Processing tick thread (not an extra thread). </para>
+        /// </summary>
         public event EventHandler processFrameEvent_TICK;
 
         public Powerup puRef = null;
-        
+
+        // ---------------------------------------------------------------------
+        // ----------------------INITIALISE DispatchTimer-----------------------
+        // ---------------------------------------------------------------------
         public GameTimer()
         {
             DispatcherTimer gameLoopTimer = new DispatcherTimer(DispatcherPriority.Render);
@@ -57,6 +67,9 @@ namespace WizardWarz
             }
         }
 
+        // ---------------------------------------------------------------------
+        // ---------------------- TICK EVENT -----------------------------------
+        // ---------------------------------------------------------------------
         public void timer_Tick(object sender, EventArgs e)
         {
             curTdelta += deltaTime;
@@ -70,14 +83,18 @@ namespace WizardWarz
                 puRef.Count();
             }
 
-            // Send Public Tick Event For PROCESSING
+            // ---------------------------------------------------------------------
+            // ----------------------TICK EVENT FOR PROCESSING ---------------------
+            // ---------------------------------------------------------------------             
             if (processFrameEvent_TICK != null)
             {
                 processFrameEvent_TICK.Invoke(this, e);
 
             }
 
-            //send public tick event for RENDERING
+            // ---------------------------------------------------------------------
+            // ----------------------TICK EVENT FOR RENDERING-----------------------
+            // ---------------------------------------------------------------------            
             if (renderFrameEvent_TICK != null)
             {
                 renderFrameEvent_TICK.Invoke(this,e);

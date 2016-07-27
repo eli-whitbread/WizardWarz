@@ -55,9 +55,9 @@ namespace WizardWarz
         public void InitializeGameBoard()
         {
             
-            Int32 tileSize = 64;
+            Int32 tileSize = GameWindow.ReturnTileSize();
             //set the grid size
-            if(GameWindow.ReturnNumberOfPlayer() == 6)
+            if (GameWindow.ReturnNumberOfPlayer() == 6)
             {
                 rows = 14;
                 cols = 16;

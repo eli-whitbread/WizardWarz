@@ -23,10 +23,11 @@ namespace WizardWarz
         public Point relativePosition, localBombRelative;
         public Grid localGameGrid = null;
         public Grid highlightLocalGrid = null;
-        public Int32 tileSize = 64, bombRadius = 3;
+        public Int32 tileSize, bombRadius = 3;
         public Int32 playerPosition;
         public Int32[,] playerGridLocArray;
-        Color tempColour = new Color();
+        Color playerColour = new Color();
+        string playerImage;
         public GameBoardManager managerRef = null;
         public GameTimer playerTimerRef = null;
         AudioManager playMusic = new AudioManager();
@@ -55,6 +56,8 @@ namespace WizardWarz
         // ------------------------- Player Controller Constructor ------------
         public PlayerController()
         {
+            tileSize = GameWindow.ReturnTileSize();
+
             playerTimerRef = GameWindow.ReturnTimerInstance();
             
             //Debug.WriteLine("HELLO " + playerTimerRef);
@@ -91,64 +94,129 @@ namespace WizardWarz
 
         private void setPlayerPos(int gridStartPos)
         {
-            playerTile = new Rectangle();
-            playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerRight1.png", UriKind.Relative)));
+            
+            playerTile = new Rectangle();            
             playerTile.Height = tileSize;
             playerTile.Width = tileSize;
             Grid.SetColumn(playerTile, 0);
             Grid.SetRow(playerTile, 0);
 
             Grid.SetZIndex(playerTile, 10); //set the layering position of the playerTile - can use Grid.SetZIndex or Canvas.SetZIndex(object,int layer)
-           
-            if(gridStartPos == 0)
+
+
+            //------------------------------------------------------------------------------------------------
+            //-------------------------------|           PLAYER 1             |-------------------------------
+            //------------------------------------------------------------------------------------------------
+            if (gridStartPos == 0)
             {
-                relativePosition = new Point(64, 64);
+                relativePosition = new Point(64, 64);                
                 playerX = 1;
                 playerY = 1;
-                tempColour = Colors.Blue;
+                playerColour = Colors.Silver;
+                playerImage = "PlayerRight1.png";
                 Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
             }
-            else if(gridStartPos == 1)
+            //------------------------------------------------------------------------------------------------
+            //-------------------------------|           PLAYER 2             |-------------------------------
+            //------------------------------------------------------------------------------------------------
+            else if (gridStartPos == 1)
             {
-                relativePosition = new Point(704, 64);
-                playerX = 11;
-                playerY = 1;
-                tempColour = Colors.Red;
+                if(GameWindow.ReturnNumberOfPlayer() == 6)
+                {
+                    // Become PLAYER 3
+                    relativePosition = new Point(704, 256);
+                    playerX = 10;
+                    playerY = 4;
+                    playerImage = "PlayerRight1.png";
+                }
+                else 
+                {
+                    // Stay as PLAYER 2
+                    relativePosition = new Point(704, 64);
+                    playerX = 11;
+                    playerY = 1;                    
+                    playerImage = "PlayerRight1.png";                    
+                }
+                playerColour = Colors.Red;
                 Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
             }
+            //------------------------------------------------------------------------------------------------
+            //-------------------------------|           PLAYER 3             |-------------------------------
+            //------------------------------------------------------------------------------------------------
             else if (gridStartPos == 2)
             {
-                relativePosition = new Point(704, 704);
-                playerX = 10;
-                playerY = 10;
-                tempColour = Colors.Green;
+                if(GameWindow.ReturnNumberOfPlayer() == 6)
+                {
+                    // Becomes PLAYER 5
+                    relativePosition = new Point(64, 704);
+                    playerX = 1;
+                    playerY = 10;
+                    playerImage = "PlayerRight1.png";
+                }
+                else 
+                {
+                    // Stay as PLAYER 3
+                    relativePosition = new Point(704, 704);
+                    playerX = 10;
+                    playerY = 10;
+                    playerImage = "PlayerRight1.png";
+                }
+                playerColour = Colors.Blue;                
                 Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
-
             }
+            //------------------------------------------------------------------------------------------------
+            //-------------------------------|           PLAYER 4             |-------------------------------
+            //------------------------------------------------------------------------------------------------
             else if (gridStartPos == 3)
             {
-                relativePosition = new Point(64, 704);
-                playerX = -1;
-                playerY = 10;
-                tempColour = Colors.Pink;
+                if(GameWindow.ReturnNumberOfPlayer() == 6)
+                {
+                    // BECOMES PLAYER 6
+                    relativePosition = new Point(64, 256);
+                    playerX = 1;
+                    playerY = 4;
+                    playerImage = "PlayerRight1.png";
+                }
+                else 
+                {
+                    // Stay as PLAYER 4
+                    relativePosition = new Point(64, 704);
+                    playerX = 1;
+                    playerY = 10;
+                    playerImage = "PlayerRight1.png";
+                }                
                 Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
+                playerColour = Colors.Yellow;
             }
+            //------------------------------------------------------------------------------------------------
+            //-------------------------------|           PLAYER 5             |-------------------------------
+            //------------------------------------------------------------------------------------------------
             else if (gridStartPos == 4)
             {
-                relativePosition = new Point(64, 256);
-                playerX = 1;
-                playerY = 4;
-                tempColour = Colors.Yellow;
+                relativePosition = new Point(704, 64);
+                playerX = 10;
+                playerY = 1;
+                playerColour = (Color)ColorConverter.ConvertFromString("#FFAC02FB");
+                playerImage = "PlayerRight1.png";
                 Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
             }
+            //------------------------------------------------------------------------------------------------
+            //-------------------------------|           PLAYER 6             |-------------------------------
+            //------------------------------------------------------------------------------------------------
             else if (gridStartPos == 5)
-            {
-                relativePosition = new Point(640, 256);
-                playerX = 10;
-                playerY = 4;
-                tempColour = Colors.Silver;
+            {                
+                    relativePosition = new Point(704, 704);
+                    playerX = 10;
+                    playerY = 10;
+                    playerColour = Colors.Green;
+                playerImage = "PlayerRight1.png";
                 Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
-            }            
+            } 
+            else
+            {
+                return;
+            }
+            playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@"./Resources/" + playerImage, UriKind.Relative)));
             localGameGrid.Children.Add(playerTile);
         }
         
@@ -263,7 +331,7 @@ namespace WizardWarz
             highlight.Width = 64 * 0.2;
             
             
-            highlight.Fill = new SolidColorBrush(tempColour);
+            highlight.Fill = new SolidColorBrush(playerColour);
             highlight.Fill.Opacity = 0.4f;
             highlight.IsHitTestVisible = false;
             pathHighlightTile.Add(highlight);

@@ -21,7 +21,7 @@ namespace WizardWarz
     /// </summary>
     public partial class GameWindow : UserControl
     {
-        public Int32 tileSize = 64;
+        protected static Int32 tileSize = 64;
         double varRotTransform = 90;
         double gameLevelTime = 120;
         protected static GameTimer gameTimerInstance;
@@ -33,28 +33,42 @@ namespace WizardWarz
         public PlayerController[] playerControllers = null;
         public PlayerLivesAndScore[] playerLives;
         public Powerup powerupRef = null;
-             
 
+        /// <summary>
+        /// Returns reference to MainWindow Canvas. <para> The Canvas exists above the game Grid, so will be rendered first.</para>
+        /// </summary>
         public static Canvas ReturnnMainCanvas()
         {
             return GameCanvasInstance;
-
         }
 
+        /// <summary>
+        /// Returns a references to the Game Timer. <para> This provides a way to easily reference the game timer (once, instead of several instances), within any class. </para>
+        /// </summary>
         public static GameTimer ReturnTimerInstance()
         {
             return gameTimerInstance;
         }
 
+        /// <summary>
+        /// Returns a reference to the GameBoardManager. <para> The GameBoard Manager holds tile/floor state information. </para>
+        /// </summary>
         public static GameBoardManager ReturnGameBoardInstance()
         {
             return gameBoardManager;
         }
 
-
+        /// <summary>
+        /// Returns the number of players in the current game instance. <para> The game board size is different for both 4 or 6 players, wherein the latter is larger. If you use this reference, make sure what is placed on the board corresponds. </para>
+        /// </summary>
         public static int ReturnNumberOfPlayer()
         {
             return noOfPlayers;
+        }
+
+        public static Int32 ReturnTileSize()
+        {
+            return tileSize;
         }
 
         public GameWindow()

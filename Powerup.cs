@@ -153,8 +153,8 @@ namespace WizardWarz
             // Set general powerup properties
             Rectangle powerupTile = new Rectangle();
 
-            powerupTile.Height = 64;
-            powerupTile.Width = 64;
+            powerupTile.Height = GameWindow.ReturnTileSize(); 
+            powerupTile.Width = GameWindow.ReturnTileSize();
             Grid.SetColumn(powerupTile, xPos);
             Grid.SetRow(powerupTile, yPos);
 

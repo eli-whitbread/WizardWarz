@@ -23,13 +23,11 @@ namespace WizardWarz
     {
         public Int32 playerLivesNumber;
         public Rectangle playerHomeTile;
-        public Rectangle playerHomeTile2;
-
+        //public Rectangle playerHomeTile2;
         public Rectangle playerLivesTile;
         public Label playerScore;
         public int currentScore;
-        public string finalScore;
-        public Canvas mainCanvasLocalRef;
+        //public Canvas mainCanvasLocalRef;
         public int tileSizeLocal;
         AudioManager playMusic = new AudioManager();
 
@@ -40,7 +38,7 @@ namespace WizardWarz
             InitializeComponent();
 
             //mainCanvasLocalRef = mainCanvas;
-            tileSizeLocal = 64;
+            tileSizeLocal = GameWindow.ReturnTileSize();
 
             //--------------- Player Lives (HAS TO BE CHANGED HERE)--------------------------
             playerLivesNumber = playerLivesNumber + 3;
@@ -147,33 +145,26 @@ namespace WizardWarz
 
         public void initialiseScore()
         {
-            //--------------------------------------------------------------------------------------------------------------
+            //------------------------------------------------------------------------------------------------------------------
             //--------------------------------------------| Initialise Player Score |-------------------------------------------           
             //------------------------------------------------------------------------------------------------------------------
 
             playerScore = new Label();
 
-
-
             playerScore.Content = currentScore.ToString();
             playerScore.FontSize = 32;
             playerScore.Foreground = new SolidColorBrush(Colors.Black);
             playerScore.Width = 128;
-            playerScore.Height = 64;
+            playerScore.Height = GameWindow.ReturnTileSize();
 
-
-            // --------------- Set position, within the local grid (scoreGrid) of this element ------------------------------
+            // --------------- Set position, within the local grid (scoreGrid) of this element --------------------------------
 
             Grid.SetRow(playerScore, 0);
             Grid.SetColumn(playerScore, 1);
-
             
-
             scoreGrid.Children.Add(playerScore);
-
-
-            //--------------------------------------------------------------------------------------------------------------
-            //--------------------------------------------------------------------------------------------------------------
+            //-----------------------------------------------------------------------------------------------------------------
+            //-----------------------------------------------------------------------------------------------------------------
 
         }
 
@@ -194,7 +185,7 @@ namespace WizardWarz
         {
             try
             {
-                // ------------------ Remove Score from Grid ----------------------------------
+                // ------------- Remove Score from Grid --------------------------------------------------------------------------
                 scoreGrid.Children.RemoveAt(0);
             }
             catch

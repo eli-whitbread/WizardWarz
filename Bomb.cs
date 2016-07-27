@@ -208,8 +208,8 @@ namespace WizardWarz
 
 
             bombImage = new Rectangle();
-            bombImage.Height = 64;
-            bombImage.Width = 64;
+            bombImage.Height = GameWindow.ReturnTileSize(); 
+            bombImage.Width = GameWindow.ReturnTileSize();
 
             bombImage.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Bomb.png", UriKind.Relative)));
             bombImage.IsHitTestVisible = false;
@@ -295,8 +295,8 @@ namespace WizardWarz
                 if (colPos != 0 || rowPos != 0)
                 {
                     Rectangle explosion = new Rectangle();
-                    explosion.Height = 64;
-                    explosion.Width = 64;
+                    explosion.Height = GameWindow.ReturnTileSize(); 
+                    explosion.Width = GameWindow.ReturnTileSize();
 
                     explosion.Fill = new SolidColorBrush(Colors.Red);
                     explosion.Fill.Opacity = 0.7f;
