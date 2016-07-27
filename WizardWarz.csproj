@@ -77,6 +77,7 @@
       <DependentUpon>PlayerLivesAndScore.xaml</DependentUpon>
     </Compile>
     <Compile Include="Powerup.cs" />
+    <Compile Include="SpritesheetImage.cs" />
     <Compile Include="StaticCollections.cs" />
     <Compile Include="TitleScreen.xaml.cs">
       <DependentUpon>TitleScreen.xaml</DependentUpon>
@@ -109,6 +110,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PlayerLivesAndScore.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -256,11 +261,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ZombieHunter_SpriteSheet.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\WizardWarzText1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -281,6 +281,9 @@
     <None Include="Resources\superbomb.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ZombieHunter_SpriteSheet.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -17,6 +17,7 @@ namespace WizardWarz
 {
     public class PlayerController
     {
+        //SpritesheetImage playerTile;
         public Rectangle playerTile;
         public Point currentPOS;
         public Point lastClickPOS;
@@ -94,7 +95,27 @@ namespace WizardWarz
 
         private void setPlayerPos(int gridStartPos)
         {
-            
+            //Animated sprite test begin - switch Rectangle playerTile variable to SpritesheetImage playerTile and comment out "playerTile = new Rectangle()" and playerTile.Fill below as well as playerDirection() and the function call in PlayerMoveToCell()
+
+            //BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/Resources/ZombieHunter_SpriteSheet.png", UriKind.Absolute));
+            //playerTile = new SpritesheetImage()
+            //{
+            //    Source = image,
+            //    FrameMaxX = 5,
+            //    FrameMaxY = 2,
+            //    FrameRate = 15,
+            //    Width = 64,
+            //    Height = 64,
+            //    PlaysRemaining = 10,
+            //    LoopForever = true
+            //};
+            //playerTile.AnimationComplete += (o, s) =>
+            //{
+            //    localGameGrid.Children.Remove(playerTile);
+            //};
+
+            //Animated sprite test end
+
             playerTile = new Rectangle();            
             playerTile.Height = tileSize;
             playerTile.Width = tileSize;
