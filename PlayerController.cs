@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Input;
 using System.Diagnostics;
+using static WizardWarz.Powerup;
 
 namespace WizardWarz
 {
@@ -30,6 +31,8 @@ namespace WizardWarz
         public GameTimer playerTimerRef = null;
         AudioManager playMusic = new AudioManager();
 
+        public string playerState = null;
+
         int p1PathCellCount = 0;
         public int playerX = 0;
         public int playerY = 0;
@@ -47,6 +50,7 @@ namespace WizardWarz
         public Rectangle[,] gridCellsArray = null;
         public Canvas gameCanRef = null;
         public PlayerLivesAndScore myLivesAndScore = null;
+        public Powerup myPowerupRef = null;
 
         // ------------------------- Player Controller Constructor ------------
         public PlayerController()
@@ -329,6 +333,11 @@ namespace WizardWarz
                 Debug.WriteLine("Cell state confirmed as floor!");
                 return true;
             }
+            else if (curCellTS == TileStates.Powerup)
+            {
+                Debug.WriteLine("Cell has a powerup.");
+                return true;
+            }
             else
             {
                 Debug.WriteLine("Cell state confirmed as not floor!");
@@ -394,7 +403,17 @@ namespace WizardWarz
             playerY = Convert.ToInt32(relativePosition.Y) / tileSize;
             Debug.WriteLine("New Player x = {0}, New Player y = {1}", playerX, playerY);
 
-            
+
+            //Console.WriteLine("Tile secondary state: {0}", GameBoardManager.powerupTileState[playerX, playerY]);
+            //MessageBox.Show(string.Format("Scanning for powerups. Current tile state: {0}", GameBoardManager.curTileState[playerX, playerY]));
+
+            if (GameBoardManager.curTileState[playerX, playerY] == TileStates.Powerup)
+            {
+                playerState = myPowerupRef.ReturnPowerup(playerX, playerY, localGameGrid);
+                Console.WriteLine("Player State: {0}", playerState);
+            }
+
+
             pathCells.RemoveAt(0);
         }
 
@@ -453,15 +472,25 @@ namespace WizardWarz
 
                     localGameGrid.Children.Remove(playerTile);
 
+                    if (playerState == "Superbomb")
+                        bombRadius += 3;
+
                     fireBomb.InitialiseBomb((int)(localCol / tileSize), (int)(localRow / tileSize), bombRadius);
                     localGameGrid.Children.Add(playerTile);
-
 
                     // Play Bomb Explode Sound (Should also play the tick sound here)
                     //playMusic.playBombExplode(); - move to Bomb.cs
 
                     //add bomb reference to bomb collection
                     StaticCollections.AddBomb(fireBomb, (int)(localCol / tileSize), (int)(localRow / tileSize));
+
+                    //MessageBox.Show(string.Format("Player state: {0}", playerState));
+                    if (playerState == "Superbomb")
+                    {
+                        bombRadius = 3;
+                        playerState = null;
+
+                    }
                 }
             }
 

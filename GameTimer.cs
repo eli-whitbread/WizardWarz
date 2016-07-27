@@ -35,6 +35,8 @@ namespace WizardWarz
 
         public event EventHandler renderFrameEvent_TICK;
         public event EventHandler processFrameEvent_TICK;
+
+        public Powerup puRef = null;
         
         public GameTimer()
         {
@@ -61,6 +63,10 @@ namespace WizardWarz
             if (curTdelta % 5 == 0)
             {                
                 Debug.WriteLine("Elapsed = {0}", curTdelta);
+            }
+
+            {
+                puRef.Count();
             }
 
             // Send Public Tick Event For PROCESSING

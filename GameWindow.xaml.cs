@@ -32,6 +32,7 @@ namespace WizardWarz
         protected static int noOfPlayers = 6;
         public PlayerController[] playerControllers = null;
         public PlayerLivesAndScore[] playerLives;
+        public Powerup powerupRef = null;
              
 
         public static Canvas ReturnnMainCanvas()
@@ -66,6 +67,7 @@ namespace WizardWarz
             if (gameTimerInstance == null)
             {
                 gameTimerInstance = new GameTimer();
+
             }
 
             gameTimerInstance.Initialise();
@@ -84,6 +86,11 @@ namespace WizardWarz
             Debug.WriteLine(GameCanvasInstance.Name);
 
             StaticCollections _staticColections = new StaticCollections();
+
+            powerupRef = new Powerup();
+            powerupRef.curGameGrid = MainGameGrid;
+            powerupRef.InitialisePowerups();
+            gameTimerInstance.puRef = powerupRef;
         }
 
         private void initialiseGameBoardSize()
@@ -111,7 +118,8 @@ namespace WizardWarz
                 playerControllers[i].gridCellsArray = gameBoardManager.flrTiles;
                 playerControllers[i].myLivesAndScore = playerLives[i];
                 playerControllers[i].initialisePlayerGridRef();
-                
+                playerControllers[i].myPowerupRef = new Powerup();
+
                 // --------------------------- Initialise All Players Lives and Score Controls -----------------------------
                 initialisePlayerLivesAndScore(i);
             }

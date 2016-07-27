@@ -76,6 +76,7 @@
     <Compile Include="PlayerLivesAndScore.xaml.cs">
       <DependentUpon>PlayerLivesAndScore.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Powerup.cs" />
     <Compile Include="StaticCollections.cs" />
     <Compile Include="TitleScreen.xaml.cs">
       <DependentUpon>TitleScreen.xaml</DependentUpon>
@@ -272,6 +273,14 @@
     <Resource Include="Resources\WizardWarzText4.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shield.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\superbomb.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
