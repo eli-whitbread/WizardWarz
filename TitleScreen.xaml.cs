@@ -25,6 +25,10 @@ namespace WizardWarz
         public bool dTimerBool = false;
         int picCount = 0;
         int picWaitMove = 0;
+
+        public MainWindow mwRef = null;
+        public HelpScreen tutorial = null;
+
         public TitleScreen()
         {
             InitializeComponent();
@@ -32,7 +36,36 @@ namespace WizardWarz
             dTimer1.Interval = new TimeSpan(0, 0, 0, 0, 150);
             dTimer1.Start();
             titleScreenSound.playTitleSound();
+
+
             
+        }
+
+        //Tutorial buttons
+        private void TopRightButtonClick(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show("Top right button clicked.");
+            mwRef = MainWindow.ReturnMainWindowInstance();
+            mwRef.ToggleVolumeButton();
+            mwRef.MainCanvas.Children.Remove(this);
+
+            tutorial = new HelpScreen();
+            mwRef.MainCanvas.Children.Add(tutorial);
+
+            tutorial.InitializeHelpScreen();
+        }
+
+        private void BottomLeftButtonClick(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show("Bottom left button clicked.");
+            mwRef = MainWindow.ReturnMainWindowInstance();
+            mwRef.ToggleVolumeButton();
+            mwRef.MainCanvas.Children.Remove(this);
+
+            tutorial = new HelpScreen();
+            mwRef.MainCanvas.Children.Add(tutorial);
+
+            tutorial.InitializeHelpScreen();
         }
 
         private void DTimer1_Tick(object sender, EventArgs e)

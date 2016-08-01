@@ -9,8 +9,8 @@
         Title="Wizard Warz" Height="1080" Width="1080">
     <Canvas Name="MainCanvas">
         <Canvas Name="AudioCanvas">
-            <Grid Name="audioTile" Panel.ZIndex="5" >
-                <Label x:Name="label" Content="Volume" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontFamily="Stencil"/>
+            <Grid Name="audioTile" Panel.ZIndex="5" Height="1080" Width="1080" >
+                <Label x:Name="volLabel" Content="Volume" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontFamily="Stencil"/>
                 <Image x:Name="volImage" HorizontalAlignment="Center" Height="64" Margin="0,0,0,0" VerticalAlignment="Center" Width="64"
                    Source="Resources/audioOn.png" Stretch="Fill" TouchDown="image_TouchDown" MouseLeftButtonDown="image_MouseLeftButtonDown">
                 </Image>

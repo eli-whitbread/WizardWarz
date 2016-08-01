@@ -1,0 +1,126 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Windows.Threading;
+
+namespace WizardWarz
+{
+    /// <summary>
+    /// Interaction logic for MainMenu.xaml
+    /// </summary>
+    public partial class EndGame : UserControl
+    {
+        public int currentTick = 0;
+        public int maxScore = 0;
+        public string topPlayer;
+        public int endCountdown = 10;
+
+        public DispatcherTimer endGameTimer = null;
+        public GameWindow gwRef;
+
+        public EndGame()
+        {
+            InitializeComponent();
+
+            // End game timer
+            endGameTimer = new DispatcherTimer(DispatcherPriority.Render);
+            endGameTimer.Interval = TimeSpan.FromSeconds(1);
+            endGameTimer.Tick += new EventHandler(timer_Tick);
+            endGameTimer.Start();
+
+            RetrieveScores();
+        }
+
+        public void timer_Tick(object sender, EventArgs e)
+        {
+            currentTick += 1;
+            endCountdown = 10 - currentTick;
+
+            if (currentTick % 1 == 0)
+            {
+                Console.WriteLine("Current tick: {0}", currentTick);
+                Countdown();
+            }
+        }
+
+        public void Countdown()
+        {
+            // Count down to 0, then restart the game.
+            endTimer.Content = endCountdown + " seconds.";
+            if (endCountdown <= 0)
+            {
+                endGameTimer.Stop();
+
+                MainWindow mwRef = MainWindow.ReturnMainWindowInstance();
+                mwRef.MainCanvas.Children.Remove(this);
+
+                TitleScreen title = new TitleScreen();
+                title.MouseDown += mwRef.Title_MouseDown;
+                mwRef.MainCanvas.Children.Add(title);
+            }
+        }
+
+        public void RetrieveScores()
+        {
+            gwRef = GameWindow.ReturnGameWindowInstance();
+
+            Dictionary<string, int> unsortedPlayerStats = new Dictionary<string, int>();
+            Dictionary<string, int> sortedPlayerStats = new Dictionary<string, int>();
+
+            // Random value used solely for testing
+            Random r = new Random();
+
+            foreach (PlayerController player in gwRef.playerControllers)
+            {
+                int test = r.Next(-200, 200);
+
+                unsortedPlayerStats.Add(player.playerName, test);
+                Console.WriteLine(string.Format("Player result: {0}, score: {1}", player.playerName, test));
+            }
+
+            // Use OrderBy method to sort dictionary by value, then add the sorted values to the second dictionary.
+            foreach (var item in unsortedPlayerStats.OrderBy(i => i.Value))
+            {
+                //MessageBox.Show(string.Format("Dictionary key/value: {0}", item));
+                Console.WriteLine(item);
+                sortedPlayerStats.Add(item.Key, item.Value);
+            }
+
+            // The sorted dictionary should have the top-scoring player as the last entry.
+            topPlayer = sortedPlayerStats.Keys.Last();
+            Console.WriteLine("{0} is the winner!", topPlayer);
+            Winner.Content = topPlayer;
+
+            player1Score.Content = unsortedPlayerStats.Values.ElementAt(0);
+            player2Score.Content = unsortedPlayerStats.Values.ElementAt(1);
+            player3Score.Content = unsortedPlayerStats.Values.ElementAt(2);
+            player4Score.Content = unsortedPlayerStats.Values.ElementAt(3);
+
+            // If there are only 4 players, empty the last two groups of labels
+            if (GameWindow.ReturnNumberOfPlayer() <= 4)
+            {
+                player5Score.Content = "";
+                player5Label.Content = "";
+                player6Score.Content = "";
+                player6Label.Content = "";
+            }
+
+            else
+            {
+                player5Score.Content = unsortedPlayerStats.Values.ElementAt(4);
+                player6Score.Content = unsortedPlayerStats.Values.ElementAt(5);
+            }
+        }  
+    }
+}

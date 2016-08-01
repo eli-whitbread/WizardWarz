@@ -15,7 +15,8 @@ namespace WizardWarz
     public enum PowerupTypes
     {
         Superbomb,
-        Shield
+        Shield,
+        Lifeup
     }
 
 
@@ -26,12 +27,13 @@ namespace WizardWarz
         public int powerupType;
         public int gameTime;
         public static PowerupTypes[,] _powerupTile = null;
+        protected static Powerup powerupRef = null;
 
         GameBoardManager _localGameBoard = new GameBoardManager();
         public Grid curGameGrid = null;
 
-        public static int xPos;
-        public static int yPos;
+        public int xPos;
+        public int yPos;
 
         // Used to prevent the powerups from spawning on wall tiles
         bool xFlag = true;
@@ -40,40 +42,29 @@ namespace WizardWarz
         public TileStates[,] curTileStates = GameBoardManager.curTileState;
         public PowerupStates[,] powerupTileStates = GameBoardManager.powerupTileState;
 
-        //// Use to retrieve each individual powerup
-        //public List<puRef> pList = new List<puRef>();
-        //// used to index powerups
-        //public int totalObjects;
-
-        //public class Powerup
-        //{
-        //    public int pIndex { get; set; }
-        //    public string pName { get; set; }
-        //    public int xPos { get; set; }
-        //    public int yPos { get; set; }
-
-        //    public Powerup(int index, string name, int posX, int posY)
-        //    {
-        //        pIndex = index;
-        //        pName = name;
-        //        xPos = posX;
-        //        yPos = posY;
-        //    }
-        //}
-
 
         public void InitialisePowerups()
         {
-
+            //powerupRef = this;
         }
+
+        //public static Powerup ReturnPowerupReference()
+        //{
+        //    return powerupRef;
+        //}
+        
 
         public void Count()
         {
             powerupCount += 1;
             //Debug.WriteLine("Power up count: {0}", powerupCount);
-            if (powerupCount >= 2)
+            if (powerupCount >= 1)
             {
                 powerupCount = 0;
+
+                Random rand = new Random();
+                xPos = rand.Next(1, 12);
+                yPos = rand.Next(1, 12);
 
                 TileCheck();
             }
@@ -85,11 +76,7 @@ namespace WizardWarz
             xFlag = true;
             yFlag = true;
 
-
-            Random rand = new Random();
-            xPos = rand.Next(1, 12);
             //Console.WriteLine("xPos: {0}", xPos);
-            yPos = rand.Next(1, 12);
             //Console.WriteLine("yPos: {0}", yPos);
 
             // Compare x-coordinates
@@ -124,7 +111,7 @@ namespace WizardWarz
             {
                 Random randType = new Random();
                 // The right-most number should be equal to the amount of powerups we've created 
-                powerupType = randType.Next(0, 2);
+                powerupType = randType.Next(0, 3);
 
                 if (powerupType == 0)
                 {
@@ -135,6 +122,11 @@ namespace WizardWarz
                 {
                     SpawnPowerup("Shield");
                     Console.WriteLine("Shield spawned");
+                }
+                else if (powerupType == 2)
+                {
+                    SpawnPowerup("Lifeup");
+                    Console.WriteLine("Lfieup spawned");
                 }
                 else
                     Console.WriteLine("Powerup type error.");
@@ -163,19 +155,62 @@ namespace WizardWarz
             switch (powerupName)
             {
                 case ("SuperBomb"):
+                    pName = "Superbomb";
                     powerupTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\superbomb.png", UriKind.Relative)));
                     _localGameBoard.ChangeTileState(xPos, yPos, "Superbomb");
-                    pName = "Superbomb";
                     break;
                 case ("Shield"):
+                    pName = "Shield";
                     powerupTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\shield.png", UriKind.Relative)));
                     _localGameBoard.ChangeTileState(xPos, yPos, "Shield");
-                    pName = "Shield";
+                    break;
+                case ("Lifeup"):
+                    pName = "Lifeup";
+                    powerupTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\heart.png", UriKind.Relative)));
+                    _localGameBoard.ChangeTileState(xPos, yPos, "Lifeup");
                     break;
             }
 
             curGameGrid.Children.Add(powerupTile);
-            Console.WriteLine("Game Grid children: {0}", curGameGrid.Children.Count);
+        }
+
+
+        // Spawn a powerup at a wall position
+        public void WallSpawn(int PosX, int PosY, Grid GameGrid)
+        {
+            Rectangle powerupTile = new Rectangle();
+
+            Random r = new Random();
+            int rand = r.Next(0, 3);
+            //MessageBox.Show(string.Format("Random number: {0}", rand));
+            if (rand == 0)
+            {
+                pName = "Superbomb";
+                powerupTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\superbomb.png", UriKind.Relative)));
+                _localGameBoard.ChangeTileState(PosX, PosY, "Superbomb");
+                //MessageBox.Show("Superbomb made");
+            }
+            else if (rand == 1)
+            {
+                pName = "Shield";
+                powerupTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\shield.png", UriKind.Relative)));
+                _localGameBoard.ChangeTileState(PosX, PosY, "Shield");
+                //MessageBox.Show("Shield made");
+            }
+            else if (rand == 2)
+            {
+                pName = "Lifeup";
+                powerupTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\heart.png", UriKind.Relative)));
+                _localGameBoard.ChangeTileState(PosX, PosY, "Lifeup");
+                //MessageBox.Show("Lifeup made");
+            }
+
+            powerupTile.Height = GameWindow.ReturnTileSize();
+            powerupTile.Width = GameWindow.ReturnTileSize();
+            Grid.SetColumn(powerupTile, PosX);
+            Grid.SetRow(powerupTile, PosY);
+            GameBoardManager.curTileState[PosX, PosY] = TileStates.Powerup;
+            GameGrid.Children.Add(powerupTile);
         }
 
 
@@ -183,8 +218,6 @@ namespace WizardWarz
         // Used to empower players.
         public string ReturnPowerup(int col, int row, Grid GameGrid)
         {
-            //Console.WriteLine("Game Grid children: {0}", GameGrid.Children.Count);
-
             for (int i = 220; i < GameGrid.Children.Count; i++)
             {
                 UIElement elem = GameGrid.Children[i];
@@ -193,7 +226,7 @@ namespace WizardWarz
                 {
                     if (GameBoardManager.curTileState[col, row] == TileStates.Powerup)
                     {
-                        // Remove the powerup, then return it's name.
+                        // Remove the powerup, then return its name.
                         GameBoardManager.curTileState[col, row] = TileStates.Floor;
                         GameGrid.Children.Remove(elem);
 
@@ -208,6 +241,12 @@ namespace WizardWarz
                             GameBoardManager.powerupTileState[col, row] = PowerupStates.Empty;
                             //MessageBox.Show("Shield!");
                             return "Shield";
+                        }
+                        else if (GameBoardManager.powerupTileState[col, row] == PowerupStates.Lifeup)
+                        {
+                            GameBoardManager.powerupTileState[col, row] = PowerupStates.Empty;
+                            //MessageBox.Show("Lifeup!");
+                            return "Lifeup";
                         }
                     }
                 }

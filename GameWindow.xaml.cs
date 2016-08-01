@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.Windows.Threading;
 
 namespace WizardWarz
 {
@@ -23,10 +24,10 @@ namespace WizardWarz
     {
         protected static Int32 tileSize = 64;
         double varRotTransform = 90;
-        double gameLevelTime = 120;
         protected static GameTimer gameTimerInstance;
         protected static GameBoardManager gameBoardManager;
         protected static Canvas GameCanvasInstance;
+        protected static GameWindow gameWindowInstance;
         public Grid MainGameGrid;
         public RotateTransform trRot = null;
         protected static int noOfPlayers = 6;
@@ -34,10 +35,15 @@ namespace WizardWarz
         public PlayerLivesAndScore[] playerLives;
         public Powerup powerupRef = null;
 
+        private DispatcherTimer endTimer;
+        public int gameTimeSeconds = 00;
+        public int gameTimeMinutes = 4;
+
+
         /// <summary>
         /// Returns reference to MainWindow Canvas. <para> The Canvas exists above the game Grid, so will be rendered first.</para>
         /// </summary>
-        public static Canvas ReturnnMainCanvas()
+        public static Canvas ReturnMainCanvas()
         {
             return GameCanvasInstance;
         }
@@ -66,6 +72,11 @@ namespace WizardWarz
             return noOfPlayers;
         }
 
+        public static GameWindow ReturnGameWindowInstance()
+        {
+            return gameWindowInstance;
+        }
+
         public static Int32 ReturnTileSize()
         {
             return tileSize;
@@ -77,6 +88,7 @@ namespace WizardWarz
 
             GameCanvasInstance = GameCanvas;
             MainGameGrid = GameBoardGrid;
+            gameWindowInstance = this;
 
             if (gameTimerInstance == null)
             {
@@ -85,6 +97,13 @@ namespace WizardWarz
             }
 
             gameTimerInstance.Initialise();
+
+            // The number of players needs to be set before the game board is initialized
+            if (MainMenu.GlobalPlayerMainMenu)
+                noOfPlayers = 6;
+            else
+                noOfPlayers = 4;
+
 
             initialiseGameBoardSize();
             
@@ -105,6 +124,36 @@ namespace WizardWarz
             powerupRef.curGameGrid = MainGameGrid;
             powerupRef.InitialisePowerups();
             gameTimerInstance.puRef = powerupRef;
+
+
+            // End timer
+            endTimer = new DispatcherTimer(DispatcherPriority.Render);
+            endTimer.Interval = TimeSpan.FromSeconds(1);
+            endTimer.Tick += new EventHandler(timer_Tick);
+            endTimer.Start();
+        }
+
+        public void timer_Tick(object sender, EventArgs e)
+        {
+            gameTimeSeconds -= 1;
+
+            if (gameTimeSeconds <= -1)
+            {
+                gameTimeSeconds = 59;
+                gameTimeMinutes -= 1;
+
+                if (gameTimeMinutes <= -1)
+                {
+                    MessageBox.Show("Three minutes passed. End of game reached.");
+                    gameTimerInstance.gameLoopTimer.Stop();
+
+                    MainWindow mwRef = MainWindow.ReturnMainWindowInstance();
+                    mwRef.GameEnd();
+                } 
+            }
+
+            // "D2" = Standard Numeric Formatting. Ensures that the seconds will always be displayed in double digits.
+            gameTimeText.Content = gameTimeMinutes + ":" + gameTimeSeconds.ToString("D2");
         }
 
         private void initialiseGameBoardSize()
@@ -133,9 +182,12 @@ namespace WizardWarz
                 playerControllers[i].myLivesAndScore = playerLives[i];
                 playerControllers[i].initialisePlayerGridRef();
                 playerControllers[i].myPowerupRef = new Powerup();
+                playerControllers[i].playerName = "Player " + (i + 1).ToString();
+
 
                 // --------------------------- Initialise All Players Lives and Score Controls -----------------------------
                 initialisePlayerLivesAndScore(i);
+                //Console.WriteLine("New player: {0}", playerControllers[i].playerName);
             }
         }
 

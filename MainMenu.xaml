@@ -10,8 +10,8 @@
         <Grid>
 
         </Grid>
-        <Button x:Name="button" Content="4" Canvas.Left="412" Canvas.Top="348" Width="256" Height="64" FontSize="32" MouseLeftButtonDown="four_MouseLeftButtonDown"/>
-        <Button x:Name="button1" Content="6" Canvas.Left="412" Canvas.Top="640" Width="256" Height="64" FontSize="32" MouseLeftButtonDown="six_MouseLeftButtonDown"/>
+        <Button x:Name="button" Content="4" Canvas.Left="412" Canvas.Top="348" Width="256" Height="64" FontSize="32" PreviewMouseLeftButtonDown="four_MouseLeftButtonDown"/>
+        <Button x:Name="button1" Content="6" Canvas.Left="412" Canvas.Top="640" Width="256" Height="64" FontSize="32" PreviewMouseLeftButtonDown="six_MouseLeftButtonDown"/>
         <Label x:Name="label" Content="Number of Players" Canvas.Left="284" Canvas.Top="192" Height="128" Width="542" FontSize="64"/>
     </Canvas>
 </UserControl>

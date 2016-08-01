@@ -34,6 +34,7 @@ namespace WizardWarz
         AudioManager playMusic = new AudioManager();
 
         public string playerState = null;
+        public string playerName = null;
 
         int p1PathCellCount = 0;
         public int playerX = 0;
@@ -499,6 +500,18 @@ namespace WizardWarz
             if (GameBoardManager.curTileState[playerX, playerY] == TileStates.Powerup)
             {
                 playerState = myPowerupRef.ReturnPowerup(playerX, playerY, localGameGrid);
+
+                if (playerState == "Lifeup")
+                {
+                    playerState = null;
+                    myLivesAndScore.playerLivesNumber += 1;
+
+                    if (myLivesAndScore.playerLivesNumber >= 4)
+                        myLivesAndScore.playerLivesNumber = 3;
+
+                    myLivesAndScore.CalculateLives();
+                }
+
                 Console.WriteLine("Player State: {0}", playerState);
             }
 

@@ -25,9 +25,14 @@ namespace WizardWarz
     /// </summary>
     public partial class MainWindow : Window
     {
-        AudioManager newAudioManager;
+        public AudioManager newAudioManager;
         GameWindow newgame;
-        TitleScreen title;
+        public TitleScreen title;
+        MainMenu menu;
+        EndGame endwindow;
+        HelpScreen tutorial;
+
+        protected static MainWindow mainWin;
 
         public static bool GlobalAudio1
         {
@@ -44,7 +49,10 @@ namespace WizardWarz
             title = new TitleScreen();
             title.MouseDown += Title_MouseDown;
             // Add Title screen to the Main Window
-            MainCanvas.Children.Add(title);            
+            MainCanvas.Children.Add(title);
+
+            tutorial = new HelpScreen();
+
 
             // Initialising Audio (visual pushing to the far right), Play open track.
             GlobalAudio1 = true;
@@ -52,17 +60,35 @@ namespace WizardWarz
             newAudioManager.playTitleSound();
             Canvas.SetLeft(audioTile, 0);
             MainCanvas.Children.Add(newAudioManager);
+
+            mainWin = this;
         }
 
-        private void Title_MouseDown(object sender, MouseButtonEventArgs e)
+        public void Title_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //On any mouse click, load the Game Window, remove the title from the Main Window (along with it's tied event)
-            newgame = new GameWindow();
-            title.MouseDown -= Title_MouseDown;
+            // On click, open the player count menu.
+            menu = new MainMenu();
             MainCanvas.Children.Remove(title);
-            // Add Game to the Main Window
-            newAudioManager.playMainMusic();
+            //MainCanvas.Children.Remove(tutorial);
+            MainCanvas.Children.Add(menu);
+        }
+
+        public void GameStart()
+        {
+            newgame = new GameWindow();
+
+            MainCanvas.Children.Remove(menu);
             MainCanvas.Children.Add(newgame);
+            title.MouseDown -= Title_MouseDown;
+        }
+
+        public void GameEnd()
+        {
+            endwindow = new EndGame();
+
+            newAudioManager.StopTrack();
+            MainCanvas.Children.Remove(newgame);
+            MainCanvas.Children.Add(endwindow);
         }
 
         private void volume_off_On()
@@ -87,6 +113,17 @@ namespace WizardWarz
             // UPDATE AUDIO MANAGER AS TO WHETHER AUDIO SHOULD BE ON
         }
 
+        public void ToggleVolumeButton()
+        {
+            MessageBox.Show("Volume button toggled off.");
+            //if (volLabel.IsEnabled)
+                volLabel.IsEnabled = false;
+            volImage = null;
+
+            //if (!volLabel.IsEnabled)
+            //    volLabel.IsEnabled = true;
+        }
+
         private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             volume_off_On();
@@ -94,6 +131,12 @@ namespace WizardWarz
         private void image_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
             volume_off_On();
+        }
+
+        //
+        public static MainWindow ReturnMainWindowInstance()
+        {
+            return mainWin;
         }
     }
 }

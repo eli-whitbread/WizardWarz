@@ -27,7 +27,8 @@ namespace WizardWarz
     {
         Empty,
         Superbomb,
-        Shield
+        Shield,
+        Lifeup
     }
 
     public class GameBoardManager
@@ -49,7 +50,6 @@ namespace WizardWarz
             };
 
         public int[,] destructibleWallPos = { {9, 1 }, { 3, 2 }, { 3, 5 }, { 5, 5 }, { 5, 9 }, { 7, 1 }, { 7, 6 }, { 9, 6 }, { 5, 3 }, { 7, 9 } };
-
 
         //initialise the game board
         public void InitializeGameBoard()
@@ -193,6 +193,11 @@ namespace WizardWarz
                 case ("Shield"):
                     curTileState[PosX, PosY] = TileStates.Powerup;
                     powerupTileState[PosX, PosY] = PowerupStates.Shield;
+                    break;
+
+                case ("Lifeup"):
+                    curTileState[PosX, PosY] = TileStates.Powerup;
+                    powerupTileState[PosX, PosY] = PowerupStates.Lifeup;
                     break;
             }
         }

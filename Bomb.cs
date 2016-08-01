@@ -32,7 +32,7 @@ namespace WizardWarz
         public GameBoardManager managerRef = null;
         public PlayerController myOwner = null;
 
-        public Powerup puRef = new Powerup();
+        public Powerup puRef = null;
 
         GameTimer myGameTimerRef = null;
 
@@ -41,6 +41,8 @@ namespace WizardWarz
             curGameGrid = localGameGrid;
             myGameTimerRef = GameWindow.ReturnTimerInstance();
             myGameTimerRef.processFrameEvent_TICK += MyGameTimerRef_tickEvent;
+
+            puRef = null;
         }
 
         private void MyGameTimerRef_tickEvent(object sender, EventArgs e)
@@ -248,25 +250,23 @@ namespace WizardWarz
                         //}
                         if(ReturnCellTileState(curCellC, curCellR) == TileStates.DestructibleWall )
                         {
+                            //MessageBox.Show("Destroyed wall.");
                             GameBoardManager.curTileState[curCellC, curCellR] = TileStates.Floor;
                             myOwner.myLivesAndScore.ChangeScore(50, true);
                             managerRef.ChangeTileImage(curCellC, curCellR);
 
-                            //// Attempt to spawn powerup
-                            //Random r = new Random();
-                            //int rand = r.Next(1,2);
-                            ////MessageBox.Show(string.Format("Attempting to spawn powerup. Random number: {0}", rand));
-                            //if (rand == 1)
-                            //{
-                            //    puRef.Count();
-                            //    MessageBox.Show("attempting to spawn powerup");
-                            //}
-                            //    //
-                            //else if (rand == 2)
-                            //{
-                            //    puRef.Count();
-                            //    MessageBox.Show("attempting to spawn powerup");
-                            //}
+
+                            // Attempt to spawn powerup
+                            puRef = new Powerup();
+
+                            Random r = new Random();
+                            int rand = r.Next(0, 2);
+                            //MessageBox.Show(string.Format("Random number: {0}", rand));
+                            if (rand == 0)
+                            {
+                                puRef.WallSpawn(curCellC, curCellR, curGameGrid);
+                                Console.WriteLine(string.Format("Powerup spawned at {0} {1}", curCellC, curCellR));
+                            }
                         }
                     }
                 }

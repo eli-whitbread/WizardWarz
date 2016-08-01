@@ -70,6 +70,12 @@
     <Compile Include="GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EndGame.xaml.cs">
+      <DependentUpon>EndGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HelpScreen.xaml.cs">
+      <DependentUpon>HelpScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
@@ -87,6 +93,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GameWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EndGame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HelpScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

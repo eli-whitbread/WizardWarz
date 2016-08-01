@@ -26,11 +26,12 @@ namespace WizardWarz
         float deltaTime = 0;
         public float exposedDT = 0;
         float curTdelta = 0;
+        public DispatcherTimer gameLoopTimer;
 
         Point curMousePos = new Point(0, 0);
 
         public Canvas GameCanRef = null;
-
+        public Powerup puRef = null;
         public PlayerController playerReference = null;
 
         /// <summary>
@@ -43,18 +44,18 @@ namespace WizardWarz
         /// </summary>
         public event EventHandler processFrameEvent_TICK;
 
-        public Powerup puRef = null;
+
 
         // ---------------------------------------------------------------------
         // ----------------------INITIALISE DispatchTimer-----------------------
         // ---------------------------------------------------------------------
         public GameTimer()
         {
-            DispatcherTimer gameLoopTimer = new DispatcherTimer(DispatcherPriority.Render);
+            gameLoopTimer = new DispatcherTimer(DispatcherPriority.Render);
             gameLoopTimer.Interval = TimeSpan.FromMilliseconds(FramesPerSecond());
             gameLoopTimer.Tick += new EventHandler(timer_Tick);
             gameLoopTimer.Start();
-            GameCanRef = GameWindow.ReturnnMainCanvas();
+            GameCanRef = GameWindow.ReturnMainCanvas();
             Debug.WriteLine("gameLoopTimer Initialised");
         }
 
@@ -67,6 +68,8 @@ namespace WizardWarz
             }
         }
 
+
+
         // ---------------------------------------------------------------------
         // ---------------------- TICK EVENT -----------------------------------
         // ---------------------------------------------------------------------
@@ -76,11 +79,6 @@ namespace WizardWarz
             if (curTdelta % 5 == 0)
             {                
                 Debug.WriteLine("Elapsed = {0}", curTdelta);
-            }
-
-            if (curTdelta % 3000 == 0)
-            {
-                puRef.Count();
             }
 
             // ---------------------------------------------------------------------
@@ -99,9 +97,7 @@ namespace WizardWarz
             {
                 renderFrameEvent_TICK.Invoke(this,e);
             }
-
-            
-            
+                   
 
             //for all bombs currently active in the level fire "BombUpdateTick"
             //StaticCollections.SendBombUpdate();
@@ -113,8 +109,6 @@ namespace WizardWarz
             //playerReference.RenderFrame();
         }
 
-
-
         private double FramesPerSecond()
         {
             Int32 fps = 60;
@@ -123,6 +117,8 @@ namespace WizardWarz
             frameTimeSpan = 1000 / fps;
             deltaTime = Convert.ToSingle(frameTimeSpan);
             exposedDT = deltaTime;
+
+            //MessageBox.Show(string.Format("Single tick = {0}", deltaTime));
 
             return frameTimeSpan;
         }

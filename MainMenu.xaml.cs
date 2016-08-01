@@ -20,8 +20,6 @@ namespace WizardWarz
     /// </summary>
     public partial class MainMenu : UserControl
     {
-        GameWindow newGame;
-
         public MainMenu()
         {
             InitializeComponent();
@@ -33,23 +31,24 @@ namespace WizardWarz
         }
 
         private void four_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {            
+        {
+            //MessageBox.Show("4 player button pressed");
             GlobalPlayerMainMenu = false;
             RunWizardWarz();
         }
 
         private void six_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            //MessageBox.Show("6 player button pressed");
             GlobalPlayerMainMenu = true;
             RunWizardWarz();
         }
 
         private void RunWizardWarz()
         {
-            newGame = new GameWindow();
-
-        }
-
-        
+            MainWindow mainWinRef = MainWindow.ReturnMainWindowInstance();
+            mainWinRef.newAudioManager.playMainMusic();
+            mainWinRef.GameStart();
+        }       
     }
 }
