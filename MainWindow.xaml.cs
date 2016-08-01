@@ -118,7 +118,6 @@ namespace WizardWarz
             MessageBox.Show("Volume button toggled off.");
             //if (volLabel.IsEnabled)
                 volLabel.IsEnabled = false;
-            volImage = null;
 
             //if (!volLabel.IsEnabled)
             //    volLabel.IsEnabled = true;

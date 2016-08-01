@@ -10,7 +10,12 @@
         <!--This Dock Panel holds the score/ lives controls for Players 5 & 6. These are placed on the canvas first, then the second dock is layer on top-->
         <DockPanel Name="panel2" Background="#FF2B1717" Width="1152" Height="1024">
             <Separator Height="64" Width="384" Background="#00A0A0A0" />
-            <Label Name="gameTimeText" FontSize="48" Content="4:19" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="141,-10,96,0" Width="147" Height="64" FontFamily="Palatino Linotype" TextOptions.TextFormattingMode="Display" FontWeight="Light" />
+            <Label Name="gameTimeText1" FontSize="48" Content="4:00" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="141,-10,96,0" Width="147" Height="64" FontFamily="Palatino Linotype" TextOptions.TextFormattingMode="Display" FontWeight="Light" />
+            <Label Name="gameTimeText2" FontSize="48" Content="4:00" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="-355,-10,96,0" Width="147" Height="64" FontFamily="Palatino Linotype" TextOptions.TextFormattingMode="Display" FontWeight="Light">
+                <Label.LayoutTransform>
+                    <RotateTransform Angle="180"/>
+                </Label.LayoutTransform>
+            </Label>
             <!--Player 5 User Control-->
             <Grid Name="TopPanel2" DockPanel.Dock="Top" HorizontalAlignment="Right" Height="64" Background="#FFAC02FB" Margin="0,0,0,0" />
             <!--Player 6 User Control-->

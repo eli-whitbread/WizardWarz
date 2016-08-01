@@ -153,14 +153,16 @@ namespace WizardWarz
             }
 
             // "D2" = Standard Numeric Formatting. Ensures that the seconds will always be displayed in double digits.
-            gameTimeText.Content = gameTimeMinutes + ":" + gameTimeSeconds.ToString("D2");
+            gameTimeText1.Content = gameTimeMinutes + ":" + gameTimeSeconds.ToString("D2");
+            gameTimeText2.Content = gameTimeMinutes + ":" + gameTimeSeconds.ToString("D2");
         }
 
         private void initialiseGameBoardSize()
         {
             if (noOfPlayers == 4)
             {
-                gameTimeText.Margin = new Thickness(384, 0, -10, 0);
+                gameTimeText1.Margin = new Thickness(384, 0, -10, 0);
+                gameTimeText2.Margin = new Thickness(384, 0, -10, 0);
                 TopPanel.HorizontalAlignment = HorizontalAlignment.Center;
                 BottomPanel.HorizontalAlignment = HorizontalAlignment.Center;
                 BottomPanel.Margin = new Thickness(60, 0, 0, 0);
