@@ -39,6 +39,8 @@ namespace WizardWarz
         public int gameTimeSeconds = 00;
         public int gameTimeMinutes = 4;
 
+        //Hello
+
 
         /// <summary>
         /// Returns reference to MainWindow Canvas. <para> The Canvas exists above the game Grid, so will be rendered first.</para>
