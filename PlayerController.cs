@@ -11,7 +11,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Input;
 using System.Diagnostics;
-using static WizardWarz.Powerup;
 
 namespace WizardWarz
 {
@@ -147,7 +146,7 @@ namespace WizardWarz
                 {
                     // Become PLAYER 3
                     relativePosition = new Point(704, 256);
-                    playerX = 10;
+                    playerX = 11;
                     playerY = 4;
                     playerImage = "PlayerRight1.png";
                 }
@@ -172,15 +171,15 @@ namespace WizardWarz
                     // Becomes PLAYER 5
                     relativePosition = new Point(64, 704);
                     playerX = 1;
-                    playerY = 10;
+                    playerY = 11;
                     playerImage = "PlayerRight1.png";
                 }
                 else 
                 {
                     // Stay as PLAYER 3
                     relativePosition = new Point(704, 704);
-                    playerX = 10;
-                    playerY = 10;
+                    playerX = 11;
+                    playerY = 11;
                     playerImage = "PlayerRight1.png";
                 }
                 playerColour = Colors.Blue;                
@@ -216,7 +215,7 @@ namespace WizardWarz
             else if (gridStartPos == 4)
             {
                 relativePosition = new Point(704, 64);
-                playerX = 10;
+                playerX = 11;
                 playerY = 1;
                 playerColour = (Color)ColorConverter.ConvertFromString("#FFAC02FB");
                 playerImage = "PlayerRight1.png";
@@ -228,8 +227,8 @@ namespace WizardWarz
             else if (gridStartPos == 5)
             {                
                     relativePosition = new Point(704, 704);
-                    playerX = 10;
-                    playerY = 10;
+                    playerX = 11;
+                    playerY = 11;
                     playerColour = Colors.Green;
                 playerImage = "PlayerRight1.png";
                 Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
