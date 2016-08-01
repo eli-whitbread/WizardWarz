@@ -84,6 +84,8 @@ namespace WizardWarz
             return tileSize;
         }
 
+        
+
         public GameWindow()
         {
             InitializeComponent();
@@ -127,6 +129,7 @@ namespace WizardWarz
             powerupRef.InitialisePowerups();
             gameTimerInstance.puRef = powerupRef;
 
+            
 
             // End timer
             endTimer = new DispatcherTimer(DispatcherPriority.Render);
@@ -153,6 +156,8 @@ namespace WizardWarz
                     mwRef.GameEnd();
                 } 
             }
+
+            provideAllPlayerPositions();
 
             // "D2" = Standard Numeric Formatting. Ensures that the seconds will always be displayed in double digits.
             gameTimeText.Content = gameTimeMinutes + ":" + gameTimeSeconds.ToString("D2");
@@ -238,6 +243,16 @@ namespace WizardWarz
                     Debug.WriteLine("Nothing Happened!!");
                     break;
             }
+        }
+
+        public void provideAllPlayerPositions()
+        {
+            for(int i = 0; i < playerControllers.Length; i++)
+            {
+                Debug.WriteLine("Player " + i + ", is located at point: " + playerControllers[i].relativePosition.X + "x , " + playerControllers[i].relativePosition.Y + "y");
+
+            }
+
         }
     }
 }
