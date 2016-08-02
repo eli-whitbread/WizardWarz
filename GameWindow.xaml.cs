@@ -34,6 +34,7 @@ namespace WizardWarz
         public PlayerController[] playerControllers = null;
         public PlayerLivesAndScore[] playerLives;
         public Powerup powerupRef = null;
+        public Int32 playersOnBoard;
 
         private DispatcherTimer endTimer;
         public int gameTimeSeconds = 00;
@@ -104,9 +105,9 @@ namespace WizardWarz
 
             // The number of players needs to be set before the game board is initialized
             if (MainMenu.GlobalPlayerMainMenu)
-                noOfPlayers = 6;
+            { noOfPlayers = 6; playersOnBoard = 6; }
             else
-                noOfPlayers = 4;
+            { noOfPlayers = 4; playersOnBoard = 4; }
 
 
             initialiseGameBoardSize();
@@ -133,7 +134,7 @@ namespace WizardWarz
 
             // End timer
             endTimer = new DispatcherTimer(DispatcherPriority.Render);
-            endTimer.Interval = TimeSpan.FromSeconds(1);
+            endTimer.Interval = TimeSpan.FromSeconds(0.5);
             endTimer.Tick += new EventHandler(timer_Tick);
             endTimer.Start();
         }
@@ -250,9 +251,17 @@ namespace WizardWarz
             for(int i = 0; i < playerControllers.Length; i++)
             {
                 Debug.WriteLine("Player " + i + ", is located at point: " + playerControllers[i].relativePosition.X + "x , " + playerControllers[i].relativePosition.Y + "y");
+                if (playerControllers[i].myLivesAndScore.playerLivesNumber <= 0)
+                {
+                    MainGameGrid.Children.Remove(playerControllers[i].playerTile);
+                    playersOnBoard--;
 
+                    if(playersOnBoard <= 1)
+                    {
+                        gameTimeMinutes = 0;
+                    }
+                }
             }
-
         }
     }
 }
