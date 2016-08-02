@@ -30,5 +30,6 @@
         <Grid Name="EndGrid">
 
         </Grid>
+        <Image x:Name="image" Height="306" Canvas.Left="-99" Canvas.Top="-454" Width="793" Source="Resources/WizardWarzText1.png"/>
     </Canvas>
 </UserControl>
