@@ -119,7 +119,7 @@ namespace WizardWarz
 
             playerControllers = new PlayerController[noOfPlayers];
             playerLives = new PlayerLivesAndScore[noOfPlayers];
-            playerPositions = new Int32[noOfPlayers];
+            //playerPositions = new Int32[noOfPlayers];
             initialisePlayerReferences();            
 
             Debug.WriteLine(GameCanvasInstance.Name);
@@ -261,16 +261,18 @@ namespace WizardWarz
 
         private void CheckPlayersOnBoard()
         {
-            for (int i = 0; i < playerControllers.Length; i++)
+            for (int i = 0; i < noOfPlayers; i++)
             {
                 if (playerControllers[i].myLivesAndScore.playerLivesNumber == 0)
                 {
                     MainGameGrid.Children.Remove(playerControllers[i].playerTile);
+                    playerControllers[i].myLivesAndScore.playerLivesNumber = -1;
                     playersOnBoard--;
 
                     if (playersOnBoard <= 1)
                     {
                         gameTimeMinutes = 0;
+                        gameTimeSeconds = 0;
                     }
                 }
             }
