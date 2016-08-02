@@ -35,6 +35,7 @@ namespace WizardWarz
         public PlayerLivesAndScore[] playerLives;
         public Powerup powerupRef = null;
         public Int32 playersOnBoard;
+        public Int32[,] playerPositions;
 
         private DispatcherTimer endTimer;
         public int gameTimeSeconds = 00;
@@ -118,7 +119,7 @@ namespace WizardWarz
 
             playerControllers = new PlayerController[noOfPlayers];
             playerLives = new PlayerLivesAndScore[noOfPlayers];
-           
+            playerPositions = new Int32[noOfPlayers];
             initialisePlayerReferences();            
 
             Debug.WriteLine(GameCanvasInstance.Name);
@@ -159,7 +160,7 @@ namespace WizardWarz
             }
 
             provideAllPlayerPositions();
-
+            CheckPlayersOnBoard();
             // "D2" = Standard Numeric Formatting. Ensures that the seconds will always be displayed in double digits.
             gameTimeText.Content = gameTimeMinutes + ":" + gameTimeSeconds.ToString("D2");
         }
@@ -250,18 +251,30 @@ namespace WizardWarz
         {
             for(int i = 0; i < playerControllers.Length; i++)
             {
-                Debug.WriteLine("Player " + i + ", is located at point: " + playerControllers[i].relativePosition.X + "x , " + playerControllers[i].relativePosition.Y + "y");
-                if (playerControllers[i].myLivesAndScore.playerLivesNumber <= 0)
+                for(int j = 0; j < playerControllers.Length; j++)
+                {
+                    //Debug.WriteLine("Player " + i + ", is located at point: " + playerControllers[i].relativePosition.X + "x , " + playerControllers[i].relativePosition.Y + "y");
+                    // Array of Arrays? Need to store two player ints, in each array, and store that array in another array which can be called globally - and checked in bombs.
+                }     
+            }
+        }
+
+        private void CheckPlayersOnBoard()
+        {
+            for (int i = 0; i < playerControllers.Length; i++)
+            {
+                if (playerControllers[i].myLivesAndScore.playerLivesNumber == 0)
                 {
                     MainGameGrid.Children.Remove(playerControllers[i].playerTile);
                     playersOnBoard--;
 
-                    if(playersOnBoard <= 1)
+                    if (playersOnBoard <= 1)
                     {
                         gameTimeMinutes = 0;
                     }
                 }
             }
+
         }
     }
 }
