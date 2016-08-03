@@ -20,12 +20,13 @@ namespace WizardWarz
         public Rectangle playerTile;
         public Point currentPOS;
         public Point lastClickPOS;
+        public Point playerPosition;
         public Point relativePosition, localBombRelative;
         public Grid localGameGrid = null;
         public Grid highlightLocalGrid = null;
         public Int32 tileSize, bombRadius = 3;
-        public Int32 playerPosition;
         public Int32[,] playerGridLocArray;
+        public int playerStartPos;
         Color playerColour = new Color();
         string playerImage;
         public GameBoardManager managerRef = null;
@@ -85,7 +86,7 @@ namespace WizardWarz
         {
             //playerGridLocArray = new Int32[6, 2] { {0, 0 }, { 12, 0}, { 11, 11}, { 0, 11 }, { 0, 5}, { 11, 5} };
 
-            setPlayerPos(playerPosition);
+            setPlayerPos(playerStartPos);
 
             testPlayerMove();
 
@@ -130,7 +131,7 @@ namespace WizardWarz
             //------------------------------------------------------------------------------------------------
             if (gridStartPos == 0)
             {
-                relativePosition = new Point(64, 64);                
+                relativePosition = new Point(64, 64);
                 playerX = 1;
                 playerY = 1;
                 playerColour = Colors.Silver;
@@ -231,16 +232,29 @@ namespace WizardWarz
                     playerY = 11;
                     playerColour = Colors.Green;
                 playerImage = "PlayerRight1.png";
-                Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
-            } 
+                //Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
+            }
+
             else
             {
                 return;
             }
+
+
+            // Update the player's position in the list
+            for (int i = 0; i < GameWindow.ReturnPlayerList().Count; i++)
+            {
+                if (GameWindow.ReturnPlayerList()[i].playerName == playerName)
+                {
+                    GameWindow.ReturnPlayerList()[i].playerPosition = relativePosition;
+                    MessageBox.Show(string.Format("{0} found at position: {1}.", playerName, relativePosition));
+                }
+            }
+
             playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@"./Resources/" + playerImage, UriKind.Relative)));
             localGameGrid.Children.Add(playerTile);
         }
-        
+
 
         public void ProcessFrame()
         {
@@ -252,6 +266,7 @@ namespace WizardWarz
                 //Mouse.Capture(gameCanRef);
                 isTouched = true;
                 Debug.WriteLine("Capturing...");
+
             }
             else if (Mouse.LeftButton == MouseButtonState.Released && isTouched == true)
             {
@@ -297,10 +312,10 @@ namespace WizardWarz
 
                             Debug.WriteLine("1st Element added!");
                         }
-                        else if (Mouse.DirectlyOver == playerTile)
-                        {
-                            mouseOverFailure();
-                        }
+                        //else if (Mouse.DirectlyOver == playerTile)
+                        //{
+                        //    mouseOverFailure();
+                        //}
                         else
                         {
                             mouseOverFailure();
@@ -324,10 +339,10 @@ namespace WizardWarz
                                 mouseOverFailure();
                             }
                         }
-                        else if (Mouse.DirectlyOver == playerTile)
-                        {
-                            mouseOverFailure();
-                        }
+                        //else if (Mouse.DirectlyOver == playerTile)
+                        //{
+                        //    mouseOverFailure();
+                        //}
                     }
                     //else if (Mouse.DirectlyOver == playerTile && Mouse.DirectlyOver != pathCells[pathCells.Count - 1])
                     //{
@@ -485,17 +500,34 @@ namespace WizardWarz
 
             playerTile.RenderTransform = translateTransform1;
 
+
+            // Update the player's position in the list
+            for (int i = 0; i < GameWindow.ReturnPlayerList().Count; i++)
+            {
+                if (GameWindow.ReturnPlayerList()[i].playerName == playerName)
+                {
+                    GameWindow.ReturnPlayerList()[i].playerPosition = relativePosition;
+                    Console.WriteLine(string.Format("{0} found at position: {1} {2}.", playerName, relativePosition.X / 64, relativePosition.Y / 64));
+
+                    // Prevent players from occupying the same tile.
+                    //
+                    if (relativePosition == GameWindow.ReturnPlayerList()[i].playerPosition && GameWindow.ReturnPlayerList()[i].playerName != playerName)
+                    {
+                        return;
+                    }
+                }
+            }
+
+
             localGameGrid.Children.Remove(playerTile);
             localGameGrid.Children.Add(playerTile);
 
             playerX = Convert.ToInt32(relativePosition.X) / tileSize;
             playerY = Convert.ToInt32(relativePosition.Y) / tileSize;
-            Debug.WriteLine("New Player x = {0}, New Player y = {1}", playerX, playerY);
+            //Debug.WriteLine("New Player x = {0}, New Player y = {1}", playerX, playerY);
+            
 
-
-            //Console.WriteLine("Tile secondary state: {0}", GameBoardManager.powerupTileState[playerX, playerY]);
-            //MessageBox.Show(string.Format("Scanning for powerups. Current tile state: {0}", GameBoardManager.curTileState[playerX, playerY]));
-
+            // Check the tile the player is on for power ups
             if (GameBoardManager.curTileState[playerX, playerY] == TileStates.Powerup)
             {
                 playerState = myPowerupRef.ReturnPowerup(playerX, playerY, localGameGrid);

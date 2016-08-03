@@ -28,6 +28,7 @@ namespace WizardWarz
         protected static GameBoardManager gameBoardManager;
         protected static Canvas GameCanvasInstance;
         protected static GameWindow gameWindowInstance;
+        protected static List<PlayerController> PlayerListRef;
         public Grid MainGameGrid;
         public RotateTransform trRot = null;
         protected static int noOfPlayers = 6;
@@ -35,11 +36,13 @@ namespace WizardWarz
         public PlayerLivesAndScore[] playerLives;
         public Powerup powerupRef = null;
         public Int32 playersOnBoard;
-        public Int32[,] playerPositions;
+        //public Int32[,] playerPositions;
+        public List<PlayerController> ListOfPlayers = new List<PlayerController>();
 
         private DispatcherTimer endTimer;
         public int gameTimeSeconds = 00;
         public int gameTimeMinutes = 4;
+        public double currentTick;
 
         //Hello
 
@@ -85,6 +88,10 @@ namespace WizardWarz
         {
             return tileSize;
         }
+        public static List<PlayerController> ReturnPlayerList()
+        {
+            return PlayerListRef;
+        }
 
         
 
@@ -95,6 +102,7 @@ namespace WizardWarz
             GameCanvasInstance = GameCanvas;
             MainGameGrid = GameBoardGrid;
             gameWindowInstance = this;
+
 
             if (gameTimerInstance == null)
             {
@@ -119,7 +127,7 @@ namespace WizardWarz
 
             playerControllers = new PlayerController[noOfPlayers];
             playerLives = new PlayerLivesAndScore[noOfPlayers];
-            //playerPositions = new Int32[noOfPlayers];
+            //playerPositions = new int[noOfPlayers];
             initialisePlayerReferences();            
 
             Debug.WriteLine(GameCanvasInstance.Name);
@@ -130,8 +138,7 @@ namespace WizardWarz
             powerupRef.curGameGrid = MainGameGrid;
             powerupRef.InitialisePowerups();
             gameTimerInstance.puRef = powerupRef;
-
-            
+      
 
             // End timer
             endTimer = new DispatcherTimer(DispatcherPriority.Render);
@@ -142,34 +149,49 @@ namespace WizardWarz
 
         public void timer_Tick(object sender, EventArgs e)
         {
-            gameTimeSeconds -= 1;
+            currentTick += 0.5;
 
-            if (gameTimeSeconds <= -1)
-            {
-                gameTimeSeconds = 59;
-                gameTimeMinutes -= 1;
+            //if (currentTick % 5 == 0)
+            //{
+            //    foreach(PlayerController player in ListOfPlayers)
+            //    {
+            //        MessageBox.Show(string.Format("{0} position: {1}", player.playerName, player.playerPosition));
+            //    }
+            //}
 
-                if (gameTimeMinutes <= -1)
+            if (currentTick % 1 == 0) {
+
+                gameTimeSeconds -= 1;
+
+                if (gameTimeSeconds <= -1)
                 {
-                    MessageBox.Show("Three minutes passed. End of game reached.");
-                    gameTimerInstance.gameLoopTimer.Stop();
+                    gameTimeSeconds = 59;
+                    gameTimeMinutes -= 1;
 
-                    MainWindow mwRef = MainWindow.ReturnMainWindowInstance();
-                    mwRef.GameEnd();
-                } 
+                    if (gameTimeMinutes <= -1)
+                    {
+                        //MessageBox.Show("Four minutes passed. End of game reached.");
+                        gameTimerInstance.gameLoopTimer.Stop();
+
+                        MainWindow mwRef = MainWindow.ReturnMainWindowInstance();
+                        mwRef.GameEnd();
+                    }
+                }
             }
 
-            provideAllPlayerPositions();
+            //provideAllPlayerPositions();
             CheckPlayersOnBoard();
             // "D2" = Standard Numeric Formatting. Ensures that the seconds will always be displayed in double digits.
-            gameTimeText.Content = gameTimeMinutes + ":" + gameTimeSeconds.ToString("D2");
+            gameTimeText1.Content = gameTimeMinutes + ":" + gameTimeSeconds.ToString("D2");
+            gameTimeText2.Content = gameTimeMinutes + ":" + gameTimeSeconds.ToString("D2");
         }
 
         private void initialiseGameBoardSize()
         {
             if (noOfPlayers == 4)
             {
-                gameTimeText.Margin = new Thickness(384, 0, -10, 0);
+                gameTimeText1.Margin = new Thickness(384, 0, -10, 0);
+                //gameTimeText2.Margin = new Thickness(384, 0, -10, 0);
                 TopPanel.HorizontalAlignment = HorizontalAlignment.Center;
                 BottomPanel.HorizontalAlignment = HorizontalAlignment.Center;
                 BottomPanel.Margin = new Thickness(60, 0, 0, 0);
@@ -178,12 +200,17 @@ namespace WizardWarz
 
         public void initialisePlayerReferences()
         {
+            // Set the reference
+            PlayerListRef = ListOfPlayers;
+
+
             // ------------------------------- Initialise Player References ------------------------------------------------
             for (int i = 0; i <= noOfPlayers - 1; i++)
             {
                 playerControllers[i] = new PlayerController();
                 playerLives[i] = new PlayerLivesAndScore();
-                playerControllers[i].playerPosition = i;
+                playerControllers[i].playerStartPos = i;
+                //playerControllers[i].playerPosition = new Point(0, 0);
                 playerControllers[i].localGameGrid = MainGameGrid;                               
                 playerControllers[i].highlightLocalGrid = MainGameGrid;
                 playerControllers[i].managerRef = gameBoardManager;
@@ -193,10 +220,33 @@ namespace WizardWarz
                 playerControllers[i].myPowerupRef = new Powerup();
                 playerControllers[i].playerName = "Player " + (i + 1).ToString();
 
+                // Add the player to the list
+                ListOfPlayers.Add(playerControllers[i]);
 
                 // --------------------------- Initialise All Players Lives and Score Controls -----------------------------
                 initialisePlayerLivesAndScore(i);
-                //Console.WriteLine("New player: {0}", playerControllers[i].playerName);
+
+            }
+
+            // I had to hard code the player's starting positions, but they'll update properly whenever the player moves.
+            for (int x = 0; x < noOfPlayers; x++)
+            {
+                playerControllers[0].playerPosition = new Point(64, 64);
+
+                if (noOfPlayers == 4)
+                {
+                    playerControllers[1].playerPosition = new Point(704, 64);
+                    playerControllers[2].playerPosition = new Point(704, 704);
+                    playerControllers[3].playerPosition = new Point(64, 704);
+                }
+                else if (noOfPlayers == 6)
+                {
+                    playerControllers[1].playerPosition = new Point(704, 256);
+                    playerControllers[2].playerPosition = new Point(64, 704);
+                    playerControllers[3].playerPosition = new Point(64, 256);
+                    playerControllers[4].playerPosition = new Point(704, 64);
+                    playerControllers[5].playerPosition = new Point(704, 704);
+                }
             }
         }
 
@@ -247,17 +297,17 @@ namespace WizardWarz
             }
         }
 
-        public void provideAllPlayerPositions()
-        {
-            for(int i = 0; i < playerControllers.Length; i++)
-            {
-                for(int j = 0; j < playerControllers.Length; j++)
-                {
-                    //Debug.WriteLine("Player " + i + ", is located at point: " + playerControllers[i].relativePosition.X + "x , " + playerControllers[i].relativePosition.Y + "y");
-                    // Array of Arrays? Need to store two player ints, in each array, and store that array in another array which can be called globally - and checked in bombs.
-                }     
-            }
-        }
+        //public void provideAllPlayerPositions()
+        //{
+        //    for(int i = 0; i < playerControllers.Length; i++)
+        //    {
+        //        for(int j = 0; j < playerControllers.Length; j++)
+        //        {
+        //            //Debug.WriteLine("Player " + i + ", is located at point: " + playerControllers[i].relativePosition.X + "x , " + playerControllers[i].relativePosition.Y + "y");
+        //            // Array of Arrays? Need to store two player ints, in each array, and store that array in another array which can be called globally - and checked in bombs.
+        //        }     
+        //    }
+        //}
 
         private void CheckPlayersOnBoard()
         {
@@ -276,7 +326,6 @@ namespace WizardWarz
                     }
                 }
             }
-
         }
     }
 }

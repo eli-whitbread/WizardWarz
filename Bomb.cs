@@ -314,8 +314,6 @@ namespace WizardWarz
             {
                 iCanDestroy = true;
             }
-
-
         }
 
         private Tuple<int> checkEffectedPlayers()
@@ -323,21 +321,48 @@ namespace WizardWarz
             int colPos = explosionMatrix[explosionStep, 0];
             int rowPos = explosionMatrix[explosionStep, 1];
 
-            if (colPos == myOwner.playerX && rowPos == myOwner.playerY)
+            //// Check if the player was caught in the blast
+            //if (colPos == myOwner.playerX && rowPos == myOwner.playerY)
+            //{
+
+            //    if (myOwner.playerState == "Shield")
+            //    {
+            //        myOwner.playerState = null;
+            //    }
+
+            //    else
+            //    {
+            //        myOwner.myLivesAndScore.ReduceLives(1);
+            //        myOwner.myLivesAndScore.ChangeScore(50, false);
+            //    }
+            //}
+
+            // Check if all players were caught in the blast.
+            for(int i = 0; i < GameWindow.ReturnPlayerList().Count; i++)
             {
+                PlayerController tempPlayer = GameWindow.ReturnPlayerList()[i];
 
-                if (myOwner.playerState == "Shield")
+                if (colPos == tempPlayer.playerX && rowPos == tempPlayer.playerY)
                 {
-                    myOwner.playerState = null;
-                }
+                    MessageBox.Show(string.Format("{0} was caught in the blast!", tempPlayer.playerName));
 
-                else
-                {
-                    myOwner.myLivesAndScore.ReduceLives(1);
-                    myOwner.myLivesAndScore.ChangeScore(50, false);
-                }
+                    if (tempPlayer.playerState == "Shield")
+                    {
+                        MessageBox.Show(string.Format("{0} was shielded.", tempPlayer.playerName));
+                        tempPlayer.playerState = null;
+                    }
 
+                    else
+                    {
+                        tempPlayer.myLivesAndScore.ReduceLives(1);
+                        tempPlayer.myLivesAndScore.ChangeScore(50, false);
+
+                        // Grant the player points for causing other players to lose lives.
+                        myOwner.myLivesAndScore.ChangeScore(50, true);
+                    }
+                }
             }
+
 
             return new Tuple<int>(0);
         }
