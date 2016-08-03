@@ -218,7 +218,7 @@ namespace WizardWarz
         // Used to empower players.
         public string ReturnPowerup(int col, int row, Grid GameGrid)
         {
-            for (int i = 220; i < GameGrid.Children.Count; i++)
+            for (int i = 165; i < GameGrid.Children.Count; i++)
             {
                 UIElement elem = GameGrid.Children[i];
 

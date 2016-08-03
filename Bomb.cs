@@ -344,11 +344,11 @@ namespace WizardWarz
 
                 if (colPos == tempPlayer.playerX && rowPos == tempPlayer.playerY)
                 {
-                    MessageBox.Show(string.Format("{0} was caught in the blast!", tempPlayer.playerName));
+                    //MessageBox.Show(string.Format("{0} was caught in the blast!", tempPlayer.playerName));
 
                     if (tempPlayer.playerState == "Shield")
                     {
-                        MessageBox.Show(string.Format("{0} was shielded.", tempPlayer.playerName));
+                        //MessageBox.Show(string.Format("{0} was shielded.", tempPlayer.playerName));
                         tempPlayer.playerState = null;
                     }
 

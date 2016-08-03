@@ -528,9 +528,12 @@ namespace WizardWarz
             
 
             // Check the tile the player is on for power ups
-            if (GameBoardManager.curTileState[playerX, playerY] == TileStates.Powerup)
+            if (GameBoardManager.curTileState[playerX, playerY] == TileStates.Powerup && playerState == null)
             {
+                //MessageBox.Show("Scanning for powerups.");
                 playerState = myPowerupRef.ReturnPowerup(playerX, playerY, localGameGrid);
+
+                //MessageBox.Show(string.Format("Player state: {0]", playerState));
 
                 if (playerState == "Lifeup")
                 {
