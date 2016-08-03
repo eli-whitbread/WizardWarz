@@ -213,7 +213,7 @@ namespace WizardWarz
             bombImage.Height = GameWindow.ReturnTileSize(); 
             bombImage.Width = GameWindow.ReturnTileSize();
 
-            bombImage.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Bomb.png", UriKind.Relative)));
+            bombImage.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Bomb2.png", UriKind.Relative)));
             bombImage.IsHitTestVisible = false;
 
             Grid.SetColumn(bombImage, colPos);
@@ -290,16 +290,26 @@ namespace WizardWarz
                 {
                     curGameGrid.Children.Remove(bombImage);
                     playBombSndFX.playBombExplode();
+                    bombImage = new Rectangle();
+                    bombImage.Height = GameWindow.ReturnTileSize();
+                    bombImage.Width = GameWindow.ReturnTileSize();
+                    
+
+                    Grid.SetColumn(bombImage, colPos);
+                    Grid.SetRow(bombImage, rowPos);
+                    curGameGrid.Children.Add(bombImage);
                 }
 
                 if (colPos != 0 || rowPos != 0)
                 {
                     Rectangle explosion = new Rectangle();
+                    
+                    Color tempColour = myOwner.playerColour;
                     explosion.Height = GameWindow.ReturnTileSize(); 
                     explosion.Width = GameWindow.ReturnTileSize();
-
-                    explosion.Fill = new SolidColorBrush(Colors.Red);
-                    explosion.Fill.Opacity = 0.7f;
+                    
+                    explosion.Fill = new SolidColorBrush(tempColour);
+                    explosion.Fill.Opacity = 0.5f;
                     explosion.IsHitTestVisible = false;
                     explosionTiles.Add(explosion);
 

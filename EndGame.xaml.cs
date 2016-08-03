@@ -21,11 +21,12 @@ namespace WizardWarz
     /// </summary>
     public partial class EndGame : UserControl
     {
-        public int currentTick = 0;
+        public float currentTick = 0;
         public int maxScore = 0;
         public string topPlayer;
-        public int endCountdown = 10;
-
+        public double endCountdown = 10;
+        int picCount = 0;
+        int picWaitMove = 0;
         public DispatcherTimer endGameTimer = null;
         public GameWindow gwRef;
 
@@ -35,7 +36,7 @@ namespace WizardWarz
 
             // End game timer
             endGameTimer = new DispatcherTimer(DispatcherPriority.Render);
-            endGameTimer.Interval = TimeSpan.FromSeconds(1);
+            endGameTimer.Interval = TimeSpan.FromSeconds(0.5);
             endGameTimer.Tick += new EventHandler(timer_Tick);
             endGameTimer.Start();
 
@@ -44,7 +45,7 @@ namespace WizardWarz
 
         public void timer_Tick(object sender, EventArgs e)
         {
-            currentTick += 1;
+            currentTick += 0.5f;
             endCountdown = 10 - currentTick;
 
             if (currentTick % 1 == 0)
@@ -52,6 +53,7 @@ namespace WizardWarz
                 Console.WriteLine("Current tick: {0}", currentTick);
                 Countdown();
             }
+            FlashTick();
         }
 
         public void Countdown()
@@ -121,6 +123,59 @@ namespace WizardWarz
                 player5Score.Content = unsortedPlayerStats.Values.ElementAt(4);
                 player6Score.Content = unsortedPlayerStats.Values.ElementAt(5);
             }
-        }  
+        }
+
+        private void FlashTick()
+        {
+
+            picWaitMove++;
+
+            if (picCount <= 3)
+            {
+                FlashText();
+            }
+            else
+            {
+                picCount = 0;
+                FlashText();
+            }
+
+            if (picWaitMove == 4)
+            {
+                
+                picWaitMove = 0;
+            }
+        }
+
+        private void FlashText()
+        {
+            switch (picCount)
+            {
+                case 0:
+                    wizardText.Source = new BitmapImage(new Uri("Resources/WizardWarzText2.png", UriKind.Relative));
+                    picCount++;
+                    break;
+
+                case 1:
+                    wizardText.Source = new BitmapImage(new Uri("Resources/WizardWarzText4.png", UriKind.Relative));
+                    picCount++;
+                    break;
+
+                case 2:
+                    wizardText.Source = new BitmapImage(new Uri("Resources/WizardWarzText3.png", UriKind.Relative));
+                    picCount++;
+                    break;
+
+                case 3:
+                    wizardText.Source = new BitmapImage(new Uri("Resources/WizardWarzText1.png", UriKind.Relative));
+                    picCount++;
+                    break;
+
+                default:
+                    wizardText.Source = new BitmapImage(new Uri("Resources/WizardWarzText.png", UriKind.Relative));
+                    picCount = 0;
+                    break;
+            }
+        }
     }
 }

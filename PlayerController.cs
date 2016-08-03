@@ -27,7 +27,7 @@ namespace WizardWarz
         public Int32 tileSize, bombRadius = 3;
         public Int32[,] playerGridLocArray;
         public int playerStartPos;
-        Color playerColour = new Color();
+        public Color playerColour = new Color();
         string playerImage;
         public GameBoardManager managerRef = null;
         public GameTimer playerTimerRef = null;

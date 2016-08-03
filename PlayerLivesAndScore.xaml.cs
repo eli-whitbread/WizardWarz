@@ -50,20 +50,15 @@ namespace WizardWarz
             initialiseHomeBases();
             initialiseLives();
             initialiseScore();
-
-
-          
         }
 
-        
+
 
         public void initialiseHomeBases()
         {
-            //--------------------------------------------| Initialise Player Home Base |-------------------------------------------           
+            //--------------------------------------------| Initialise Player Home Base |-------------------------------------------         
             playerHomeTile = new Rectangle();
-
-            playerHomeTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\castleWizardBlue1.png", UriKind.Relative)));
-
+            playerHomeTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Home0.png", UriKind.Relative)));
             playerHomeTile.Height = tileSizeLocal;
             playerHomeTile.Width = tileSizeLocal;
 
@@ -74,10 +69,10 @@ namespace WizardWarz
 
             // ------------------ Add element to the grid, according to the above -------------------------------------
             livesGrid.Children.Add(playerHomeTile);
-            
-            
 
-        }
+
+
+        }        
 
         public void initialiseLives()
         {
