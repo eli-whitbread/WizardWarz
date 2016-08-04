@@ -129,17 +129,17 @@ namespace WizardWarz
                 if(GameWindow.ReturnNumberOfPlayer() == 6)
                 {
                     // Become PLAYER 3
-                    relativePosition = new Point(704, 256);
-                    playerX = 11;
-                    playerY = 4;
+                    relativePosition = new Point(1344, 384);
+                    playerX = 21;
+                    playerY = 6;
                     playerImage = "PlayerRight1.png";
                     playerTileAnimOverlay.UpdateDirection(false);
                 }
                 else 
                 {
                     // Stay as PLAYER 2
-                    relativePosition = new Point(704, 64);
-                    playerX = 11;
+                    relativePosition = new Point(1344, 64);
+                    playerX = 21;
                     playerY = 1;                    
                     playerImage = "PlayerRight1.png";                    
                 }
@@ -162,7 +162,7 @@ namespace WizardWarz
                 else 
                 {
                     // Stay as PLAYER 3
-                    relativePosition = new Point(704, 704);
+                    relativePosition = new Point(1344, 704);
                     playerX = 11;
                     playerY = 11;
                     playerImage = "PlayerRight1.png";
@@ -178,9 +178,9 @@ namespace WizardWarz
                 if(GameWindow.ReturnNumberOfPlayer() == 6)
                 {
                     // BECOMES PLAYER 6
-                    relativePosition = new Point(64, 256);
+                    relativePosition = new Point(64, 384);
                     playerX = 1;
-                    playerY = 4;
+                    playerY = 6;
                     playerImage = "PlayerRight1.png";
                 }
                 else 
@@ -188,7 +188,7 @@ namespace WizardWarz
                     // Stay as PLAYER 4
                     relativePosition = new Point(64, 704);
                     playerX = 1;
-                    playerY = 10;
+                    playerY = 11;
                     playerImage = "PlayerRight1.png";
                 }                
                 Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
@@ -199,8 +199,8 @@ namespace WizardWarz
             //------------------------------------------------------------------------------------------------
             else if (gridStartPos == 4)
             {
-                relativePosition = new Point(704, 64);
-                playerX = 11;
+                relativePosition = new Point(1344, 64);
+                playerX = 21;
                 playerY = 1;
                 playerColour = (Color)ColorConverter.ConvertFromString("#FFAC02FB");
                 playerImage = "PlayerRight1.png";
@@ -211,8 +211,8 @@ namespace WizardWarz
             //------------------------------------------------------------------------------------------------
             else if (gridStartPos == 5)
             {                
-                    relativePosition = new Point(704, 704);
-                    playerX = 11;
+                    relativePosition = new Point(1344, 704);
+                    playerX = 21;
                     playerY = 11;
                     playerColour = Colors.Green;
                 playerImage = "PlayerRight1.png";

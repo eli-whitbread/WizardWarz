@@ -200,11 +200,17 @@ namespace WizardWarz
         {
             if (noOfPlayers == 4)
             {
-                gameTimeText1.Margin = new Thickness(384, 0, -10, 0);
-                //gameTimeText2.Margin = new Thickness(384, 0, -10, 0);
+                gameTimeText1.Margin = new Thickness(900, 0, -10, 0);
+                gameTimeText2.Margin = new Thickness(-252, 0, -10, 0);
                 TopPanel.HorizontalAlignment = HorizontalAlignment.Center;
                 BottomPanel.HorizontalAlignment = HorizontalAlignment.Center;
                 BottomPanel.Margin = new Thickness(60, 0, 0, 0);
+            }
+            else
+            {
+                gameTimeText1.Margin = new Thickness(400, 0, -10, 0);
+                gameTimeText2.Margin = new Thickness(-252, 0, -10, 0);
+
             }
         }
 
@@ -245,17 +251,17 @@ namespace WizardWarz
 
                 if (noOfPlayers == 4)
                 {
-                    playerControllers[1].playerPosition = new Point(704, 64);
-                    playerControllers[2].playerPosition = new Point(704, 704);
+                    playerControllers[1].playerPosition = new Point(1344, 64);
+                    playerControllers[2].playerPosition = new Point(1344, 704);
                     playerControllers[3].playerPosition = new Point(64, 704);
                 }
                 else if (noOfPlayers == 6)
                 {
-                    playerControllers[1].playerPosition = new Point(704, 256);
+                    playerControllers[1].playerPosition = new Point(1344, 384);
                     playerControllers[2].playerPosition = new Point(64, 704);
-                    playerControllers[3].playerPosition = new Point(64, 256);
-                    playerControllers[4].playerPosition = new Point(704, 64);
-                    playerControllers[5].playerPosition = new Point(704, 704);
+                    playerControllers[3].playerPosition = new Point(64, 384);
+                    playerControllers[4].playerPosition = new Point(1344, 64);
+                    playerControllers[5].playerPosition = new Point(1344, 704);
                 }
             }
         }
