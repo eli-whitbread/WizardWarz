@@ -63,7 +63,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AnimatedTile.cs" />
     <Compile Include="AudioManager.xaml.cs">
       <DependentUpon>AudioManager.xaml</DependentUpon>
     </Compile>
@@ -81,6 +80,9 @@
     </Compile>
     <Compile Include="PlayerLivesAndScore.xaml.cs">
       <DependentUpon>PlayerLivesAndScore.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlayerUserControl.xaml.cs">
+      <DependentUpon>PlayerUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Powerup.cs" />
     <Compile Include="SpritesheetImage.cs" />
@@ -124,6 +126,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PlayerLivesAndScore.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlayerUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -318,6 +324,9 @@
     <None Include="Resources\HorizontalExplosion.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ZombieHunter_SpriteSheet_facingLeft.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

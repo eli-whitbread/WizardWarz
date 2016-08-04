@@ -16,7 +16,7 @@ namespace WizardWarz
 {
     public class PlayerController
     {
-        //SpritesheetImage playerTile;
+        public PlayerUserControl playerTileAnimOverlay;
         public Rectangle playerTile;
         public Point currentPOS;
         public Point lastClickPOS;
@@ -96,27 +96,9 @@ namespace WizardWarz
 
         private void setPlayerPos(int gridStartPos)
         {
-            //Animated sprite test begin - switch Rectangle playerTile variable to SpritesheetImage playerTile and comment out "playerTile = new Rectangle()" and playerTile.Fill below as well as playerDirection() and the function call in PlayerMoveToCell()
-
-            //BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/Resources/ZombieHunter_SpriteSheet.png", UriKind.Absolute));
-            //playerTile = new SpritesheetImage()
-            //{
-            //    Source = image,
-            //    FrameMaxX = 5,
-            //    FrameMaxY = 2,
-            //    FrameRate = 15,
-            //    Width = 64,
-            //    Height = 64,
-            //    PlaysRemaining = 10,
-            //    LoopForever = true
-            //};
-            //playerTile.AnimationComplete += (o, s) =>
-            //{
-            //    localGameGrid.Children.Remove(playerTile);
-            //};
-
-            //Animated sprite test end
-
+            
+            playerTileAnimOverlay = new PlayerUserControl();
+            playerTileAnimOverlay.UpdateDirection(true);
             playerTile = new Rectangle();            
             playerTile.Height = tileSize;
             playerTile.Width = tileSize;
@@ -124,6 +106,7 @@ namespace WizardWarz
             Grid.SetRow(playerTile, 0);
 
             Grid.SetZIndex(playerTile, 10); //set the layering position of the playerTile - can use Grid.SetZIndex or Canvas.SetZIndex(object,int layer)
+            Grid.SetZIndex(playerTileAnimOverlay, 11);
 
 
             //------------------------------------------------------------------------------------------------
@@ -150,6 +133,7 @@ namespace WizardWarz
                     playerX = 11;
                     playerY = 4;
                     playerImage = "PlayerRight1.png";
+                    playerTileAnimOverlay.UpdateDirection(false);
                 }
                 else 
                 {
@@ -251,7 +235,9 @@ namespace WizardWarz
                 }
             }
 
-            playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@"./Resources/" + playerImage, UriKind.Relative)));
+            //playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@"./Resources/" + playerImage, UriKind.Relative)));
+            playerTile.Fill = new SolidColorBrush(Colors.Transparent);
+            localGameGrid.Children.Add(playerTileAnimOverlay);
             localGameGrid.Children.Add(playerTile);
         }
 
@@ -498,6 +484,7 @@ namespace WizardWarz
             //MessageBox.Show(String.Format("MY NEW POINTS ARE X: {0}, Y: {1} ", relativePosition.X, relativePosition.Y));
             TranslateTransform translateTransform1 = new TranslateTransform(relativePosition.X, relativePosition.Y);
 
+            playerTileAnimOverlay.RenderTransform = translateTransform1;
             playerTile.RenderTransform = translateTransform1;
 
 
@@ -520,6 +507,8 @@ namespace WizardWarz
 
 
             localGameGrid.Children.Remove(playerTile);
+            localGameGrid.Children.Remove(playerTileAnimOverlay);
+            localGameGrid.Children.Add(playerTileAnimOverlay);
             localGameGrid.Children.Add(playerTile);
 
             playerX = Convert.ToInt32(relativePosition.X) / tileSize;
@@ -557,21 +546,24 @@ namespace WizardWarz
         {
             if (relativePosition.X > pathCells[0].TransformToAncestor(localGameGrid).Transform(new Point(0, 0)).X)
             {
-                playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerLeft1.png", UriKind.Relative)));
+                // playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerLeft1.png", UriKind.Relative)));
+                playerTileAnimOverlay.UpdateDirection(false);
             }
-            else if (relativePosition.X < pathCells[0].TransformToAncestor(localGameGrid).Transform(new Point(0, 0)).X)
+            //else if (relativePosition.X < pathCells[0].TransformToAncestor(localGameGrid).Transform(new Point(0, 0)).X)
+            else
             {
-                playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerRight1.png", UriKind.Relative)));
+                //playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerRight1.png", UriKind.Relative)));
+                playerTileAnimOverlay.UpdateDirection(true);
 
             }
-            if (relativePosition.Y > pathCells[0].TransformToAncestor(localGameGrid).Transform(new Point(0, 0)).Y)
-            {
-                playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerBack1.png", UriKind.Relative)));
-            }
-            else if (relativePosition.Y < pathCells[0].TransformToAncestor(localGameGrid).Transform(new Point(0, 0)).Y)
-            {
-                playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerFront1.png", UriKind.Relative)));
-            }
+            //if (relativePosition.Y > pathCells[0].TransformToAncestor(localGameGrid).Transform(new Point(0, 0)).Y)
+            //{
+            //    playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerBack1.png", UriKind.Relative)));
+            //}
+            //else if (relativePosition.Y < pathCells[0].TransformToAncestor(localGameGrid).Transform(new Point(0, 0)).Y)
+            //{
+            //    playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\PlayerFront1.png", UriKind.Relative)));
+            //}
         }
 
         private void mouseOverFailure()
@@ -637,8 +629,11 @@ namespace WizardWarz
             TranslateTransform translateTransform1 = new TranslateTransform(relativePosition.X, relativePosition.Y);
 
             playerTile.RenderTransform = translateTransform1;
+            playerTileAnimOverlay.RenderTransform = translateTransform1;
 
             localGameGrid.Children.Remove(playerTile);
+            localGameGrid.Children.Remove(playerTileAnimOverlay);
+            localGameGrid.Children.Add(playerTileAnimOverlay);
             localGameGrid.Children.Add(playerTile);
 
             //MessageBox.Show(string.Format("I should be moving to {0}", relativePosition));

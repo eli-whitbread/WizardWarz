@@ -54,13 +54,14 @@ namespace WizardWarz
             gameLoopTimer = new DispatcherTimer(DispatcherPriority.Render);
             gameLoopTimer.Interval = TimeSpan.FromMilliseconds(FramesPerSecond());
             gameLoopTimer.Tick += new EventHandler(timer_Tick);
-            gameLoopTimer.Start();
+           // gameLoopTimer.Start();
             GameCanRef = GameWindow.ReturnMainCanvas();
             Debug.WriteLine("gameLoopTimer Initialised");
         }
 
         public void Initialise()
         {
+            StartGameTimer();
             Debug.WriteLine(GameCanRef.Name);
             if (playerReference != null)
             {
@@ -68,7 +69,19 @@ namespace WizardWarz
             }
         }
 
+        public void StartGameTimer()
+        {
+            gameLoopTimer.Start();
+        }
 
+        public void StopGameTimer()
+        {
+            gameLoopTimer.Stop();
+            deltaTime = 0;
+            exposedDT = 0;
+            curTdelta = 0;
+        }
+        
 
         // ---------------------------------------------------------------------
         // ---------------------- TICK EVENT -----------------------------------

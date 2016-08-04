@@ -313,7 +313,7 @@ namespace WizardWarz
         {
             for (int i = 0; i < noOfPlayers; i++)
             {
-                if (playerControllers[i].myLivesAndScore.playerLivesNumber == 0)
+                if (playerControllers[i].myLivesAndScore.playerLivesNumber == 0 && playerControllers[i] != null)
                 {
                     MainGameGrid.Children.Remove(playerControllers[i].playerTile);
                     playerControllers[i].myLivesAndScore.playerLivesNumber = -1;
