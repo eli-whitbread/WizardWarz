@@ -91,6 +91,14 @@ namespace WizardWarz
             MainCanvas.Children.Add(endwindow);
         }
 
+        public static void GameRestart()
+        {
+            //MessageBox.Show("Restarting.");
+
+            System.Windows.Forms.Application.Exit();
+            System.Windows.Forms.Application.Restart();
+        }
+
         private void volume_off_On()
         {
             // Event run when the audio button is pressed (either click or touch) - essentially turns audio on or off, and swaps the image to match. 
@@ -115,13 +123,18 @@ namespace WizardWarz
 
         public void ToggleVolumeButton()
         {
-            MessageBox.Show("Volume button toggled off.");
-            //if (volLabel.IsEnabled)
+            //MessageBox.Show("Volume button toggled.");
+            if (volLabel.IsEnabled && volImage.Source != null)
+            {
                 volLabel.IsEnabled = false;
-            volImage = null;
+                volImage.Source = null;
+            }
 
-            //if (!volLabel.IsEnabled)
-            //    volLabel.IsEnabled = true;
+            else
+            {
+                volLabel.IsEnabled = true;
+                volImage.Source = new BitmapImage(new Uri("Resources/audioOn.png", UriKind.Relative));
+            }
         }
 
         private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -62,14 +62,23 @@ namespace WizardWarz
             endTimer.Content = endCountdown + " seconds.";
             if (endCountdown <= 0)
             {
+                // Original method of restarting game:
+                // Resets variables without creating a new instance of the game.
+
+                //endGameTimer.Stop();
+
+                //MainWindow mwRef = MainWindow.ReturnMainWindowInstance();
+                //mwRef.MainCanvas.Children.Remove(this);
+
+                //TitleScreen title = new TitleScreen();
+                //title.MouseDown += mwRef.Title_MouseDown;
+                //mwRef.MainCanvas.Children.Add(title);
+
+                // New method of restarting game:
+                // Closes the window, then launches a new one.
                 endGameTimer.Stop();
-
-                MainWindow mwRef = MainWindow.ReturnMainWindowInstance();
-                mwRef.MainCanvas.Children.Remove(this);
-
-                TitleScreen title = new TitleScreen();
-                title.MouseDown += mwRef.Title_MouseDown;
-                mwRef.MainCanvas.Children.Add(title);
+                MainWindow.GameRestart();
+                Application.Current.Shutdown();
             }
         }
 
