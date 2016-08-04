@@ -316,6 +316,7 @@ namespace WizardWarz
                 if (playerControllers[i].myLivesAndScore.playerLivesNumber == 0 && playerControllers[i] != null)
                 {
                     MainGameGrid.Children.Remove(playerControllers[i].playerTile);
+                    MainGameGrid.Children.Remove(playerControllers[i].playerTileAnimOverlay);
                     playerControllers[i].myLivesAndScore.playerLivesNumber = -1;
                     playersOnBoard--;
 
