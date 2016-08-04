@@ -53,7 +53,9 @@ namespace WizardWarz
         }
 
 
-
+	/// <summary>
+        /// Initialises a home base. <para> Can be used by any number of players, though needs player controllers set up before hand, and in conjunction. Sets the same initial home base position for all players. </para>
+        /// </summary>
         public void initialiseHomeBases()
         {
             //--------------------------------------------| Initialise Player Home Base |-------------------------------------------         
@@ -74,6 +76,9 @@ namespace WizardWarz
 
         }        
 
+        /// <summary>
+        /// Sets the initial amount of lives a player has. 
+        /// </summary>
         public void initialiseLives()
         {
             //-----------------------------------------------------| Initialise Lives|-------------------------------------------
@@ -97,15 +102,22 @@ namespace WizardWarz
 
         }
 
-        // REDUCE LIVES FUNCTION
+         /// <summary>
+        /// Reduces a players lives by the passed in number. <para> Needs to be associated with a player, but allows the players lives to be changed at will. Though always negatively. </para>
+        /// </summary>
         public void ReduceLives(int count)
         {
-            playerLivesNumber -= count;
+            
+	// REDUCE LIVES FUNCTION
+	playerLivesNumber -= count;
             
             CalculateLives();
             Debug.WriteLine("Player lives reduced!");
         }
 
+        /// <summary>
+        /// Handles the graphics of reducing lives. <para>Is auto called as party of ReduceLives.</para>
+        /// </summary>
         public void CalculateLives()
         {
             // ---------------------- Remove ALL hearts from grid----------------------------
@@ -138,6 +150,9 @@ namespace WizardWarz
             
         }
 
+        /// <summary>
+        /// Sets up each players score initially. <para> Is called as part of calculate lives function. This function redraws the score after each time it is called. </para>
+        /// </summary>
         public void initialiseScore()
         {
             //------------------------------------------------------------------------------------------------------------------
@@ -163,6 +178,9 @@ namespace WizardWarz
 
         }
 
+        /// <summary>
+        /// Handy score changing function, used in conjunction with player controller. <para> Takes in two parameters - the first is the number by which the score is change, and the second as to whether it is positive (true) or negative (false). </para>
+        /// </summary>
         public void ChangeScore(int scoreUpOrDown, bool Up)
         {
             string info;
@@ -176,6 +194,9 @@ namespace WizardWarz
             CalculateScore();            
         }
 
+        /// <summary>
+        /// Is Auto-called as part of Change Score. <para> Removes the score from the grid, so it can then be redrawn in intialise score. </para>
+        /// </summary>
         public void CalculateScore()
         {
             try

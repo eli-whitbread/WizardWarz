@@ -79,15 +79,25 @@ namespace WizardWarz
             return noOfPlayers;
         }
 
+        /// <summary>
+        /// Returns a reference to the Main Window. 
+        /// </summary>
         public static GameWindow ReturnGameWindowInstance()
         {
             return gameWindowInstance;
         }
 
+        /// <summary>
+        /// Returns the games set tile size. <para> Wizard Warz as default uses 64x64. </para>
+        /// </summary>
         public static Int32 ReturnTileSize()
         {
             return tileSize;
         }
+
+        /// <summary>
+        /// Returns the globally callable player list - 1-4/ 1-6. Provides access to all players. <para> This list provides access to all players within the game - meaning other classes can interact with them as needed. </para>
+        /// </summary>
         public static List<PlayerController> ReturnPlayerList()
         {
             return PlayerListRef;
