@@ -89,10 +89,10 @@ namespace WizardWarz
         public void timer_Tick(object sender, EventArgs e)
         {
             curTdelta += deltaTime;
-            if (curTdelta % 5 == 0)
-            {                
-                Debug.WriteLine("Elapsed = {0}", curTdelta);
-            }
+            //if (curTdelta % 5 == 0)
+            //{                
+            //    Debug.WriteLine("Elapsed = {0}", curTdelta);
+            //}
 
             // ---------------------------------------------------------------------
             // ----------------------TICK EVENT FOR PROCESSING ---------------------

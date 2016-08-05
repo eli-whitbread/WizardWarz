@@ -38,17 +38,18 @@ namespace WizardWarz
         public Rectangle[,] flrTiles = null;
         Int32 rows = 13;
         Int32 cols = 23;
-        Int32 numberOfDestructibleWalls = 20;
+        Int32 numberOfDestructibleWalls = 60;
         public static TileStates[,] curTileState = null;
         public static PowerupStates[,] powerupTileState = null;
+        static Random randomNumber = new Random();
 
-
-        public int[,] innerWallPos = { { 2, 2 }, { 2, 4 }, { 2, 6 }, { 2, 8 }, { 2, 10 },
-                { 4, 2 }, { 4, 4 }, { 4, 6 }, { 4, 8 }, { 4, 10 },
-                { 6, 2 }, { 6, 4 }, { 6, 6 }, { 6, 8 }, { 6, 10 },
-                { 8, 2 }, { 8, 4 }, { 8, 6 }, { 8, 8 }, { 8, 10 },
-                { 10, 2 }, { 10, 4 }, { 10, 6 }, { 10, 8 }, { 10, 10 }
-            };
+        //public int[,] innerWallPos = { { 2, 2 }, { 2, 4 }, { 2, 6 }, { 2, 8 }, { 2, 10 },
+        //        { 4, 2 }, { 4, 4 }, { 4, 6 }, { 4, 8 }, { 4, 10 },
+        //        { 6, 2 }, { 6, 4 }, { 6, 6 }, { 6, 8 }, { 6, 10 },
+        //        { 8, 2 }, { 8, 4 }, { 8, 6 }, { 8, 8 }, { 8, 10 },
+        //        { 10, 2 }, { 10, 4 }, { 10, 6 }, { 10, 8 }, { 10, 10 }
+        //    };
+        public int[,] innerWallPos;
 
         //public int[,] destructibleWallPos = { {9, 1 }, { 3, 2 }, { 3, 5 }, { 5, 5 }, { 5, 9 }, { 7, 1 }, { 7, 6 }, { 9, 6 }, { 5, 3 }, { 7, 9 } };
         public int[,] destructibleWallPos;
@@ -141,23 +142,38 @@ namespace WizardWarz
             Int32 wallCount = 0;
             destructibleWallPos = new Int32[numberOfDestructibleWalls, 2];
 
-            Random rndColGen = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
-            Random rndRowGen = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
-
             while (wallCount <= numberOfDestructibleWalls - 1)
             {
                
-                Int32 rndColNum = rndColGen.Next(2, cols - 3);
-                Int32 rndRowNum = rndRowGen.Next(2, rows - 3);
+                Int32 rndColNum = randomNumber.Next(2, cols - 3);
+                Int32 rndRowNum = randomNumber.Next(2, rows - 3);
 
                 if ((rndColNum % 2 != 0) || (rndRowNum % 2 != 0))
                 {
-                    destructibleWallPos[wallCount, 0] = rndColNum;
-                    destructibleWallPos[wallCount, 1] = rndRowNum;
 
-                    wallCount++;
-                    
+                    bool canPlaceTileHere = true;
+
+                    for(int i = 0; i < destructibleWallPos.Length / 2; i++)
+                    {
+                        if (destructibleWallPos[i, 0] == rndColNum && destructibleWallPos[i, 1] == rndRowNum)
+                        {
+                            canPlaceTileHere = false;
+                            break;
+                        }
+                       
+                    }
+
+                    if (canPlaceTileHere == true)
+                    {
+                        destructibleWallPos[wallCount, 0] = rndColNum;
+                        destructibleWallPos[wallCount, 1] = rndRowNum;
+                        Debug.WriteLine("D'Walls = {0} {1} ", destructibleWallPos[wallCount, 0], destructibleWallPos[wallCount, 1]);
+                        wallCount++;
+                    }
+
+
                 }
+                
                 //if (DestructableWallPlacementCheck(rndColNum, rndRowNum) == true)
                 //{
                 //    //flrTiles[rndColNum, rndRowNum].Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Destructible.png", UriKind.Relative)));
@@ -178,12 +194,22 @@ namespace WizardWarz
 
         public bool InitialTilePlacementCheck(Int32 c, Int32 r, Int32 colsLength, Int32 rowsLength)
         {
+            innerWallPos = new Int32[(rows * cols),2]; //this is waaay too long but don't have much choice
+
+            Int32 innerWallCount = 0;
+
             if (r == 0 || r == rowsLength - 1 || c == 0 || c == colsLength - 1)
             {
+                innerWallPos[innerWallCount, 0] = c;
+                innerWallPos[innerWallCount, 1] = r;
+                innerWallCount++;
                 return true;
             }
             else if ((c % 2 == 0) && (r % 2 == 0) )
             {
+                innerWallPos[innerWallCount, 0] = c;
+                innerWallPos[innerWallCount, 1] = r;
+                innerWallCount++;
                 return true;
             }
             //setup an array of grid positions (int[,]) for inner walls  = {column,Row} - count starts from "outer wall". ie. 5 = 5 + wall.
@@ -237,7 +263,14 @@ namespace WizardWarz
             {
                 if (destructibleWallPos[i, 0] == c && destructibleWallPos[i, 1] == r)
                 {
-                    return true;
+                    if (curTileState[c, r] == TileStates.DestructibleWall)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 }
             }
 

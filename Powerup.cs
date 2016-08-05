@@ -66,7 +66,10 @@ namespace WizardWarz
                 xPos = rand.Next(1, 12);
                 yPos = rand.Next(1, 12);
 
-                TileCheck();
+                if (_localGameBoard.innerWallPos != null && _localGameBoard.destructibleWallPos != null)
+                {
+                    TileCheck();
+                }
             }
         }
 
