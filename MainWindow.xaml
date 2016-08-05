@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WizardWarz"
         xmlns:Custom="http://schemas.microsoft.com/surface/2008" x:Class="WizardWarz.MainWindow"
         mc:Ignorable="d"
-        Title="Wizard Warz" Height="1080" Width="1080">
+        Title="Wizard Warz" Height="1080" Width="1080" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Canvas Name="MainCanvas">
         <Canvas Name="AudioCanvas">
             <Grid Name="audioTile" Panel.ZIndex="5" Height="1080" Width="1080" >

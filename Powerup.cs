@@ -230,7 +230,7 @@ namespace WizardWarz
 
                 if (Grid.GetRow(elem) == row && Grid.GetColumn(elem) == col)
                 {
-                    MessageBox.Show(string.Format("Child number: {0}. Total children: {1}", i, GameGrid.Children.Count));
+                    //MessageBox.Show(string.Format("Child number: {0}. Total children: {1}", i, GameGrid.Children.Count));
 
                     if (GameBoardManager.curTileState[col, row] == TileStates.Powerup)
                     {

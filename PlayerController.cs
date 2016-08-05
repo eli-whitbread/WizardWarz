@@ -61,7 +61,7 @@ namespace WizardWarz
             tileSize = GameWindow.ReturnTileSize();
 
             playerTimerRef = GameWindow.ReturnTimerInstance();
-            
+
             //Debug.WriteLine("HELLO " + playerTimerRef);
             playerTimerRef.processFrameEvent_TICK += PlayerTimerRef_tickEventPROCESS;
         }
@@ -75,7 +75,7 @@ namespace WizardWarz
             ProcessFrame();
 
             RenderFrame();
-            
+
         }
 
         // ---------------------------------------------------------------------
@@ -92,14 +92,14 @@ namespace WizardWarz
 
             localGameGrid.MouseDown += new MouseButtonEventHandler(controller_MouseLeftButtonDown);
         }
-                
+
 
         private void setPlayerPos(int gridStartPos)
         {
-            
+
             playerTileAnimOverlay = new PlayerUserControl();
             playerTileAnimOverlay.UpdateDirection(true);
-            playerTile = new Rectangle();            
+            playerTile = new Rectangle();
             playerTile.Height = tileSize;
             playerTile.Width = tileSize;
             Grid.SetColumn(playerTile, 0);
@@ -115,8 +115,7 @@ namespace WizardWarz
             if (gridStartPos == 0)
             {
                 relativePosition = new Point(64, 64);
-                playerX = 1;
-                playerY = 1;
+
                 playerColour = Colors.Silver;
                 playerImage = "PlayerRight1.png";
                 Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
@@ -126,22 +125,20 @@ namespace WizardWarz
             //------------------------------------------------------------------------------------------------
             else if (gridStartPos == 1)
             {
-                if(GameWindow.ReturnNumberOfPlayer() == 6)
+                if (GameWindow.ReturnNumberOfPlayer() == 6)
                 {
                     // Become PLAYER 3
                     relativePosition = new Point(1344, 384);
-                    playerX = 21;
-                    playerY = 6;
+
                     playerImage = "PlayerRight1.png";
                     playerTileAnimOverlay.UpdateDirection(false);
                 }
-                else 
+                else
                 {
                     // Stay as PLAYER 2
                     relativePosition = new Point(1344, 64);
-                    playerX = 21;
-                    playerY = 1;                    
-                    playerImage = "PlayerRight1.png";                    
+
+                    playerImage = "PlayerRight1.png";
                 }
                 playerColour = Colors.Red;
                 Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
@@ -151,23 +148,21 @@ namespace WizardWarz
             //------------------------------------------------------------------------------------------------
             else if (gridStartPos == 2)
             {
-                if(GameWindow.ReturnNumberOfPlayer() == 6)
+                if (GameWindow.ReturnNumberOfPlayer() == 6)
                 {
                     // Becomes PLAYER 5
                     relativePosition = new Point(64, 704);
-                    playerX = 1;
-                    playerY = 11;
+
                     playerImage = "PlayerRight1.png";
                 }
-                else 
+                else
                 {
                     // Stay as PLAYER 3
                     relativePosition = new Point(1344, 704);
-                    playerX = 11;
-                    playerY = 11;
+
                     playerImage = "PlayerRight1.png";
                 }
-                playerColour = Colors.Blue;                
+                playerColour = Colors.Blue;
                 Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
             }
             //------------------------------------------------------------------------------------------------
@@ -175,22 +170,19 @@ namespace WizardWarz
             //------------------------------------------------------------------------------------------------
             else if (gridStartPos == 3)
             {
-                if(GameWindow.ReturnNumberOfPlayer() == 6)
+                if (GameWindow.ReturnNumberOfPlayer() == 6)
                 {
                     // BECOMES PLAYER 6
                     relativePosition = new Point(64, 384);
-                    playerX = 1;
-                    playerY = 6;
                     playerImage = "PlayerRight1.png";
                 }
-                else 
+                else
                 {
                     // Stay as PLAYER 4
                     relativePosition = new Point(64, 704);
-                    playerX = 1;
-                    playerY = 11;
+
                     playerImage = "PlayerRight1.png";
-                }                
+                }
                 Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
                 playerColour = Colors.Yellow;
             }
@@ -200,8 +192,7 @@ namespace WizardWarz
             else if (gridStartPos == 4)
             {
                 relativePosition = new Point(1344, 64);
-                playerX = 21;
-                playerY = 1;
+
                 playerColour = (Color)ColorConverter.ConvertFromString("#FFAC02FB");
                 playerImage = "PlayerRight1.png";
                 Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
@@ -210,11 +201,10 @@ namespace WizardWarz
             //-------------------------------|           PLAYER 6             |-------------------------------
             //------------------------------------------------------------------------------------------------
             else if (gridStartPos == 5)
-            {                
-                    relativePosition = new Point(1344, 704);
-                    playerX = 21;
-                    playerY = 11;
-                    playerColour = Colors.Green;
+            {
+                relativePosition = new Point(1344, 704);
+
+                playerColour = Colors.Green;
                 playerImage = "PlayerRight1.png";
                 //Debug.WriteLine("%%% Player {0}: player X: {1}, player Y: {2} /n", gridStartPos + 1, playerX, playerY);
             }
@@ -236,6 +226,8 @@ namespace WizardWarz
             }
 
             //playerTile.Fill = new ImageBrush(new BitmapImage(new Uri(@"./Resources/" + playerImage, UriKind.Relative)));
+            playerX = (int)relativePosition.X / tileSize;
+            playerY = (int)relativePosition.Y / tileSize;
             playerTile.Fill = new SolidColorBrush(Colors.Transparent);
             localGameGrid.Children.Add(playerTileAnimOverlay);
             localGameGrid.Children.Add(playerTile);
@@ -292,7 +284,7 @@ namespace WizardWarz
 
                             //HIGHLIGHT
                             HighlightPathCalc(elementNameC, elementNameR);
-                            
+
                             p1PathCellCount++;
                             p1HasPath = true;
 
@@ -341,18 +333,18 @@ namespace WizardWarz
             }
         }
 
-        
+
 
         private void HighlightPathCalc(int elementC, int elementR)
         {
-            
+
             Ellipse highlight = new Ellipse();
-            
+
             //---------------------ADD HIGHLIGHT  
             highlight.Height = 64 * 0.2;
             highlight.Width = 64 * 0.2;
-            
-            
+
+
             highlight.Fill = new SolidColorBrush(playerColour);
             highlight.Fill.Opacity = 0.4f;
             highlight.IsHitTestVisible = false;
@@ -362,7 +354,7 @@ namespace WizardWarz
             Grid.SetRow(highlight, elementR);
 
             highlightLocalGrid.Children.Add(highlight);
-            
+
             //----------------------------------            
 
 
@@ -506,15 +498,9 @@ namespace WizardWarz
             }
 
 
-            localGameGrid.Children.Remove(playerTile);
-            localGameGrid.Children.Remove(playerTileAnimOverlay);
-            localGameGrid.Children.Add(playerTileAnimOverlay);
-            localGameGrid.Children.Add(playerTile);
-
-            playerX = Convert.ToInt32(relativePosition.X) / tileSize;
-            playerY = Convert.ToInt32(relativePosition.Y) / tileSize;
-            //Debug.WriteLine("New Player x = {0}, New Player y = {1}", playerX, playerY);
             
+            //Debug.WriteLine("New Player x = {0}, New Player y = {1}", playerX, playerY);
+
 
             // Check the tile the player is on for power ups
             if (GameBoardManager.curTileState[playerX, playerY] == TileStates.Powerup && playerState == null)
@@ -538,6 +524,13 @@ namespace WizardWarz
                 Console.WriteLine("Player State: {0}", playerState);
             }
 
+            localGameGrid.Children.Remove(playerTile);
+            localGameGrid.Children.Remove(playerTileAnimOverlay);
+            localGameGrid.Children.Add(playerTileAnimOverlay);
+            localGameGrid.Children.Add(playerTile);
+
+            playerX = Convert.ToInt32(relativePosition.X) / tileSize;
+            playerY = Convert.ToInt32(relativePosition.Y) / tileSize;
 
             pathCells.RemoveAt(0);
         }
@@ -590,7 +583,7 @@ namespace WizardWarz
                 localBombRelative = mousewasdownOn.TransformToAncestor(localGameGrid).Transform(new Point(lastClickPOS.X, lastClickPOS.Y));
                 double localCol = localBombRelative.X;
                 double localRow = localBombRelative.Y;
-                
+
 
                 if (StaticCollections.CheckBombPosition((int)(localCol / tileSize), (int)(localRow / tileSize)) == true)
                 {
