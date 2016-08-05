@@ -6,7 +6,10 @@
              xmlns:local="clr-namespace:WizardWarz"
              mc:Ignorable="d" 
              Height="1080" Width="1080">
-    <Grid>
-
+    <Grid Background="Gray">
+        <Button Name="CloseHelpScreen" Background="Salmon" BorderThickness="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" Click="CloseHelpScreen_Click" >
+           Back to Main Menu 
+        </Button>
+        
     </Grid>
 </UserControl>

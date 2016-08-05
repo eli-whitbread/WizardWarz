@@ -7,8 +7,8 @@
              mc:Ignorable="d" Height="1080" Width="1080" >
     <Canvas Name="Canvas1" Background="#FF892A2A" Height="1080" Width="1080">
         <!--<Grid Background="#FF892A2A" >-->
-        <Button Name="TopRightButton" Content="?" HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" Height="50" Click="TopRightButtonClick" Canvas.Left="975" Canvas.Top="50"/>
-        <Button Name="BottomLeftButton" Content="?" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="50" Height="50" Click="BottomLeftButtonClick" Canvas.Left="50" Canvas.Top="975"/>
+        <!--<Button Name="TopRightButton" Content="?" HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" Height="50" Click="TopRightButtonClick" Canvas.Left="975" Canvas.Top="50"/>
+        <Button Name="BottomLeftButton" Content="?" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="50" Height="50" Click="BottomLeftButtonClick" Canvas.Left="50" Canvas.Top="975"/>-->
 
         <Image Name="wizard1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="64" Height="64" Margin="182,214,834,802" 
                 Source="Resources/WIZARD1.png" Stretch="Fill"/>

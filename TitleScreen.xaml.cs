@@ -25,6 +25,7 @@ namespace WizardWarz
         public bool dTimerBool = false;
         int picCount = 0;
         int picWaitMove = 0;
+        private static Random rnd = new Random();
 
         public MainWindow mwRef = null;
         public HelpScreen tutorial = null;
@@ -124,21 +125,25 @@ namespace WizardWarz
         private void RandomiseWizards()
         {
             Image[] wizards = { wizard1, wizard2, wizard3, wizard4};
-            Random rnd = new Random();
+            //Random rnd = new Random();
 
             for (int i = 0; i < 4; i++)
             {
 
-                int winY = (int)Canvas1.ActualHeight / 2;
-                int winX = (int)Canvas1.ActualWidth / 2 ;
+                //int winY = (int)Canvas1.ActualHeight / 2;
+                //int winX = (int)Canvas1.ActualWidth / 2 ;
 
-                int positionY = rnd.Next(0, winY);
-                int positionX = rnd.Next(0, winX);
+                // int positionY = rnd.Next(0, winY);
+                //int positionX = rnd.Next(0, winX);
+                Int32 positionY = rnd.Next(200, (Int32)Canvas1.Width - 200);
+                Int32 positionX = rnd.Next(200, (Int32)Canvas1.Height - 200);
 
                 //Console.Write(string.Format("X = {0}, Y = {1} /n", positionX, positionY));
 
-                Canvas.SetLeft(wizards[i], positionX);
-                Canvas.SetTop(wizards[i], positionY);
+                wizards[i].Margin = new Thickness(positionX, positionY, 0, 0);
+
+               // Canvas.SetLeft(wizards[i], positionX);
+               // Canvas.SetTop(wizards[i], positionY);
                 
             }
             

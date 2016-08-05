@@ -61,5 +61,10 @@ namespace WizardWarz
 
             //MessageBox.Show("Image made");
         }
+
+        private void CloseHelpScreen_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
