@@ -90,14 +90,14 @@ namespace WizardWarz
             Dictionary<string, int> sortedPlayerStats = new Dictionary<string, int>();
 
             // Random value used solely for testing
-            Random r = new Random();
+            //Random r = new Random();
 
             foreach (PlayerController player in gwRef.playerControllers)
             {
-                int test = r.Next(-200, 200);
+                //int test = r.Next(-200, 200);
 
-                unsortedPlayerStats.Add(player.playerName, test);
-                Console.WriteLine(string.Format("Player result: {0}, score: {1}", player.playerName, test));
+                unsortedPlayerStats.Add(player.playerName, player.myLivesAndScore.currentScore);
+                Console.WriteLine(string.Format("Player result: {0}, score: {1}", player.playerName, player.myLivesAndScore.currentScore));
             }
 
             // Use OrderBy method to sort dictionary by value, then add the sorted values to the second dictionary.
