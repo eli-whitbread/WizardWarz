@@ -109,9 +109,10 @@ namespace WizardWarz
 
             if (xFlag || yFlag)
             {
-                Random randType = new Random();
+                //Random randType = new Random();
                 // The right-most number should be equal to the amount of powerups we've created 
-                powerupType = randType.Next(0, 3);
+                //powerupType = randType.Next(0, 3);
+                powerupType = GameWindow.ReturnRandomPowerUpNo();
 
                 if (powerupType == 0)
                 {
@@ -180,15 +181,17 @@ namespace WizardWarz
         {
             Rectangle powerupTile = new Rectangle();
 
-            Random r = new Random();
-            int rand = r.Next(0, 3);
+            //Random r = new Random();
+            //int rand = r.Next(0, 3);
+
+            int rand = GameWindow.ReturnRandomPowerUpNo();
             //MessageBox.Show(string.Format("Random number: {0}", rand));
             if (rand == 0)
             {
                 pName = "Superbomb";
                 powerupTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\superbomb.png", UriKind.Relative)));
                 _localGameBoard.ChangeTileState(PosX, PosY, "Superbomb");
-                //MessageBox.Show("Superbomb made");
+                //MessageBox.Show("Superbomb made");    
             }
             else if (rand == 1)
             {

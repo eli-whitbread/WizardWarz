@@ -38,7 +38,7 @@ namespace WizardWarz
         public Int32 playersOnBoard;
         //public Int32[,] playerPositions;
         public List<PlayerController> ListOfPlayers = new List<PlayerController>();
-
+        protected static Int16 randomNo4PowerUps;
         private DispatcherTimer endTimer;
         public int gameTimeSeconds = 00;
         public int gameTimeMinutes = 4;
@@ -103,7 +103,13 @@ namespace WizardWarz
             return PlayerListRef;
         }
 
-        
+        /// <summary>
+        /// Returns the globally callable random Number - between 0 and 3. <para> This number is generated within GameWindow, each tick, thus providing some randomness. </para>
+        /// </summary>
+        public static Int16 ReturnRandomPowerUpNo()
+        {
+            return randomNo4PowerUps;
+        }
 
         public GameWindow()
         {
@@ -187,6 +193,7 @@ namespace WizardWarz
                         mwRef.GameEnd();
                     }
                 }
+                
             }
 
             //provideAllPlayerPositions();
@@ -194,6 +201,9 @@ namespace WizardWarz
             // "D2" = Standard Numeric Formatting. Ensures that the seconds will always be displayed in double digits.
             gameTimeText1.Content = gameTimeMinutes + ":" + gameTimeSeconds.ToString("D2");
             gameTimeText2.Content = gameTimeMinutes + ":" + gameTimeSeconds.ToString("D2");
+
+            Random tempRandom = new Random();
+            randomNo4PowerUps = (short)tempRandom.Next(0, 3);
         }
 
         private void initialiseGameBoardSize()
@@ -333,6 +343,7 @@ namespace WizardWarz
                 {
                     MainGameGrid.Children.Remove(playerControllers[i].playerTile);
                     MainGameGrid.Children.Remove(playerControllers[i].playerTileAnimOverlay);
+
                     playerControllers[i].myLivesAndScore.playerLivesNumber = -1;
                     playersOnBoard--;
 
