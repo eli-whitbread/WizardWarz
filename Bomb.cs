@@ -109,7 +109,8 @@ namespace WizardWarz
             fillDir_right = true;
 
             //check if we can spawn the bomb at the player's position (should always be true - player can't walk on walls!)
-            if (ReturnCellTileState(startX, startY) != TileStates.Floor)
+            // Players should be able to spawn bombs on top of power ups too. The game crashes for me otherwise.
+            if (ReturnCellTileState(startX, startY) != TileStates.Floor && ReturnCellTileState(startX, startY) != TileStates.Powerup)
             {
                 return;
             }

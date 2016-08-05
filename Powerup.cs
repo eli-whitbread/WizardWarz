@@ -218,12 +218,14 @@ namespace WizardWarz
         // Used to empower players.
         public string ReturnPowerup(int col, int row, Grid GameGrid)
         {
-            for (int i = 165; i < GameGrid.Children.Count; i++)
+            for (int i = 160; i < GameGrid.Children.Count; i++)
             {
                 UIElement elem = GameGrid.Children[i];
 
                 if (Grid.GetRow(elem) == row && Grid.GetColumn(elem) == col)
                 {
+                    MessageBox.Show(string.Format("Rectangle child: {0}", i));
+
                     if (GameBoardManager.curTileState[col, row] == TileStates.Powerup)
                     {
                         // Remove the powerup, then return its name.
