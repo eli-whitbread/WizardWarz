@@ -85,6 +85,7 @@
       <DependentUpon>PlayerUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Powerup.cs" />
+    <Compile Include="RandomNumberGenerator.cs" />
     <Compile Include="SpritesheetImage.cs" />
     <Compile Include="StaticCollections.cs" />
     <Compile Include="TitleScreen.xaml.cs">
