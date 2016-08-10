@@ -45,6 +45,8 @@ namespace WizardWarz
         public double currentTick;
 
         //Hello
+        //Random number generator instance
+        public RandomNumberGenerator RNG = new RandomNumberGenerator();
 
 
         /// <summary>
@@ -177,6 +179,7 @@ namespace WizardWarz
 
             if (currentTick % 1 == 0) {
 
+                // Decrement the timer
                 gameTimeSeconds -= 1;
 
                 if (gameTimeSeconds <= -1)
@@ -193,11 +196,29 @@ namespace WizardWarz
                         mwRef.GameEnd();
                     }
                 }
-                
+
+                //// Use the Generate method to return the first number of a set of randomly generated numbers.
+                //if (currentTick % 1 == 0)
+                //{
+                //    int number = RNG.GenerateRandomNumber();
+
+                //    // Simple method of returning the first digit of the 'number' variable
+                //    //result = Math.Floor(number / Math.Pow(10, Math.Floor(Math.Log10(number))));
+
+                //    // Testing random funtion.
+                //    double result;
+                //    if (number <= 85) { result = 0; }
+                //    else if (number >= 86 && number <= 190) { result = 1; }
+                //    else { result = 2; }
+
+                //    Console.WriteLine("Random Number: {0} {1}", result, Environment.NewLine);
+                //    //Console.WriteLine();
+                //}
             }
 
             //provideAllPlayerPositions();
             CheckPlayersOnBoard();
+
             // "D2" = Standard Numeric Formatting. Ensures that the seconds will always be displayed in double digits.
             gameTimeText1.Content = gameTimeMinutes + ":" + gameTimeSeconds.ToString("D2");
             gameTimeText2.Content = gameTimeMinutes + ":" + gameTimeSeconds.ToString("D2");

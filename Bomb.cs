@@ -31,8 +31,8 @@ namespace WizardWarz
 
         public GameBoardManager managerRef = null;
         public PlayerController myOwner = null;
-
         public Powerup puRef = null;
+        private RandomNumberGenerator RNG = new RandomNumberGenerator();
 
         GameTimer myGameTimerRef = null;
 
@@ -257,13 +257,13 @@ namespace WizardWarz
                             managerRef.ChangeTileImage(curCellC, curCellR);
 
 
-                            // Attempt to spawn powerup
+                            //// Attempt to spawn powerup
                             puRef = new Powerup();
 
-                            Random r = new Random();
-                            int rand = r.Next(0, 2);
+                            //Random r = new Random();
+                            int rand = RNG.GenerateRandomNumber();
                             //MessageBox.Show(string.Format("Random number: {0}", rand));
-                            if (rand == 0)
+                            if (rand % 2 == 0)
                             {
                                 puRef.WallSpawn(curCellC, curCellR, curGameGrid);
                                 Console.WriteLine(string.Format("Powerup spawned at {0} {1}", curCellC, curCellR));

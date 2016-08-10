@@ -41,7 +41,7 @@ namespace WizardWarz
 
         public TileStates[,] curTileStates = GameBoardManager.curTileState;
         public PowerupStates[,] powerupTileStates = GameBoardManager.powerupTileState;
-
+        private RandomNumberGenerator RNG = new RandomNumberGenerator();
 
         public void InitialisePowerups()
         {
@@ -187,29 +187,33 @@ namespace WizardWarz
             //Random r = new Random();
             //int rand = r.Next(0, 3);
 
-            int rand = GameWindow.ReturnRandomPowerUpNo();
+            int rand = RNG.GenerateRandomNumber();
             //MessageBox.Show(string.Format("Random number: {0}", rand));
-            if (rand == 0)
+
+            // I believe that the rand number will always be between 1 and 255. So we divide 255 by 3 and see if 'rand' is equal to or less than one, two or three thirds of 255.\
+            // Basically, this method of handling things should ensure an even chance of each power up spawning.
+            if (rand <= 85)
             {
                 pName = "Superbomb";
                 powerupTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\superbomb.png", UriKind.Relative)));
                 _localGameBoard.ChangeTileState(PosX, PosY, "Superbomb");
                 //MessageBox.Show("Superbomb made");    
             }
-            else if (rand == 1)
+            else if (rand >= 86 && rand <= 190)
             {
                 pName = "Shield";
                 powerupTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\shield.png", UriKind.Relative)));
                 _localGameBoard.ChangeTileState(PosX, PosY, "Shield");
                 //MessageBox.Show("Shield made");
             }
-            else if (rand == 2)
+            else if (rand >= 191)
             {
                 pName = "Lifeup";
                 powerupTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\heart.png", UriKind.Relative)));
                 _localGameBoard.ChangeTileState(PosX, PosY, "Lifeup");
                 //MessageBox.Show("Lifeup made");
             }
+
 
             powerupTile.Height = GameWindow.ReturnTileSize();
             powerupTile.Width = GameWindow.ReturnTileSize();
