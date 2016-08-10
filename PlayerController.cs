@@ -384,6 +384,8 @@ namespace WizardWarz
 
                 if (movementTimer % 10 == 0)
                 {
+                    PowerupPlayer();
+
                     if (pathCells.Count() != 0)
                     {
                         movementTimer = 0;
@@ -502,27 +504,7 @@ namespace WizardWarz
             //Debug.WriteLine("New Player x = {0}, New Player y = {1}", playerX, playerY);
 
 
-            // Check the tile the player is on for power ups
-            if (GameBoardManager.curTileState[playerX, playerY] == TileStates.Powerup && playerState == null)
-            {
-                //MessageBox.Show("Scanning for powerups.");
-                playerState = myPowerupRef.ReturnPowerup(playerX, playerY, localGameGrid);
-
-                //MessageBox.Show(string.Format("Player state: {0]", playerState));
-
-                if (playerState == "Lifeup")
-                {
-                    playerState = null;
-                    myLivesAndScore.playerLivesNumber += 1;
-
-                    if (myLivesAndScore.playerLivesNumber >= 4)
-                        myLivesAndScore.playerLivesNumber = 3;
-
-                    myLivesAndScore.CalculateLives();
-                }
-
-                Console.WriteLine("Player State: {0}", playerState);
-            }
+            
 
             localGameGrid.Children.Remove(playerTile);
             localGameGrid.Children.Remove(playerTileAnimOverlay);
@@ -594,7 +576,7 @@ namespace WizardWarz
                     localGameGrid.Children.Remove(playerTile);
 
                     if (playerState == "Superbomb")
-                        bombRadius += 3;
+                        bombRadius = bombRadius * 2;
 
                     fireBomb.InitialiseBomb((int)(localCol / tileSize), (int)(localRow / tileSize), bombRadius);
                     localGameGrid.Children.Add(playerTile);
@@ -608,7 +590,7 @@ namespace WizardWarz
                     //MessageBox.Show(string.Format("Player state: {0}", playerState));
                     if (playerState == "Superbomb")
                     {
-                        bombRadius = 3;
+                        bombRadius = bombRadius / 2;
                         playerState = null;
 
                     }
@@ -630,6 +612,50 @@ namespace WizardWarz
             localGameGrid.Children.Add(playerTile);
 
             //MessageBox.Show(string.Format("I should be moving to {0}", relativePosition));
+        }
+
+
+        // Method that scans the tile the player is currently on for a powerup.
+        public void PowerupPlayer()
+        {
+            string tempStateFlag;
+            string previousStateFlag;
+
+            // Check the tile the player is on for power ups
+            // The last two conditions are to prevent players from being unable to pick up extra lives while they're holding onto a powerup.
+            if (GameBoardManager.curTileState[playerX, playerY] == TileStates.Powerup && playerState == null || 
+                playerState == "Superbomb" && GameBoardManager.powerupTileState[playerX, playerY] == PowerupStates.Lifeup ||
+                playerState == "Shield" && GameBoardManager.powerupTileState[playerX, playerY] == PowerupStates.Lifeup)
+            {
+                // Set the previousStateFlag flag
+                previousStateFlag = playerState;
+
+                //MessageBox.Show("Scanning for powerups.");
+                tempStateFlag = myPowerupRef.ReturnPowerup(playerX, playerY, localGameGrid);
+
+                //MessageBox.Show(string.Format("Player state: {0]", playerState));
+
+                if (tempStateFlag == "Lifeup")
+                {
+                    tempStateFlag = null;
+                    myLivesAndScore.playerLivesNumber += 1;
+
+                    if (myLivesAndScore.playerLivesNumber >= 4)
+                        myLivesAndScore.playerLivesNumber = 3;
+
+                    myLivesAndScore.CalculateLives();
+
+                    // Prevent the player from losing their current powerup due to collecting an extra life
+                    playerState = previousStateFlag;
+                }
+
+                else
+                {
+                    playerState = tempStateFlag;
+                }
+
+                Console.WriteLine("Player State: {0}", playerState);
+            }
         }
     }
 }
