@@ -592,6 +592,7 @@ namespace WizardWarz
                     {
                         bombRadius = bombRadius / 2;
                         playerState = null;
+                        UpdatePlayerStatus("null");
 
                     }
                 }
@@ -655,6 +656,25 @@ namespace WizardWarz
                 }
 
                 Console.WriteLine("Player State: {0}", playerState);
+
+                UpdatePlayerStatus(playerState);
+            }
+        }
+
+        // Update the player's section of the UI, to tell them whether or not they have a powerup.
+        public void UpdatePlayerStatus(string powerupName)
+        {
+            switch (powerupName)
+            {
+                case ("Superbomb"):
+                    myLivesAndScore.playerHomeTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\superbomb.png", UriKind.Relative)));
+                    break;
+                case ("Shield"):
+                    myLivesAndScore.playerHomeTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\shield.png", UriKind.Relative)));
+                    break;
+                case ("null"):
+                    myLivesAndScore.playerHomeTile.Fill = new ImageBrush(new BitmapImage(new Uri(@".\Resources\Home0.png", UriKind.Relative)));
+                    break;
             }
         }
     }

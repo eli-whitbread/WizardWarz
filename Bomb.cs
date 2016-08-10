@@ -361,6 +361,7 @@ namespace WizardWarz
                     {
                         //MessageBox.Show(string.Format("{0} was shielded.", tempPlayer.playerName));
                         tempPlayer.playerState = null;
+                        tempPlayer.UpdatePlayerStatus("null");
                     }
 
                     else
